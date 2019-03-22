@@ -297,6 +297,16 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IMDbDotNetDomain\IMDbDotNetDomain.csproj">
+      <Project>{517b7c4d-8bbf-421a-b419-c13b23f4e4ba}</Project>
+      <Name>IMDbDotNetDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IMDbDotNetInfrastructure\IMDbDotNetInfrastructure.csproj">
+      <Project>{d86b225b-46dd-4e1d-9115-4c7fcc0ce55c}</Project>
+      <Name>IMDbDotNetInfrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

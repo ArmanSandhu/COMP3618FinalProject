@@ -9,24 +9,35 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using IMDbDotNetAPI.Models;
+using IMDbDotNetDomain;
+using IMDbDotNetInfrastructure;
 
 namespace IMDbDotNetAPI.Controllers
 {
     public class titlebasicsController : ApiController
     {
-        private IMDbEntities1 db = new IMDbEntities1();
+        private IRepository<titlebasic> repo;
+        public titlebasicsController()
+        : this(new EFGenericRepository<titlebasic>(new IMDbEntities1()))
+        {
+        }
+
+        public titlebasicsController(IRepository<titlebasic> inRepo)
+        {
+            repo = inRepo;
+        }
 
         // GET: api/titlebasics
         public IQueryable<titlebasic> Gettitlebasics()
         {
-            return db.titlebasics;
+            return repo.Reads();
         }
 
         // GET: api/titlebasics/5
         [ResponseType(typeof(titlebasic))]
         public IHttpActionResult Gettitlebasic(string id)
         {
-            titlebasic titlebasic = db.titlebasics.Find(id);
+            titlebasic titlebasic = repo.Read(x => x.tconst == id);
             if (titlebasic == null)
             {
                 return NotFound();
@@ -48,12 +59,12 @@ namespace IMDbDotNetAPI.Controllers
             {
                 return BadRequest();
             }
-
-            db.Entry(titlebasic).State = EntityState.Modified;
+            
+            repo.Update(titlebasic);
 
             try
             {
-                db.SaveChanges();
+                repo.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,11 +90,12 @@ namespace IMDbDotNetAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.titlebasics.Add(titlebasic);
+            repo.Create(titlebasic);
+            
 
             try
             {
-                db.SaveChanges();
+                repo.SaveChanges();
             }
             catch (DbUpdateException)
             {
@@ -110,8 +122,8 @@ namespace IMDbDotNetAPI.Controllers
                 return NotFound();
             }
 
-            db.titlebasics.Remove(titlebasic);
-            db.SaveChanges();
+            repo.Delete(titlebasic);
+            repo.SaveChanges();
 
             return Ok(titlebasic);
         }

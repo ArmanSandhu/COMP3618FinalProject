@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDbDotNetAPI", "IMDbDotNet
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASPDotnetCore", "ASPDotnetCore", "{0ADB5192-8A49-43C6-B329-2862592287DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDbDotNetDomain", "IMDbDotNetDomain\IMDbDotNetDomain.csproj", "{517B7C4D-8BBF-421A-B419-C13B23F4E4BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDbDotNetInfrastructure", "IMDbDotNetInfrastructure\IMDbDotNetInfrastructure.csproj", "{D86B225B-46DD-4E1D-9115-4C7FCC0CE55C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{E31F5B6A-9933-480D-A272-572BD56B0135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E31F5B6A-9933-480D-A272-572BD56B0135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E31F5B6A-9933-480D-A272-572BD56B0135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{517B7C4D-8BBF-421A-B419-C13B23F4E4BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{517B7C4D-8BBF-421A-B419-C13B23F4E4BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{517B7C4D-8BBF-421A-B419-C13B23F4E4BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{517B7C4D-8BBF-421A-B419-C13B23F4E4BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D86B225B-46DD-4E1D-9115-4C7FCC0CE55C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D86B225B-46DD-4E1D-9115-4C7FCC0CE55C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D86B225B-46DD-4E1D-9115-4C7FCC0CE55C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D86B225B-46DD-4E1D-9115-4C7FCC0CE55C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
