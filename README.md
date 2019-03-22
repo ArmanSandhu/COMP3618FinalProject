@@ -17,21 +17,8 @@ ALTER TABLE movie.titlebasics
 	ADD CONSTRAINT PK_titlebasics_tconst PRIMARY KEY CLUSTERED (tconst); 
 ```
 * Change connection strings
-  * In `IMDbContext.cs` line 25
+  * In `Web.config` line 87
   
   ```c#
-  optionsBuilder.UseSqlServer("Server=(YourServerName);Database=IMDb;Trusted_Connection=True;");
+  <add name="IMDbEntities1" connectionString="metadata=res://*/Models.MovieModel.csdl|res://*/Models.MovieModel.ssdl|res://*/Models.MovieModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(YourServerName);initial catalog=IMDb;integrated security=True;multipleactiveresultsets=True;application name=EntityFramework&quot;" providerName="System.Data.EntityClient" />
   ```
-  * In `Startup.cs` line 31
-  
-  ```c#
-  var connection = @"Server=(YourServerName);Database=IMDb;Trusted_Connection=True;ConnectRetryCount=0";
-  ```
-
-
-## Do the following only when you want to build it from scratch
-### Scaffold from the database
-* Run Scaffold command
-```powershell
-Scaffold-DbContext "Server=(YourServerName);Database=IMDb;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
-```
