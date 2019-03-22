@@ -16,6 +16,7 @@ namespace IMDbDotNetAPI.Controllers
 {
     public class titlebasicsController : ApiController
     {
+        private IMDbEntities1 db = new IMDbEntities1();
         private IRepository<titlebasic> repo;
         public titlebasicsController()
         : this(new EFGenericRepository<titlebasic>(new IMDbEntities1()))
