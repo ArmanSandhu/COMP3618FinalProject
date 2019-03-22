@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace IMDbAPI.Models
+namespace IMDbDomain.Models
 {
     public partial class IMDbContext : DbContext
     {

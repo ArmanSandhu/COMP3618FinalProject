@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDbAPI", "IMDbAPI\IMDbAPI.csproj", "{F66AA7E0-F981-48B7-8DBB-3957D675D524}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDbAPI", "IMDbAPI\IMDbAPI.csproj", "{F66AA7E0-F981-48B7-8DBB-3957D675D524}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDbDomain", "IMDbDomain\IMDbDomain.csproj", "{77708D82-D4D9-4E47-962A-396A58559655}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDbInfrastructure", "IMDbInfrastructure\IMDbInfrastructure.csproj", "{0F556E6B-B833-48E0-8384-2717F91D75A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDbDotNetAPI", "IMDbDotNetAPI\IMDbDotNetAPI.csproj", "{E31F5B6A-9933-480D-A272-572BD56B0135}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASPDotnetCore", "ASPDotnetCore", "{0ADB5192-8A49-43C6-B329-2862592287DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +23,26 @@ Global
 		{F66AA7E0-F981-48B7-8DBB-3957D675D524}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F66AA7E0-F981-48B7-8DBB-3957D675D524}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F66AA7E0-F981-48B7-8DBB-3957D675D524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77708D82-D4D9-4E47-962A-396A58559655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77708D82-D4D9-4E47-962A-396A58559655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77708D82-D4D9-4E47-962A-396A58559655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77708D82-D4D9-4E47-962A-396A58559655}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F556E6B-B833-48E0-8384-2717F91D75A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F556E6B-B833-48E0-8384-2717F91D75A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F556E6B-B833-48E0-8384-2717F91D75A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F556E6B-B833-48E0-8384-2717F91D75A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E31F5B6A-9933-480D-A272-572BD56B0135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E31F5B6A-9933-480D-A272-572BD56B0135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E31F5B6A-9933-480D-A272-572BD56B0135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E31F5B6A-9933-480D-A272-572BD56B0135}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F66AA7E0-F981-48B7-8DBB-3957D675D524} = {0ADB5192-8A49-43C6-B329-2862592287DD}
+		{77708D82-D4D9-4E47-962A-396A58559655} = {0ADB5192-8A49-43C6-B329-2862592287DD}
+		{0F556E6B-B833-48E0-8384-2717F91D75A4} = {0ADB5192-8A49-43C6-B329-2862592287DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DBB94BE9-AC9B-4D53-8A46-AB341030D7EA}

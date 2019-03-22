@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace IMDbAPI.Models
+namespace IMDbDomain.Models
 {
-    public partial class Titlebasics
+    public partial class Titlebasics : ITitlebasics<Titlebasics>
     {
         public string Tconst { get; set; }
         public string TitleType { get; set; }
