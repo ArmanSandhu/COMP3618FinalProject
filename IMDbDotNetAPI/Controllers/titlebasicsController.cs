@@ -38,14 +38,16 @@ namespace IMDbDotNetAPI.Controllers
         [ResponseType(typeof(titlebasic))]
         public IHttpActionResult Gettitlebasic(string id)
         {
-            titlebasic titlebasic = unitOfWork.Repository<titlebasic>().Read(x => x.tconst == id);
-            if (titlebasic == null)
+            var titlebasics = unitOfWork.Repository<titlebasic>().Reads(id);
+            if (titlebasics == null)
             {
                 return NotFound();
             }
 
-            return Ok(titlebasic);
+            return Ok(titlebasics);
         }
+
+
 
         // PUT: api/titlebasics/5
         [ResponseType(typeof(void))]

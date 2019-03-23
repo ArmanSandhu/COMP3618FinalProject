@@ -25,6 +25,11 @@ namespace IMDbDotNetInfrastructure
         {
             return Context.Set<TEntity>().Where(predicate).FirstOrDefault();
         }
+        public IQueryable<TEntity> Reads(string predicate)
+        {
+            
+            return Context.Set<TEntity>().SqlQuery("Select * from [IMDb].[movie].[titlebasics] where tconst LIKE @p0", "%" + predicate + "%").AsQueryable();
+        }
         public IQueryable<TEntity> Reads()
         {
             return Context.Set<TEntity>().AsQueryable();

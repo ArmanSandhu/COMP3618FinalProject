@@ -11,6 +11,7 @@ namespace IMDbDotNetDomain
     {
         void Create(T entity);
         T Read(Expression<Func<T, bool>> predicate);
+        IQueryable<T> Reads(string predicate);
         IQueryable<T> Reads();
         void Update(T entity);
         void Delete(T entity);
