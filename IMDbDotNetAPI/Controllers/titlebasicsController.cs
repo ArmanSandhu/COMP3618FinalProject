@@ -16,29 +16,29 @@ namespace IMDbDotNetAPI.Controllers
 {
     public class titlebasicsController : ApiController
     {
-        private IMDbEntities1 db = new IMDbEntities1();
-        private IRepository<titlebasic> repo;
-        public titlebasicsController()
-        : this(new EFGenericRepository<titlebasic>(new IMDbEntities1()))
-        {
-        }
+        private UnitOfWork unitOfWork = new UnitOfWork(new IMDbEntities1());
+        //public titlebasicsController()
+        //: this(new EFGenericRepository<titlebasic>(new IMDbEntities1()))
+        //{
+        //}
 
-        public titlebasicsController(IRepository<titlebasic> inRepo)
-        {
-            repo = inRepo;
-        }
+        //public titlebasicsController(IRepository<titlebasic> inRepo)
+        //{
+        //    repo = inRepo;
+        //}
 
         // GET: api/titlebasics
         public IQueryable<titlebasic> Gettitlebasics()
         {
-            return repo.Reads();
+            var titlebasics = unitOfWork.Repository<titlebasic>().Reads();
+            return titlebasics;
         }
 
         // GET: api/titlebasics/5
         [ResponseType(typeof(titlebasic))]
         public IHttpActionResult Gettitlebasic(string id)
         {
-            titlebasic titlebasic = repo.Read(x => x.tconst == id);
+            titlebasic titlebasic = unitOfWork.Repository<titlebasic>().Read(x => x.tconst == id);
             if (titlebasic == null)
             {
                 return NotFound();
@@ -60,16 +60,17 @@ namespace IMDbDotNetAPI.Controllers
             {
                 return BadRequest();
             }
-            
-            repo.Update(titlebasic);
+
+            unitOfWork.Repository<titlebasic>().Update(titlebasic);
 
             try
             {
-                repo.SaveChanges();
+                unitOfWork.Repository<titlebasic>().SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!titlebasicExists(id))
+                titlebasic check = unitOfWork.Repository<titlebasic>().Read(x => x.tconst == titlebasic.tconst);
+                if (check == null)
                 {
                     return NotFound();
                 }
@@ -91,16 +92,17 @@ namespace IMDbDotNetAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            repo.Create(titlebasic);
+            unitOfWork.Repository<titlebasic>().Create(titlebasic);
             
 
             try
             {
-                repo.SaveChanges();
+                unitOfWork.Repository<titlebasic>().SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (titlebasicExists(titlebasic.tconst))
+                titlebasic check = unitOfWork.Repository<titlebasic>().Read(x => x.tconst == titlebasic.tconst);
+                if (check != null)
                 {
                     return Conflict();
                 }
@@ -117,14 +119,14 @@ namespace IMDbDotNetAPI.Controllers
         [ResponseType(typeof(titlebasic))]
         public IHttpActionResult Deletetitlebasic(string id)
         {
-            titlebasic titlebasic = db.titlebasics.Find(id);
+            titlebasic titlebasic = unitOfWork.Repository<titlebasic>().Read(x => x.tconst == id);
             if (titlebasic == null)
             {
                 return NotFound();
             }
 
-            repo.Delete(titlebasic);
-            repo.SaveChanges();
+            unitOfWork.Repository<titlebasic>().Delete(titlebasic);
+            unitOfWork.Repository<titlebasic>().SaveChanges();
 
             return Ok(titlebasic);
         }
@@ -133,14 +135,14 @@ namespace IMDbDotNetAPI.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool titlebasicExists(string id)
-        {
-            return db.titlebasics.Count(e => e.tconst == id) > 0;
-        }
+        //private bool titlebasicExists(string id)
+        //{
+        //    return db.titlebasics.Count(e => e.tconst == id) > 0;
+        //}
     }
 }
