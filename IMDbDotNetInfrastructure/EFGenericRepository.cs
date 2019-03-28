@@ -25,14 +25,14 @@ namespace IMDbDotNetInfrastructure
         {
             return Context.Set<TEntity>().Where(predicate).FirstOrDefault();
         }
-        public IQueryable<TEntity> Reads(string predicate)
+        public IQueryable<TEntity> Reads(string predicate, int startindex, int pagesize)
         {
             
-            return Context.Set<TEntity>().SqlQuery("Select * from [IMDb].[movie].[titlebasics] where tconst LIKE @p0", "%" + predicate + "%").AsQueryable();
+            return Context.Set<TEntity>().SqlQuery("Select * from [IMDb].[movie].[titlebasics] where tconst LIKE @p0", "%" + predicate + "%").Skip(startindex).Take(pagesize).AsQueryable();
         }
-        public IQueryable<TEntity> Reads()
+        public IQueryable<TEntity> Reads(int startindex, int pagesize)
         {
-            return Context.Set<TEntity>().AsQueryable();
+            return Context.Set<TEntity>().SqlQuery("Select * from [IMDb].[movie].[titlebasics]").Skip(startindex).Take(pagesize).AsQueryable();
         }
         public void Update(TEntity entity)
         {

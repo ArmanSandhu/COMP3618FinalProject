@@ -28,17 +28,22 @@ namespace IMDbDotNetAPI.Controllers
         //}
 
         // GET: api/titlebasics
-        public IQueryable<titlebasic> Gettitlebasics()
+        public IHttpActionResult Gettitlebasics(int startindex = 0, int pagesize = 100)
         {
-            var titlebasics = unitOfWork.Repository<titlebasic>().Reads();
-            return titlebasics;
+            var titlebasics = unitOfWork.Repository<titlebasic>().Reads(startindex, pagesize);
+            if (titlebasics == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(titlebasics);
         }
 
         // GET: api/titlebasics/5
         [ResponseType(typeof(titlebasic))]
-        public IHttpActionResult Gettitlebasic(string id)
+        public IHttpActionResult Gettitlebasic(string id, int startindex=0, int pagesize=100)
         {
-            var titlebasics = unitOfWork.Repository<titlebasic>().Reads(id);
+            var titlebasics = unitOfWork.Repository<titlebasic>().Reads(id, startindex, pagesize);
             if (titlebasics == null)
             {
                 return NotFound();
