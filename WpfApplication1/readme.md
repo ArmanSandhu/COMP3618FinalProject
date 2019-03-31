@@ -44,6 +44,8 @@ and the buttons should implement a Task.Run() call.  It's to dangerous for me to
 
 I'm really sorry I couldn't have been here right until the end for this becuase I know we would have been more prepared.  Good luck Wednesday and let me know how it went.
 
+Last minute edit.   I had a few minutes so I added some async capabilities to the mainpage.  I commented out the old working code in case it causes a problem.  Make sure the WebAPI is fully up and running before doing a search or you will get a server error because the connection has to exist to run the UI.
+
 Thanks
 
 Andrew
