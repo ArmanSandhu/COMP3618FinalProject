@@ -1120,6 +1120,362 @@
             <param name="coordinateSystem">The coordinate system of this geography curve.</param>
             <param name="creator">The implementation that created this instance.</param>
         </member>
+        <member name="T:Microsoft.Spatial.GeographyFactory">
+            <summary>
+            Geography Factory
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.Point(Microsoft.Spatial.CoordinateSystem,System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Create a Geography Point
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>A Geography Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.Point(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Create a Geography Point
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>A Geography Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.Point(Microsoft.Spatial.CoordinateSystem,System.Double,System.Double)">
+            <summary>
+            Create a Geography Point
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <returns>A Geography Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.Point(System.Double,System.Double)">
+            <summary>
+            Create a Geography Point
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <returns>A Geography Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.Point(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a factory with an empty Geography Point
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geography Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.Point">
+            <summary>
+            Create a factory with an empty Geography Point
+            </summary>
+            <returns>A Geography Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.MultiPoint(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a Geography MultiPoint
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geography MultiPoint Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.MultiPoint">
+            <summary>
+            Create a Geography MultiPoint
+            </summary>
+            <returns>A Geography MultiPoint Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.LineString(Microsoft.Spatial.CoordinateSystem,System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Create a Geography LineString with a starting position
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>A Geography LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.LineString(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Create a Geography LineString with a starting position
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>A Geography LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.LineString(Microsoft.Spatial.CoordinateSystem,System.Double,System.Double)">
+            <summary>
+            Create a Geography LineString with a starting position
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <returns>A Geography LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.LineString(System.Double,System.Double)">
+            <summary>
+            Create a Geography LineString with a starting position
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <returns>A Geography LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.LineString(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create an empty Geography LineString
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geography LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.LineString">
+            <summary>
+            Create an empty Geography LineString
+            </summary>
+            <returns>A Geography LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.MultiLineString(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a Geography MultiLineString
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geography MultiLineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.MultiLineString">
+            <summary>
+            Create a Geography MultiLineString
+            </summary>
+            <returns>A Geography MultiLineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.Polygon(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a Geography Polygon
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geography Polygon Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.Polygon">
+            <summary>
+            Create a Geography Polygon
+            </summary>
+            <returns>A Geography Polygon Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.MultiPolygon(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a Geography MultiPolygon
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geography MultiPolygon Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.MultiPolygon">
+            <summary>
+            Create a Geography MultiPolygon
+            </summary>
+            <returns>A Geography MultiPolygon Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.Collection(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a Geography Collection
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geography Collection Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory.Collection">
+            <summary>
+            Create a Geography Collection
+            </summary>
+            <returns>A Geography Collection Factory</returns>
+        </member>
+        <member name="T:Microsoft.Spatial.GeographyFactory`1">
+            <summary>
+            Geograph Spatial Factory
+            </summary>
+            <typeparam name="T">The target type</typeparam>
+        </member>
+        <member name="F:Microsoft.Spatial.GeographyFactory`1.provider">
+            <summary>
+            The provider of the built type
+            </summary>
+        </member>
+        <member name="F:Microsoft.Spatial.GeographyFactory`1.buildChain">
+            <summary>
+            The chain to build through
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.#ctor(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Initializes a new instance of the GeographyFactory class
+            </summary>
+            <param name="coordinateSystem">The coordinate system</param>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.op_Implicit(Microsoft.Spatial.GeographyFactory{`0})~`0">
+            <summary>
+            Using implicit cast to trigger the Finalize call
+            </summary>
+            <param name="factory">The factory</param>
+            <returns>The built instance of the target type</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.Point(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Start a new Point
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M Value</param>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.Point(System.Double,System.Double)">
+            <summary>
+            Start a new Point
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.Point">
+            <summary>
+            Start a new empty Point
+            </summary>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.LineString(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Start a new LineString
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M Value</param>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.LineString(System.Double,System.Double)">
+            <summary>
+            Start a new LineString
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.LineString">
+            <summary>
+            Start a new empty LineString
+            </summary>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.Polygon">
+            <summary>
+            Start a new Polygon
+            </summary>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.MultiPoint">
+            <summary>
+            Start a new MultiPoint
+            </summary>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.MultiLineString">
+            <summary>
+            Start a new MultiLineString
+            </summary>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.MultiPolygon">
+            <summary>
+            Start a new MultiPolygon
+            </summary>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.Collection">
+            <summary>
+            Start a new Collection
+            </summary>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.Ring(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Start a new Polygon Ring
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M Value</param>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.Ring(System.Double,System.Double)">
+            <summary>
+            Start a new Polygon Ring
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.LineTo(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Add a new point in the current line figure
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M Value</param>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.LineTo(System.Double,System.Double)">
+            <summary>
+            Add a new point in the current line figure
+            </summary>
+            <param name="latitude">The latitude value</param>
+            <param name="longitude">The longitude value</param>
+            <returns>The current instance of GeographyFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.Build">
+            <summary>
+            Finish the current geography
+            </summary>
+            <returns>The constructed instance</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.BeginGeo(Microsoft.Spatial.SpatialType)">
+            <summary>
+            Begin a new geography
+            </summary>
+            <param name="type">The spatial type</param>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.BeginFigure(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Begin drawing a figure
+            TODO: longitude and latitude should be swapped !!! per ABNF.
+            </summary>
+            <param name="latitude">X or Latitude Coordinate</param>
+            <param name="longitude">Y or Longitude Coordinate</param>
+            <param name="z">Z Coordinate</param>
+            <param name="m">M Coordinate</param>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.AddLine(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Draw a point in the specified coordinate
+            </summary>
+            <param name="latitude">X or Latitude Coordinate</param>
+            <param name="longitude">Y or Longitude Coordinate</param>
+            <param name="z">Z Coordinate</param>
+            <param name="m">M Coordinate</param>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.EndFigure">
+            <summary>
+            Ends the figure set on the current node
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.GeographyFactory`1.EndGeo">
+            <summary>
+            Ends the current spatial object
+            </summary>
+        </member>
         <member name="T:Microsoft.Spatial.GeographyFullGlobe">
             <summary>Represents the full globe of geography.</summary>
         </member>
@@ -2758,6 +3114,361 @@
             <param name="coordinateSystem">The coordinate system of this instance.</param>
             <param name="creator">The implementation that created this instance.</param>
         </member>
+        <member name="T:Microsoft.Spatial.GeometryFactory">
+            <summary>
+            Geometry Factory
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.Point(Microsoft.Spatial.CoordinateSystem,System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Create a Geometry Point
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>A Geometry Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.Point(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Create a Geometry Point
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>A Geometry Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.Point(Microsoft.Spatial.CoordinateSystem,System.Double,System.Double)">
+            <summary>
+            Create a Geometry Point
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <returns>A Geometry Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.Point(System.Double,System.Double)">
+            <summary>
+            Create a Geometry Point
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <returns>A Geometry Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.Point(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a factory with an empty Geometry Point
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geometry Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.Point">
+            <summary>
+            Create a factory with an empty Geometry Point
+            </summary>
+            <returns>A Geometry Point Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.MultiPoint(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a Geometry MultiPoint
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geometry MultiPoint Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.MultiPoint">
+            <summary>
+            Create a Geometry MultiPoint
+            </summary>
+            <returns>A Geometry MultiPoint Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.LineString(Microsoft.Spatial.CoordinateSystem,System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Create a Geometry LineString with a starting position
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>A Geometry LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.LineString(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Create a Geometry LineString with a starting position
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>A Geometry LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.LineString(Microsoft.Spatial.CoordinateSystem,System.Double,System.Double)">
+            <summary>
+            Create a Geometry LineString with a starting position
+            </summary>
+            <param name="coordinateSystem">The coordinate system</param>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <returns>A Geometry LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.LineString(System.Double,System.Double)">
+            <summary>
+            Create a Geometry LineString with a starting position
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <returns>A Geometry LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.LineString(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create an empty Geometry LineString
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geometry LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.LineString">
+            <summary>
+            Create an empty Geometry LineString
+            </summary>
+            <returns>A Geometry LineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.MultiLineString(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a Geometry MultiLineString
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geometry MultiLineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.MultiLineString">
+            <summary>
+            Create a Geometry MultiLineString
+            </summary>
+            <returns>A Geometry MultiLineString Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.Polygon(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a Geometry Polygon
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geometry Polygon Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.Polygon">
+            <summary>
+            Create a Geometry Polygon
+            </summary>
+            <returns>A Geometry Polygon Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.MultiPolygon(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a Geometry MultiPolygon
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geometry MultiPolygon Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.MultiPolygon">
+            <summary>
+            Create a Geometry MultiPolygon
+            </summary>
+            <returns>A Geometry MultiPolygon Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.Collection(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Create a Geometry Collection
+            </summary>
+            <param name="coordinateSystem">The CoordinateSystem</param>
+            <returns>A Geometry Collection Factory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory.Collection">
+            <summary>
+            Create a Geometry Collection
+            </summary>
+            <returns>A Geometry Collection Factory</returns>
+        </member>
+        <member name="T:Microsoft.Spatial.GeometryFactory`1">
+            <summary>
+            Geometry Spatial Factory
+            </summary>
+            <typeparam name="T">The target type</typeparam>
+        </member>
+        <member name="F:Microsoft.Spatial.GeometryFactory`1.provider">
+            <summary>
+            The provider of the built type
+            </summary>
+        </member>
+        <member name="F:Microsoft.Spatial.GeometryFactory`1.buildChain">
+            <summary>
+            The chain to build through
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.#ctor(Microsoft.Spatial.CoordinateSystem)">
+            <summary>
+            Initializes a new instance of the GeometryFactory class
+            </summary>
+            <param name="coordinateSystem">The coordinate system</param>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.op_Implicit(Microsoft.Spatial.GeometryFactory{`0})~`0">
+            <summary>
+            Cast a factory to the target type
+            </summary>
+            <param name="factory">The factory</param>
+            <returns>The built instance of the target type</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.Point(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Start a new Point
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.Point(System.Double,System.Double)">
+            <summary>
+            Start a new Point
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.Point">
+            <summary>
+            Start a new empty Point
+            </summary>  
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.LineString(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Start a new LineString
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.LineString(System.Double,System.Double)">
+            <summary>
+            Start a new LineString
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.LineString">
+            <summary>
+            Start a new empty LineString
+            </summary>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.Polygon">
+            <summary>
+            Start a new Polygon
+            </summary>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.MultiPoint">
+            <summary>
+            Start a new MultiPoint
+            </summary>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.MultiLineString">
+            <summary>
+            Start a new MultiLineString
+            </summary>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.MultiPolygon">
+            <summary>
+            Start a new MultiPolygon
+            </summary>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.Collection">
+            <summary>
+            Start a new Collection
+            </summary>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.Ring(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Start a new Polygon Ring
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.Ring(System.Double,System.Double)">
+            <summary>
+            Start a new Polygon Ring
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.LineTo(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Add a new point in the current line figure
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.LineTo(System.Double,System.Double)">
+            <summary>
+            Add a new point in the current line figure
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <returns>The current instance of GeometryFactory</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.Build">
+            <summary>
+            Finish the current Geometry
+            </summary>
+            <returns>The constructed instance</returns>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.BeginGeo(Microsoft.Spatial.SpatialType)">
+            <summary>
+            Begin a new geometry
+            </summary>
+            <param name="type">The spatial type</param>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.BeginFigure(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Begin drawing a figure
+            </summary>
+            <param name="x">X or Latitude Coordinate</param>
+            <param name="y">Y or Longitude Coordinate</param>
+            <param name="z">Z Coordinate</param>
+            <param name="m">M Coordinate</param>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.AddLine(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Draw a point in the specified coordinate
+            </summary>
+            <param name="x">X or Latitude Coordinate</param>
+            <param name="y">Y or Longitude Coordinate</param>
+            <param name="z">Z Coordinate</param>
+            <param name="m">M Coordinate</param>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.EndFigure">
+            <summary>
+            Ends the figure set on the current node
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.GeometryFactory`1.EndGeo">
+            <summary>
+            Ends the current spatial object
+            </summary>
+        </member>
         <member name="T:Microsoft.Spatial.GeometryHelperMethods">
             <summary>
             Helper methods for Geometry types
@@ -4232,6 +4943,125 @@
         <member name="M:Microsoft.Spatial.SpatialBuilder.Create">
             <summary>Creates an implementation of the builder.</summary>
             <returns>The created SpatialBuilder implementation.</returns>
+        </member>
+        <member name="T:Microsoft.Spatial.SpatialFactory">
+            <summary>
+            Base Spatial Factory
+            </summary>
+        </member>
+        <member name="F:Microsoft.Spatial.SpatialFactory.containers">
+            <summary>
+            Stack of Containers
+            </summary>
+        </member>
+        <member name="F:Microsoft.Spatial.SpatialFactory.figureDrawn">
+            <summary>
+            Whether a figure has been started
+            </summary>
+        </member>
+        <member name="F:Microsoft.Spatial.SpatialFactory.inRing">
+            <summary>
+            Inside a Polygon Ring
+            </summary>
+        </member>
+        <member name="F:Microsoft.Spatial.SpatialFactory.ringClosed">
+            <summary>
+            Current polygon ring has been closed
+            </summary>
+        </member>
+        <member name="F:Microsoft.Spatial.SpatialFactory.ringStartX">
+            <summary>
+            X coordinate of the current ring's starting position
+            </summary>
+        </member>
+        <member name="F:Microsoft.Spatial.SpatialFactory.ringStartY">
+            <summary>
+            Y coordinate of the current ring's starting position
+            </summary>
+        </member>
+        <member name="F:Microsoft.Spatial.SpatialFactory.ringStartZ">
+            <summary>
+            Z coordinate of the current ring's starting position
+            </summary>
+        </member>
+        <member name="F:Microsoft.Spatial.SpatialFactory.ringStartM">
+            <summary>
+            M coordinate of the current ring's starting position
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.SpatialFactory.#ctor">
+            <summary>
+            Initializes a new instance of the BaseSpatialFactory class
+            </summary>
+        </member>
+        <member name="P:Microsoft.Spatial.SpatialFactory.CurrentType">
+            <summary>
+            Gets the current container Definition
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.SpatialFactory.BeginGeo(Microsoft.Spatial.SpatialType)">
+            <summary>
+            Begin Geo
+            </summary>
+            <param name="type">The spatial type</param>
+        </member>
+        <member name="M:Microsoft.Spatial.SpatialFactory.BeginFigure(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Begin drawing a figure
+            </summary>
+            <param name="x">X or Latitude Coordinate</param>
+            <param name="y">Y or Longitude Coordinate</param>
+            <param name="z">Z Coordinate</param>
+            <param name="m">M Coordinate</param>
+        </member>
+        <member name="M:Microsoft.Spatial.SpatialFactory.AddLine(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Draw a point in the specified coordinate
+            </summary>
+            <param name="x">X or Latitude Coordinate</param>
+            <param name="y">Y or Longitude Coordinate</param>
+            <param name="z">Z Coordinate</param>
+            <param name="m">M Coordinate</param>
+        </member>
+        <member name="M:Microsoft.Spatial.SpatialFactory.EndFigure">
+            <summary>
+            Ends the figure set on the current node
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.SpatialFactory.EndGeo">
+            <summary>
+            Ends the current spatial object
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.SpatialFactory.Finish">
+            <summary>
+            Finish the current instance
+            </summary>
+        </member>
+        <member name="M:Microsoft.Spatial.SpatialFactory.AddPos(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Add a new position to the current line figure
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+        </member>
+        <member name="M:Microsoft.Spatial.SpatialFactory.StartRing(System.Double,System.Double,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Start a new polygon ring
+            </summary>
+            <param name="x">The X value</param>
+            <param name="y">The Y value</param>
+            <param name="z">The Z value</param>
+            <param name="m">The M value</param>
+        </member>
+        <member name="M:Microsoft.Spatial.SpatialFactory.CanContain(Microsoft.Spatial.SpatialType)">
+            <summary>
+            Can the current container contain the spatial type
+            </summary>
+            <param name="type">The spatial type to test</param>
+            <returns>A boolean value indicating whether the current container can contain the spatial type</returns>
         </member>
         <member name="T:Microsoft.Spatial.SpatialFormatter`2">
             <summary>Represents the base class for all Spatial Formats.</summary>

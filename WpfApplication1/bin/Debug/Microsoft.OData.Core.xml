@@ -762,6 +762,40 @@
             <param name="buffer">The buffer to verify</param>
             <returns>The initialized buffer</returns>
         </member>
+        <member name="M:Microsoft.OData.Buffers.BufferUtils.RentFromBuffer(Microsoft.OData.Buffers.ICharArrayPool,System.Int32)">
+            <summary>
+            Rents a character array from the pool.
+            </summary>
+            <param name="bufferPool">The character pool.</param>
+            <param name="minSize">The min required size of the character array.</param>
+            <returns>The character array from the pool.</returns>
+        </member>
+        <member name="M:Microsoft.OData.Buffers.BufferUtils.ReturnToBuffer(Microsoft.OData.Buffers.ICharArrayPool,System.Char[])">
+            <summary>
+            Returns a character array to the pool.
+            </summary>
+            <param name="bufferPool">The character pool.</param>
+            <param name="buffer">The character array should be returned.</param>
+        </member>
+        <member name="T:Microsoft.OData.Buffers.ICharArrayPool">
+            <summary>
+            Provides an interface for using character arrays.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.Buffers.ICharArrayPool.Rent(System.Int32)">
+            <summary>
+            Rents a character array from the pool.
+            This character array must be returned when it is no longer used.
+            </summary>
+            <param name="minSize">The min required size of the character array.</param>
+            <returns>The character array from the pool.</returns>
+        </member>
+        <member name="M:Microsoft.OData.Buffers.ICharArrayPool.Return(System.Char[])">
+            <summary>
+            Returns a character array to the pool.
+            </summary>
+            <param name="array">The character array should be returned.</param>
+        </member>
         <member name="T:Microsoft.OData.CollectionWithoutExpectedTypeValidator">
             <summary>
             Helper class to verify that all items of a collection are of the same kind and type.
@@ -887,6 +921,32 @@
             </summary>
             <param name="builder">The <see cref="T:Microsoft.OData.IContainerBuilder"/> to add the services to.</param>
             <returns>The <see cref="T:Microsoft.OData.IContainerBuilder"/> instance itself.</returns>
+        </member>
+        <member name="T:Microsoft.OData.DerivedTypeValidator">
+            <summary>
+             Helper class to verify the resource type meets the drived type contraints.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.DerivedTypeValidator.#ctor(Microsoft.OData.Edm.IEdmType,System.Collections.Generic.IEnumerable{System.String},System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="expectedType">The expected type.</param>
+            <param name="derivedTypeConstraints">The derived type contraints.</param>
+            <param name="resourceKind">The resource type, be used at error message.</param>
+            <param name="resourceName">The resource name, be used at error message.</param>
+        </member>
+        <member name="M:Microsoft.OData.DerivedTypeValidator.ValidateResourceType(Microsoft.OData.Edm.IEdmType)">
+            <summary>
+            Validates the type of a resource.
+            </summary>
+            <param name="resourceType">The type of the resource.</param>
+        </member>
+        <member name="M:Microsoft.OData.DerivedTypeValidator.ValidateResourceType(System.String)">
+            <summary>
+            Validates the full type name of a resource.
+            </summary>
+            <param name="resourceTypeName">The full type name of the resource.</param>
         </member>
         <member name="T:Microsoft.OData.DuplicatePropertyNameChecker">
             <summary>
@@ -2172,12 +2232,13 @@
             Gets the OData uri.
             </summary>
         </member>
-        <member name="M:Microsoft.OData.Evaluation.IODataMetadataContext.GetResourceMetadataBuilderForReader(Microsoft.OData.JsonLight.IODataJsonLightReaderResourceState,System.Boolean)">
+        <member name="M:Microsoft.OData.Evaluation.IODataMetadataContext.GetResourceMetadataBuilderForReader(Microsoft.OData.JsonLight.IODataJsonLightReaderResourceState,System.Boolean,System.Boolean)">
             <summary>
             Gets an entity metadata builder for the given resource.
             </summary>
             <param name="resourceState">Resource state to use as reference for information needed by the builder.</param>
             <param name="useKeyAsSegment">true if keys should go in separate segments in auto-generated URIs, false if they should go in parentheses.</param>
+            <param name="isDelta">true if the payload being read is a delta payload.</param>
             <returns>An entity metadata builder.</returns>
         </member>
         <member name="M:Microsoft.OData.Evaluation.IODataMetadataContext.GetBindableOperationsForType(Microsoft.OData.Edm.IEdmType)">
@@ -2299,12 +2360,13 @@
             Gets the OData uri.
             </summary>
         </member>
-        <member name="M:Microsoft.OData.Evaluation.ODataMetadataContext.GetResourceMetadataBuilderForReader(Microsoft.OData.JsonLight.IODataJsonLightReaderResourceState,System.Boolean)">
+        <member name="M:Microsoft.OData.Evaluation.ODataMetadataContext.GetResourceMetadataBuilderForReader(Microsoft.OData.JsonLight.IODataJsonLightReaderResourceState,System.Boolean,System.Boolean)">
             <summary>
             Gets a resource metadata builder for the given resource.
             </summary>
             <param name="resourceState">Resource state to use as reference for information needed by the builder.</param>
             <param name="useKeyAsSegment">true if keys should go in separate segments in auto-generated URIs, false if they should go in parentheses.</param>
+            <param name="isDelta">true if the payload being read is a delta payload</param>
             <returns>A resource metadata builder.</returns>
         </member>
         <member name="M:Microsoft.OData.Evaluation.ODataMetadataContext.GetBindableOperationsForType(Microsoft.OData.Edm.IEdmType)">
@@ -4465,6 +4527,16 @@
             <param name="expandedPayloadKind">The <see cref="T:Microsoft.OData.ODataPayloadKind"/> of the expanded content of this nested resource info or null for deferred links.</param>
             <returns>The type of the navigation property for this nested resource info; or null if no <paramref name="declaringStructuredType"/> was specified.</returns>
         </member>
+        <member name="M:Microsoft.OData.IWriterValidator.ValidateDerivedTypeConstraint(Microsoft.OData.Edm.IEdmStructuredType,Microsoft.OData.Edm.IEdmStructuredType,System.Collections.Generic.IEnumerable{System.String},System.String,System.String)">
+            <summary>
+            Validates the input <see cref="T:Microsoft.OData.Edm.IEdmStructuredType"/> meets the derived type constaints on the <see cref="T:Microsoft.OData.Edm.IEdmNavigationSource"/>.
+            </summary>
+            <param name="resourceType">The input resource type.</param>
+            <param name="metadataType">The type from metadata.</param>
+            <param name="derivedTypeConstraints">The derived type constraints on the nested resource.</param>
+            <param name="itemKind">The item kind.</param>
+            <param name="itemName">The item name.</param>
+        </member>
         <member name="T:Microsoft.OData.JsonLight.IODataJsonLightReaderResourceState">
             <summary>
             Interface representing a state of the JSON reader for resource.
@@ -4787,7 +4859,7 @@
             <summary>The ',' to use as the separator for the function parameters.</summary>
         </member>
         <member name="F:Microsoft.OData.JsonLight.JsonLightConstants.FunctionParameterAssignment">
-            <summary> THe "=@" to use as the separator for the function parameter in target.</summary>
+            <summary> The "=@" to use as the separator for the function parameter in target.</summary>
         </member>
         <member name="F:Microsoft.OData.JsonLight.JsonLightConstants.ServiceDocumentSingletonKindName">
             <summary> The kind name of the service document singleton element. </summary>
@@ -6233,7 +6305,7 @@
         </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightCollectionWriter.WriteCollectionItem(System.Object,Microsoft.OData.Edm.IEdmTypeReference)">
             <summary>
-            Writes a collection item (either primitive or enum)
+            Writes a collection item (either primitive, enum or resource)
             </summary>
             <param name="item">The collection item to write.</param>
             <param name="expectedItemType">The expected type of the collection item or null if no expected item type exists.</param>
@@ -8353,7 +8425,7 @@
         </member>
         <member name="F:Microsoft.OData.JsonLight.ODataJsonLightPropertyAndValueDeserializer.recursionDepth">
             <summary>
-            The current recursion depth of values read by this deserializer, measured by the number of complex, collection, JSON object and JSON array values read so far.
+            The current recursion depth of values read by this deserializer, measured by the number of resource, collection, JSON object and JSON array values read so far.
             </summary>
         </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightPropertyAndValueDeserializer.#ctor(Microsoft.OData.JsonLight.ODataJsonLightInputContext)">
@@ -8380,7 +8452,7 @@
         </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightPropertyAndValueDeserializer.ReadNonEntityValue(System.String,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.OData.PropertyAndAnnotationCollector,Microsoft.OData.CollectionWithoutExpectedTypeValidator,System.Boolean,System.Boolean,System.Boolean,System.String,System.Nullable{System.Boolean})">
              <summary>
-             Reads a primitive value, complex value or collection.
+             Reads a primitive value, enum, resource (complex or entity) value or collection.
              </summary>
              <param name="payloadTypeName">The type name read from the payload as a property annotation, or null if none is available.</param>
              <param name="expectedValueTypeReference">The expected type reference of the property value.</param>
@@ -8388,7 +8460,7 @@
              <param name="collectionValidator">The collection validator instance if no expected item type has been specified; otherwise null.</param>
              <param name="validateNullValue">true to validate null values; otherwise false.</param>
              <param name="isTopLevelPropertyValue">true if we are reading a top-level property value; otherwise false.</param>
-             <param name="insideComplexValue">true if we are reading a complex value and the reader is already positioned inside the complex value; otherwise false.</param>
+             <param name="insideResourceValue">true if we are reading a resource value and the reader is already positioned inside the resource value; otherwise false.</param>
              <param name="propertyName">The name of the property whose value is being read, if applicable (used for error reporting).</param>
              <param name="isDynamicProperty">Indicates whether the property is dynamic or unknown.</param>
              <returns>The value of the property read.</returns>
@@ -8401,6 +8473,8 @@
              Returns the value of the property read, which can be one of:
              - null
              - primitive value
+             - <see cref="T:Microsoft.OData.ODataEnumValue"/>
+             - <see cref="T:Microsoft.OData.ODataResourceValue"/>
              - <see cref="T:Microsoft.OData.ODataCollectionValue"/>
              </remarks>
         </member>
@@ -8439,7 +8513,7 @@
             </summary>
             <param name="propertyAndAnnotationCollector">The current level's PropertyAndAnnotationCollector.</param>
             <param name="propertyName">The property name.</param>
-            <param name="insideComplexValue">If inside complex value.</param>
+            <param name="insideResourceValue">If inside complex value.</param>
             <returns>The odata.type value or null.</returns>
         </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightPropertyAndValueDeserializer.InnerReadUndeclaredProperty(Microsoft.OData.JsonLight.IODataJsonLightReaderResourceState,System.String,System.Boolean)">
@@ -8691,17 +8765,50 @@
             <param name="propertyName">The name of the property whose value is being read, if applicable (used for error reporting).</param>
             <returns>The Enum value from the primitive string.</returns>
         </member>
+        <member name="M:Microsoft.OData.JsonLight.ODataJsonLightPropertyAndValueDeserializer.ReadResourceValue(System.Boolean,System.Boolean,System.String,Microsoft.OData.Edm.IEdmStructuredTypeReference,System.String,Microsoft.OData.PropertyAndAnnotationCollector)">
+            <summary>
+            Reads a resource value, <see cref="T:Microsoft.OData.ODataResourceValue"/>.
+            </summary>
+            <param name="insideJsonObjectValue">true if the reader is positioned on the first property of the value which is a JSON Object 
+                (or the second property if the first one was odata.type).</param>
+            <param name="insideResourceValue">true if we are reading a resource value and the reader is already positioned inside the resource value; otherwise false.</param>
+            <param name="propertyName">The name of the property whose value is being read, if applicable (used for error reporting).</param>
+            <param name="structuredTypeReference">The expected type reference of the value.</param>
+            <param name="payloadTypeName">The type name read from the payload.</param>
+            <param name="serializationTypeNameAnnotation">The serialization type name for the collection value (possibly null).</param>
+            <param name="duplicatePropertyNamesChecker">The duplicate property names checker to use - this is always initialized as necessary, do not clear.</param>
+            <returns>The value of the resource value.</returns>
+            <remarks>
+            Pre-Condition:  JsonNodeType.Property - the first property of the resource value object, or the second one if the first one was odata.type.
+                            JsonNodeType.EndObject - the end object of the resource value object.
+            Post-Condition: almost anything - the node after the resource value (after the EndObject)
+            </remarks>
+        </member>
+        <member name="M:Microsoft.OData.JsonLight.ODataJsonLightPropertyAndValueDeserializer.ReadResourceValue(Microsoft.OData.Edm.IEdmStructuredTypeReference,System.String,Microsoft.OData.PropertyAndAnnotationCollector)">
+            <summary>
+            Reads a resource value.
+            </summary>
+            <param name="structuredTypeReference">The expected type reference of the value.</param>
+            <param name="payloadTypeName">The type name read from the payload.</param>
+            <param name="propertyAndAnnotationCollector">The duplicate property names checker.</param>
+            <returns>The value of the resource value.</returns>
+            <remarks>
+            Pre-Condition:  JsonNodeType.Property - the first property of the resource value object, or the second one if the first one was odata.type.
+                            JsonNodeType.EndObject - the end object of the resource value object.
+            Post-Condition: almost anything - the node after the resource value (after the EndObject)
+            </remarks>
+        </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightPropertyAndValueDeserializer.ReadNonEntityValueImplementation(System.String,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.OData.PropertyAndAnnotationCollector,Microsoft.OData.CollectionWithoutExpectedTypeValidator,System.Boolean,System.Boolean,System.Boolean,System.String,System.Nullable{System.Boolean})">
              <summary>
-              Reads a primitive, complex or collection value.
+              Reads a primitive, enum, resource (complex or entity) or collection value.
              </summary>
               <param name="payloadTypeName">The type name read from the payload as a property annotation, or null if none is available.</param>
               <param name="expectedTypeReference">The expected type reference of the property value.</param>
               <param name="propertyAndAnnotationCollector">The duplicate property names checker to use - if null the method should create a new one if necessary.</param>
-             <param name="collectionValidator">The collection validator instance if no expected item type has been specified; otherwise null.</param>
+              <param name="collectionValidator">The collection validator instance if no expected item type has been specified; otherwise null.</param>
               <param name="validateNullValue">true to validate null values; otherwise false.</param>
               <param name="isTopLevelPropertyValue">true if we are reading a top-level property value; otherwise false.</param>
-              <param name="insideComplexValue">true if we are reading a complex value and the reader is already positioned inside the complex value; otherwise false.</param>
+              <param name="insideResourceValue">true if we are reading a complex value and the reader is already positioned inside the complex value; otherwise false.</param>
               <param name="propertyName">The name of the property whose value is being read, if applicable (used for error reporting).</param>
               <param name="isDynamicProperty">Indicates whether the property is dynamic or unknown.</param>
               <returns>The value of the property read.</returns>
@@ -8721,7 +8828,7 @@
             Reads the payload type name from a JSON object (if it exists).
             </summary>
             <param name="propertyAndAnnotationCollector">The duplicate property names checker to track the detected 'odata.type' annotation (if any).</param>
-            <param name="insideComplexValue">true if we are reading a complex value and the reader is already positioned inside the complex value; otherwise false.</param>
+            <param name="insideResourceValue">true if we are reading a resource value and the reader is already positioned inside the resource value; otherwise false.</param>
             <param name="payloadTypeName">The value of the odata.type annotation or null if no such annotation exists.</param>
             <returns>true if a type name was read from the payload; otherwise false.</returns>
             <remarks>
@@ -8731,15 +8838,15 @@
                             EndObject       for an empty JSON object or an object with only the 'odata.type' annotation
             </remarks>
         </member>
-        <member name="M:Microsoft.OData.JsonLight.ODataJsonLightPropertyAndValueDeserializer.ReadingComplexProperty(Microsoft.OData.PropertyAndAnnotationCollector,Microsoft.OData.Edm.IEdmTypeReference,System.String@)">
+        <member name="M:Microsoft.OData.JsonLight.ODataJsonLightPropertyAndValueDeserializer.ReadingResourceProperty(Microsoft.OData.PropertyAndAnnotationCollector,Microsoft.OData.Edm.IEdmTypeReference,System.String@)">
             <summary>
-            Detects whether we are currently reading a complex property or not. This can be determined from metadata (if we have it)
+            Detects whether we are currently reading a resource property or not. This can be determined from metadata (if we have it)
             or from the presence of the odata.type instance annotation in the payload.
             </summary>
             <param name="propertyAndAnnotationCollector">The duplicate property names checker in use for the resource content.</param>
             <param name="expectedPropertyTypeReference">The expected type reference of the property to read.</param>
-            <param name="payloadTypeName">The type name of the complex value if found in the payload; otherwise null.</param>
-            <returns>true if we are reading a complex property; otherwise false.</returns>
+            <param name="payloadTypeName">The type name of the resource value if found in the payload; otherwise null.</param>
+            <returns>true if we are reading a resource property; otherwise false.</returns>
             <remarks>
             This method does not move the reader.
             </remarks>
@@ -8863,6 +8970,14 @@
             Writes a Null property.
             </summary>
             <param name="property">The property to write out.</param>
+        </member>
+        <member name="M:Microsoft.OData.JsonLight.ODataJsonLightPropertySerializer.WriteResourceProperty(Microsoft.OData.ODataProperty,Microsoft.OData.ODataResourceValue,System.Boolean)">
+            <summary>
+            Writes a resource property.
+            </summary>
+            <param name="property">The property to write out.</param>
+            <param name="resourceValue">The resource value to be written</param>
+            <param name="isOpenPropertyType">If the property is open.</param>
         </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightPropertySerializer.WriteEnumProperty(Microsoft.OData.ODataEnumValue,System.Boolean)">
             <summary>
@@ -10671,7 +10786,7 @@
         </member>
         <member name="T:Microsoft.OData.JsonLight.ODataJsonLightResourceSerializer">
             <summary>
-            OData JsonLight serializer for entries and resource sets.
+            OData JsonLight serializer for resources and resource sets.
             </summary>
         </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightResourceSerializer.#ctor(Microsoft.OData.JsonLight.ODataJsonLightOutputContext)">
@@ -11098,6 +11213,11 @@
             The current recursion depth of values written by this serializer.
             </summary>
         </member>
+        <member name="F:Microsoft.OData.JsonLight.ODataJsonLightValueSerializer.propertySerializer">
+            <summary>
+            Property serializer.
+            </summary>
+        </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightValueSerializer.#ctor(Microsoft.OData.JsonLight.ODataJsonLightPropertySerializer,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:Microsoft.OData.JsonLight.ODataJsonLightValueSerializer"/> class.
@@ -11112,9 +11232,14 @@
             <param name="outputContext">The output context to use.</param>
             <param name="initContextUriBuilder">Whether contextUriBuilder should be initialized.</param>
         </member>
+        <member name="P:Microsoft.OData.JsonLight.ODataJsonLightValueSerializer.PropertySerializer">
+            <summary>
+            Gets the property serializer.
+            </summary>
+        </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightValueSerializer.WriteNullValue">
             <summary>
-            Writes a null value to the wire.
+            Writes a null value to the writer.
             </summary>
         </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightValueSerializer.WriteEnumValue(Microsoft.OData.ODataEnumValue,Microsoft.OData.Edm.IEdmTypeReference)">
@@ -11123,6 +11248,17 @@
             </summary>
             <param name="value">enum value</param>
             <param name="expectedTypeReference">expected type reference</param>
+        </member>
+        <member name="M:Microsoft.OData.JsonLight.ODataJsonLightValueSerializer.WriteResourceValue(Microsoft.OData.ODataResourceValue,Microsoft.OData.Edm.IEdmTypeReference,System.Boolean,Microsoft.OData.IDuplicatePropertyNameChecker)">
+            <summary>
+            Writes out the value of a resource (complex or entity).
+            </summary>
+            <param name="resourceValue">The resource (complex or entity) value to write.</param>
+            <param name="metadataTypeReference">The metadata type for the resource value.</param>
+            <param name="isOpenPropertyType">true if the type name belongs to an open (dynamic) property.</param>
+            <param name="duplicatePropertyNamesChecker">The checker instance for duplicate property names.</param>
+            <remarks>The current recursion depth should be a value, measured by the number of resource and collection values between
+            this resource value and the top-level payload, not including this one.</remarks>
         </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightValueSerializer.WriteCollectionValue(Microsoft.OData.ODataCollectionValue,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.OData.Edm.IEdmTypeReference,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
@@ -11134,7 +11270,7 @@
             <param name="isTopLevelProperty">Whether or not a top-level property is being written.</param>
             <param name="isInUri">Whether or not the value is being written for a URI.</param>
             <param name="isOpenPropertyType">True if the type name belongs to an open property.</param>
-            <remarks>The current recursion depth is measured by the number of complex and collection values between
+            <remarks>The current recursion depth is measured by the number of resource and collection values between
             this one and the top-level payload, not including this one.</remarks>
         </member>
         <member name="M:Microsoft.OData.JsonLight.ODataJsonLightValueSerializer.WritePrimitiveValue(System.Object,Microsoft.OData.Edm.IEdmTypeReference)">
@@ -12300,6 +12436,30 @@
             The next node in the list of nodes.
             </summary>
         </member>
+        <member name="T:Microsoft.OData.Json.DefaultJsonWriterFactory">
+            <summary>
+            Default JSON writer factory
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.Json.DefaultJsonWriterFactory.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.OData.Json.DefaultJsonWriterFactory" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.Json.DefaultJsonWriterFactory.#ctor(Microsoft.OData.Json.ODataStringEscapeOption)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.OData.Json.DefaultJsonWriterFactory" />.
+            </summary>
+            <param name="stringEscapeOption">The string escape option.</param>
+        </member>
+        <member name="M:Microsoft.OData.Json.DefaultJsonWriterFactory.CreateJsonWriter(System.IO.TextWriter,System.Boolean)">
+            <summary>
+            Creates a new JSON writer of <see cref="T:Microsoft.OData.Json.IJsonWriter"/>.
+            </summary>
+            <param name="textWriter">Writer to which text needs to be written.</param>
+            <param name="isIeee754Compatible">True if it is IEEE754Compatible.</param>
+            <returns>The JSON writer created.</returns>
+        </member>
         <member name="T:Microsoft.OData.Json.GeoJsonWriterAdapter">
             <summary>
             Convert writer interface from IJsonWriter to IGeoJsonWriter.
@@ -12816,12 +12976,6 @@
             too many L1 cache misses.
             </remarks>
         </member>
-        <member name="F:Microsoft.OData.Json.JsonReader.MaxCharacterCountToMove">
-            <summary>
-            Maximum number of characters to move in the buffer. If the current token size is bigger than this, we will allocate a larger buffer.
-            </summary>
-            <remarks>This threshold is copied from the XmlReader implementation.</remarks>
-        </member>
         <member name="F:Microsoft.OData.Json.JsonReader.reader">
             <summary>
             The text reader to read input characters from.
@@ -12899,6 +13053,11 @@
             </summary>
             <param name="reader">The text reader to read input characters from.</param>
             <param name="isIeee754Compatible">If it is isIeee754Compatible</param>
+        </member>
+        <member name="P:Microsoft.OData.Json.JsonReader.ArrayPool">
+            <summary>
+            Get/sets the character buffer pool.
+            </summary>
         </member>
         <member name="T:Microsoft.OData.Json.JsonReader.ScopeType">
             <summary>
@@ -13093,6 +13252,11 @@
             <returns>true if more characters are available; false if end of input was reached.</returns>
             <remarks>This may move characters in the characterBuffer, so after this is called
             all indeces to the characterBuffer are invalid except for tokenStartIndex.</remarks>
+        </member>
+        <member name="M:Microsoft.OData.Json.JsonReader.Dispose">
+            <summary>
+            Dispose the reader
+            </summary>
         </member>
         <member name="T:Microsoft.OData.Json.JsonReader.Scope">
             <summary>
@@ -13419,12 +13583,13 @@
             <param name="writer">The text writer to write the output to.</param>
             <param name="value">SByte value to be written.</param>
         </member>
-        <member name="M:Microsoft.OData.Json.JsonValueUtils.WriteValue(System.IO.TextWriter,System.String,System.Char[]@)">
+        <member name="M:Microsoft.OData.Json.JsonValueUtils.WriteValue(System.IO.TextWriter,System.String,Microsoft.OData.Json.ODataStringEscapeOption,System.Char[]@)">
             <summary>
             Write a string value.
             </summary>
             <param name="writer">The text writer to write the output to.</param>
             <param name="value">String value to be written.</param>
+            <param name="stringEscapeOption">The string escape option.</param>
             <param name="buffer">Char buffer to use for streaming data</param>
         </member>
         <member name="M:Microsoft.OData.Json.JsonValueUtils.WriteValue(System.IO.TextWriter,System.Byte[])">
@@ -13434,12 +13599,13 @@
             <param name="writer">The text writer to write the output to.</param>
             <param name="value">Byte array to be written.</param>
         </member>
-        <member name="M:Microsoft.OData.Json.JsonValueUtils.WriteEscapedJsonString(System.IO.TextWriter,System.String,System.Char[]@)">
+        <member name="M:Microsoft.OData.Json.JsonValueUtils.WriteEscapedJsonString(System.IO.TextWriter,System.String,Microsoft.OData.Json.ODataStringEscapeOption,System.Char[]@)">
             <summary>
             Returns the string value with special characters escaped.
             </summary>
             <param name="writer">The text writer to write the output to.</param>
             <param name="inputString">Input string value.</param>
+            <param name="stringEscapeOption">The string escape option.</param>
             <param name="buffer">Char buffer to use for streaming data</param>
         </member>
         <member name="M:Microsoft.OData.Json.JsonValueUtils.JsonTicksToDateTimeTicks(System.Int64)">
@@ -13457,12 +13623,13 @@
             <param name="inputString">string that might contain special characters.</param>
             <returns>A string with special characters escaped properly.</returns>
         </member>
-        <member name="M:Microsoft.OData.Json.JsonValueUtils.CheckIfStringHasSpecialChars(System.String,System.Int32@)">
+        <member name="M:Microsoft.OData.Json.JsonValueUtils.CheckIfStringHasSpecialChars(System.String,Microsoft.OData.Json.ODataStringEscapeOption,System.Int32@)">
             <summary>
-            Checks if the string contains special char and returns the first index 
+            Checks if the string contains special char and returns the first index
             of special char if present.
             </summary>
             <param name="inputString">string that might contain special characters.</param>
+            <param name="stringEscapeOption">The string escape option.</param>
             <param name="firstIndex">first index of the special char</param>
             <returns>A value indicating whether the string contains special character</returns>
         </member>
@@ -13513,6 +13680,11 @@
             otherwise keep number without quotes.
             </summary>
         </member>
+        <member name="F:Microsoft.OData.Json.JsonWriter.stringEscapeOption">
+            <summary>
+            Gets or sets a value indicating how to escape the string when writing JSON string.
+            </summary>
+        </member>
         <member name="F:Microsoft.OData.Json.JsonWriter.buffer">
             <summary>
             The buffer to help with streaming responses.
@@ -13523,7 +13695,15 @@
             Creates a new instance of Json writer.
             </summary>
             <param name="writer">Writer to which text needs to be written.</param>
-            <param name="isIeee754Compatible">if it is IEEE754Compatible</param>
+            <param name="isIeee754Compatible">if it is IEEE754Compatible.</param>
+        </member>
+        <member name="M:Microsoft.OData.Json.JsonWriter.#ctor(System.IO.TextWriter,System.Boolean,Microsoft.OData.Json.ODataStringEscapeOption)">
+            <summary>
+            Creates a new instance of Json writer.
+            </summary>
+            <param name="writer">Writer to which text needs to be written.</param>
+            <param name="isIeee754Compatible">if it is IEEE754Compatible.</param>
+            <param name="stringEscapeOption">Specifies how to escape string.</param>
         </member>
         <member name="T:Microsoft.OData.Json.JsonWriter.ScopeType">
             <summary>
@@ -13989,6 +14169,21 @@
             <param name="recursionDepth">The number of times this method has been called recursively.</param>
             <param name="maxInnerErrorDepth">The maximum number of nested inner errors to allow.</param>
         </member>
+        <member name="T:Microsoft.OData.Json.ODataStringEscapeOption">
+            <summary>
+            Enum type to specify how to escape string value when writing JSON text.
+            </summary>
+        </member>
+        <member name="F:Microsoft.OData.Json.ODataStringEscapeOption.EscapeNonAscii">
+            <summary>
+            All non-ASCII and control characters (e.g. newline) are escaped.
+            </summary>
+        </member>
+        <member name="F:Microsoft.OData.Json.ODataStringEscapeOption.EscapeOnlyControls">
+            <summary>
+            Only control characters (e.g. newline) are escaped.
+            </summary>
+        </member>
         <member name="T:Microsoft.OData.Json.TextWriterWrapper">
             <summary>
             Writes text non indented
@@ -14445,11 +14640,6 @@
         <member name="T:Microsoft.OData.MediaTypeUtils.MatchInfoConcurrentCache">
             <summary>
             Class representing the concurrent cache for match info.
-            </summary>
-        </member>
-        <member name="F:Microsoft.OData.MediaTypeUtils.MatchInfoConcurrentCache.maxSize">
-            <summary>
-            Max size of the elements that the cache can contain.
             </summary>
         </member>
         <member name="F:Microsoft.OData.MediaTypeUtils.MatchInfoConcurrentCache.dict">
@@ -19813,19 +20003,6 @@
             <param name="serializationInfo">The serialization info instance to validate.</param>
             <returns>The <paramref name="serializationInfo"/> instance.</returns>
         </member>
-        <member name="T:Microsoft.OData.ODataCollectionValue">
-            <summary>
-            OData representation of a Collection.
-            </summary>
-        </member>
-        <member name="P:Microsoft.OData.ODataCollectionValue.TypeName">
-            <summary>Gets or sets the type of the collection value.</summary>
-            <returns>The type of the collection value.</returns>
-        </member>
-        <member name="P:Microsoft.OData.ODataCollectionValue.Items">
-            <summary>Gets or sets the items in the bag value.</summary>
-            <returns>The items in the bag value.</returns>
-        </member>
         <member name="T:Microsoft.OData.ODataCollectionWriter">
             <summary>
             Base class for OData collection writers.
@@ -20278,7 +20455,7 @@
         <member name="F:Microsoft.OData.ODataConstants.DefaultMaxPartsPerBatch">
             <summary>The default maximum number of top-level operations and changesets per batch payload.</summary>
         </member>
-        <member name="F:Microsoft.OData.ODataConstants.DefulatMaxOperationsPerChangeset">
+        <member name="F:Microsoft.OData.ODataConstants.DefaultMaxOperationsPerChangeset">
             <summary>The default maximum number of operations per changeset.</summary>
         </member>
         <member name="F:Microsoft.OData.ODataConstants.UriSegmentSeparator">
@@ -20582,19 +20759,17 @@
             <param name="model">The model used to handle unsigned int conversions.</param>
             <returns>The type name for the context URI.</returns>
         </member>
-        <member name="M:Microsoft.OData.ODataContextUrlInfo.CreateSelectExpandContextUriSegment(Microsoft.OData.UriParser.SelectExpandClause,Microsoft.OData.ODataVersion)">
+        <member name="M:Microsoft.OData.ODataContextUrlInfo.CreateSelectExpandContextUriSegment(Microsoft.OData.UriParser.SelectExpandClause)">
             <summary>
             Build the expand clause for a given level in the selectExpandClause
             </summary>
             <param name="selectExpandClause">the current level select expand clause</param>
-            <param name="version">OData Version of the response</param>
             <returns>the select and expand segment for context url in this level.</returns>
         </member>
-        <member name="M:Microsoft.OData.ODataContextUrlInfo.ProcessSubExpand(System.String,System.String,Microsoft.OData.ODataVersion)">
+        <member name="M:Microsoft.OData.ODataContextUrlInfo.ProcessSubExpand(System.String,System.String)">
             <summary>Process sub expand node, contact with subexpand result</summary>
             <param name="expandNode">The current expanded node.</param>
             <param name="subExpand">Generated sub expand node.</param>
-            <param name="version">OData Version of the generated response.</param>
             <returns>The generated expand string.</returns>
         </member>
         <member name="M:Microsoft.OData.ODataContextUrlInfo.CombineSelectAndExpandResult(System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String})">
@@ -21177,26 +21352,6 @@
             <summary>
             Class representing a entity set in a service document.
             </summary>
-        </member>
-        <member name="T:Microsoft.OData.ODataEnumValue">
-            <summary>
-            OData enum value
-            </summary>
-        </member>
-        <member name="M:Microsoft.OData.ODataEnumValue.#ctor(System.String)">
-            <summary>Constructor</summary>
-            <param name="value">The backing type, can be "3" or "White" or "Black,Yellow,Cyan".</param>
-        </member>
-        <member name="M:Microsoft.OData.ODataEnumValue.#ctor(System.String,System.String)">
-            <summary>Constructor</summary>
-            <param name="value">The backing type, can be "3" or "White" or "Black,Yellow,Cyan".</param>
-            <param name="typeName">The type name in edm model.</param>
-        </member>
-        <member name="P:Microsoft.OData.ODataEnumValue.Value">
-            <summary>Get backing type value, can be "3" or "White" or "Black,Yellow,Cyan".</summary>
-        </member>
-        <member name="P:Microsoft.OData.ODataEnumValue.TypeName">
-            <summary>Get the type name in edm model.</summary>
         </member>
         <member name="T:Microsoft.OData.ODataError">
             <summary>
@@ -23035,6 +23190,12 @@
             <summary>Gets or sets the OData protocol version to be used for reading payloads. </summary>
             <returns>The OData protocol version to be used for reading payloads.</returns>
         </member>
+        <member name="P:Microsoft.OData.ODataMessageReaderSettings.ArrayPool">
+            <summary>
+            Get/sets the character buffer pool. This pool is used for non-container scenario.
+            If the service container has an array pool, that pool will be used.
+            </summary>
+        </member>
         <member name="P:Microsoft.OData.ODataMessageReaderSettings.Validations">
             <summary>
             Gets or sets validation settings.
@@ -24143,17 +24304,6 @@
             <summary>
             Gets or sets the value that indicates the nested resource is undeclared or not.
             </summary>
-        </member>
-        <member name="T:Microsoft.OData.ODataNullValue">
-            <summary>
-            Represents a null property value.
-            </summary>
-        </member>
-        <member name="P:Microsoft.OData.ODataNullValue.IsNullValue">
-            <summary>
-            Indicates whether the given value is a null value.
-            </summary>
-            <value> true, since this object always represents a null value. </value>
         </member>
         <member name="T:Microsoft.OData.ODataNullValueBehaviorKind">
             <summary> Represents the behavior of readers when reading property with null value. </summary>
@@ -26072,24 +26222,6 @@
             Sets the "Prefer" or the "Preference-Applied" header to the underlying message.
             </summary>
         </member>
-        <member name="T:Microsoft.OData.ODataPrimitiveValue">
-            <summary>
-            Represents a primitive property value.
-            </summary>
-        </member>
-        <member name="M:Microsoft.OData.ODataPrimitiveValue.#ctor(System.Object)">
-            <summary>
-            Creates a new primitive value from the given CLR value.
-            </summary>
-            <param name="value">The primitive to wrap.</param>
-            <remarks>The primitive value should not be an instance of ODataValue.</remarks>
-        </member>
-        <member name="P:Microsoft.OData.ODataPrimitiveValue.Value">
-            <summary>
-            Gets the underlying CLR object wrapped by this <see cref="T:Microsoft.OData.ODataPrimitiveValue"/>.
-            </summary>
-            <value> The underlying primitive CLR value. </value>
-        </member>
         <member name="T:Microsoft.OData.ODataProperty">
             <summary>
             Represents a single property of a resource.
@@ -26806,6 +26938,11 @@
             resource sets only when metadata is available and in these cases we already validate the
             types of the entries in nested resource sets.</remarks>
         </member>
+        <member name="P:Microsoft.OData.ODataReaderCore.CurrentDerivedTypeValidator">
+            <summary>
+            Validator to validate the derived type constraint.
+            </summary>
+        </member>
         <member name="M:Microsoft.OData.ODataReaderCore.Read">
             <summary>
             Reads the next <see cref="T:Microsoft.OData.ODataItem"/> from the message payload.
@@ -27066,6 +27203,11 @@
         <member name="P:Microsoft.OData.ODataReaderCore.Scope.ResourceTypeValidator">
             <summary>
             Validator for resource type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataReaderCore.Scope.DerivedTypeValidator">
+            <summary>
+            Gets or sets the derived type constraint validator.
             </summary>
         </member>
         <member name="T:Microsoft.OData.ODataReaderCoreAsync">
@@ -28168,68 +28310,6 @@
             Class representing a singleton in a service document.
             </summary>
         </member>
-        <member name="T:Microsoft.OData.ODataStreamReferenceValue">
-            <summary>
-            Represents a media resource.
-            </summary>
-        </member>
-        <member name="F:Microsoft.OData.ODataStreamReferenceValue.metadataBuilder">
-            <summary>the metadata builder for this OData resource.</summary>
-        </member>
-        <member name="F:Microsoft.OData.ODataStreamReferenceValue.edmPropertyName">
-            <summary>The name of the named stream this value belongs to; null for the default media resource.</summary>
-        </member>
-        <member name="F:Microsoft.OData.ODataStreamReferenceValue.editLink">
-            <summary>Edit link for media resource.</summary>
-        </member>
-        <member name="F:Microsoft.OData.ODataStreamReferenceValue.computedEditLink">
-            <summary>Edit link for media resource.</summary>
-        </member>
-        <member name="F:Microsoft.OData.ODataStreamReferenceValue.readLink">
-            <summary>Read link for media resource.</summary>
-        </member>
-        <member name="F:Microsoft.OData.ODataStreamReferenceValue.computedReadLink">
-            <summary>Read link for media resource.</summary>
-        </member>
-        <member name="P:Microsoft.OData.ODataStreamReferenceValue.EditLink">
-            <summary>Gets or sets the edit link for media resource.</summary>
-            <returns>The edit link for media resource.</returns>
-        </member>
-        <member name="P:Microsoft.OData.ODataStreamReferenceValue.ReadLink">
-            <summary>Gets or sets the read link for media resource.</summary>
-            <returns>The read link for media resource.</returns>
-        </member>
-        <member name="P:Microsoft.OData.ODataStreamReferenceValue.ContentType">
-            <summary>Gets or sets the content media type.</summary>
-            <returns>The content media type.</returns>
-        </member>
-        <member name="P:Microsoft.OData.ODataStreamReferenceValue.ETag">
-            <summary>Gets or sets the media resource ETag.</summary>
-            <returns>The media resource ETag.</returns>
-        </member>
-        <member name="P:Microsoft.OData.ODataStreamReferenceValue.HasNonComputedEditLink">
-            <summary>
-            true if an edit link was provided by the user or seen on the wire, false otherwise.
-            </summary>
-        </member>
-        <member name="P:Microsoft.OData.ODataStreamReferenceValue.HasNonComputedReadLink">
-            <summary>
-            true if a read link was provided by the user or seen on the wire, false otherwise.
-            </summary>
-        </member>
-        <member name="M:Microsoft.OData.ODataStreamReferenceValue.SetMetadataBuilder(Microsoft.OData.Evaluation.ODataResourceMetadataBuilder,System.String)">
-            <summary>
-            Sets the metadata builder for this stream reference value.
-            </summary>
-            <param name="builder">The metadata builder used to compute values from model annotations.</param>
-            <param name="propertyName">The property name for the named stream; null for the default media resource.</param>
-        </member>
-        <member name="M:Microsoft.OData.ODataStreamReferenceValue.GetMetadataBuilder">
-            <summary>
-            Gets the metadata builder for this stream reference value.
-            </summary>
-            <returns>The metadata builder used to compute links.</returns>
-        </member>
         <member name="T:Microsoft.OData.ODataTypeAnnotation">
             <summary>
             Annotation which stores the EDM type information of a value.
@@ -28271,22 +28351,6 @@
             <summary>
             This property is redundant info about TypeName but to improve reader performance.
             </summary>
-        </member>
-        <member name="T:Microsoft.OData.ODataUntypedValue">
-            <summary>
-            OData representation of an untyped value.
-            </summary>
-        </member>
-        <member name="P:Microsoft.OData.ODataUntypedValue.RawValue">
-            <summary>Gets or sets the raw untyped value.</summary>
-            <returns>The raw untyped value.</returns>
-            <remarks>
-            The caller of the setter is responsible for formatting the value for the
-            data transmission protocol it will be used in.
-            For instance, if the protocol is JSON, the caller must format this value as JSON.
-            If the protocol is Atom, the caller must format this value as XML.
-            This libarary will not perform any formatting.
-            </remarks>
         </member>
         <member name="T:Microsoft.OData.ODataUtils">
             <summary>
@@ -28464,37 +28528,6 @@
             </summary>
             <param name="type">Type reference.</param>
             <returns>This reference refers to a nullable type.</returns>
-        </member>
-        <member name="T:Microsoft.OData.ODataValue">
-            <summary>
-            Represents the value of a property.
-            </summary>
-        </member>
-        <member name="P:Microsoft.OData.ODataValue.IsNullValue">
-            <summary>
-            Indicates whether the given value is a null value.
-            </summary>
-            <value> true if the value is an ODataNullValue, false otherwise. </value>
-        </member>
-        <member name="T:Microsoft.OData.ODataValueUtils">
-            <summary>
-            Class with utility methods to deal with values in ODataLib.
-            </summary>
-        </member>
-        <member name="M:Microsoft.OData.ODataValueUtils.ToODataValue(System.Object)">
-            <summary>
-            Converts an object to an ODataValue. If the given object is already an ODataValue (such as an ODataCollectionValue, etc.), the original object will be returned.
-            </summary>
-            <param name="objectToConvert">The object to convert to an ODataValue</param>
-            <returns>The given object as an ODataValue.</returns>
-        </member>
-        <member name="M:Microsoft.OData.ODataValueUtils.FromODataValue(Microsoft.OData.ODataValue)">
-            <summary>
-            Converts an ODataValue to the old style of representing values, where null values are null and primitive values are just the direct primitive (no longer wrapped by ODataPrimitiveValue).
-            All other value types, such as ODataCollectionValue are returned unchanged.
-            </summary>
-            <param name="odataValue">The value to convert.</param>
-            <returns>The value behind the given ODataValue.</returns>
         </member>
         <member name="T:Microsoft.OData.ODataVersion">
             <summary>
@@ -29546,7 +29579,7 @@
             </summary>
             <param name="newState">The new writer state to transition into.</param>
         </member>
-        <member name="M:Microsoft.OData.ODataWriterCore.PushScope(Microsoft.OData.ODataWriterCore.WriterState,Microsoft.OData.ODataItem,Microsoft.OData.Edm.IEdmNavigationSource,Microsoft.OData.Edm.IEdmStructuredType,System.Boolean,Microsoft.OData.SelectedPropertiesNode,Microsoft.OData.ODataUri)">
+        <member name="M:Microsoft.OData.ODataWriterCore.PushScope(Microsoft.OData.ODataWriterCore.WriterState,Microsoft.OData.ODataItem,Microsoft.OData.Edm.IEdmNavigationSource,Microsoft.OData.Edm.IEdmStructuredType,System.Boolean,Microsoft.OData.SelectedPropertiesNode,Microsoft.OData.ODataUri,System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             Create a new writer scope.
             </summary>
@@ -29557,6 +29590,7 @@
             <param name="skipWriting">true if the content of the scope to create should not be written.</param>
             <param name="selectedProperties">The selected properties of this scope.</param>
             <param name="odataUri">The OdataUri info of this scope.</param>
+            <param name="derivedTypeConstraints">The derived type constraints.</param>
         </member>
         <member name="M:Microsoft.OData.ODataWriterCore.IsUndeclared(Microsoft.OData.ODataNestedResourceInfo)">
             <summary>
@@ -29685,6 +29719,9 @@
             <summary>
             Set to true if the content of this scope should not be written.
             </summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataWriterCore.Scope.DerivedTypeConstraints">
+            <summary>Gets or sets the derived type constraints for the current scope.</summary>
         </member>
         <member name="T:Microsoft.OData.ODataWriterCore.ResourceSetBaseScope">
             <summary>
@@ -30130,6 +30167,20 @@
             <param name="annotationName">Name of the annotation.</param>
             <param name="annotationValue">Value of the annotation.</param>
         </member>
+        <member name="M:Microsoft.OData.PropertyAndAnnotationCollector.SetDerivedTypeValidator(System.String,Microsoft.OData.DerivedTypeValidator)">
+            <summary>
+            Set the derived type validator for a property.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <param name="validator">Derived type validator.</param>
+        </member>
+        <member name="M:Microsoft.OData.PropertyAndAnnotationCollector.GetDerivedTypeValidator(System.String)">
+            <summary>
+            Gets the derived type validator for a property.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <returns>Null or the derived type validator.</returns>
+        </member>
         <member name="M:Microsoft.OData.PropertyAndAnnotationCollector.GetODataPropertyAnnotations(System.String)">
             <summary>
             Returns OData annotations for a property.
@@ -30212,6 +30263,11 @@
         <member name="P:Microsoft.OData.PropertyAndAnnotationCollector.PropertyData.Processed">
             <summary>
             Denotes whether the property has been marked as processed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.PropertyAndAnnotationCollector.PropertyData.DerivedTypeValidator">
+            <summary>
+            The derived type validator for property.
             </summary>
         </member>
         <member name="T:Microsoft.OData.PropertyCache">
@@ -31004,6 +31060,17 @@
         <member name="F:Microsoft.OData.SelectedPropertiesNode.selectionType">
             <summary>The type of the current node.</summary>
         </member>
+        <member name="F:Microsoft.OData.SelectedPropertiesNode.isExpandedNavigationProperty">
+            <summary>
+            Boolean flag indicating whether this is an expanded navigation property.
+            </summary>
+        </member>
+        <member name="F:Microsoft.OData.SelectedPropertiesNode.structuredType">
+            <summary>The Edm structured type of the current node.</summary>
+        </member>
+        <member name="F:Microsoft.OData.SelectedPropertiesNode.edmModel">
+            <summary>The Edm model.</summary>
+        </member>
         <member name="F:Microsoft.OData.SelectedPropertiesNode.PathSeparator">
             <summary>The separator character used to separate property names in a path.</summary>
         </member>
@@ -31025,19 +31092,27 @@
         <member name="F:Microsoft.OData.SelectedPropertiesNode.nodeName">
             <summary>Current node name, null if root node.</summary>
         </member>
-        <member name="M:Microsoft.OData.SelectedPropertiesNode.#ctor(System.String)">
+        <member name="M:Microsoft.OData.SelectedPropertiesNode.#ctor(System.String,Microsoft.OData.Edm.IEdmStructuredType,Microsoft.OData.Edm.IEdmModel)">
             <summary>
             Constructor.
-            TODO: Update SelectedPropertiesNode class to adapt to V4, get rid of old style constructor
             </summary>
             <param name="selectClause">The string representation of the selected property hierarchy using
             the same format as in the $select query option.</param>
+            <param name="structuredType">The Edm structured type of this node.</param>
+            <param name="edmModel">The Edm model.</param>
         </member>
         <member name="M:Microsoft.OData.SelectedPropertiesNode.#ctor(Microsoft.OData.SelectedPropertiesNode.SelectionType)">
             <summary>
             Prevents a default instance of the <see cref="T:Microsoft.OData.SelectedPropertiesNode"/> class from being created.
             </summary>
             <param name="selectionType">Type of the selection.</param>
+        </member>
+        <member name="M:Microsoft.OData.SelectedPropertiesNode.#ctor(Microsoft.OData.SelectedPropertiesNode.SelectionType,System.Boolean)">
+            <summary>
+            Prevents a default instance of the <see cref="T:Microsoft.OData.SelectedPropertiesNode"/> class from being created.
+            </summary>
+            <param name="selectionType">Type of the selection.</param>
+            <param name="isExpandedNavigationProperty">Boolean flag indicating whether this is an expanded navigation property.</param>
         </member>
         <member name="T:Microsoft.OData.SelectedPropertiesNode.SelectionType">
             <summary>
@@ -31052,7 +31127,6 @@
         <member name="F:Microsoft.OData.SelectedPropertiesNode.SelectionType.EntireSubtree">
             <summary>
             Represents the case where an entire subtree is selected.
-            TODO: Update SelectedPropertiesNode class to adapt to V4, fix EntireSubtree logic for V4
             </summary>
         </member>
         <member name="F:Microsoft.OData.SelectedPropertiesNode.SelectionType.PartialSubtree">
@@ -31060,19 +31134,27 @@
             The normal case where a partial subtree has been selected.
             </summary>
         </member>
+        <member name="M:Microsoft.OData.SelectedPropertiesNode.Create(System.String,Microsoft.OData.Edm.IEdmStructuredType,Microsoft.OData.Edm.IEdmModel)">
+            <summary>
+            Creates a node from the given raw $select query option value, structural type information and service model.
+            </summary>
+            <param name="selectQueryOption">The value of the $select query option.</param>
+            <param name="structuredType">The structured type of this node.</param>
+            <param name="edmModel">The Edm model.</param>
+            <returns>A tree representation of the selected properties specified in the query option.</returns>
+        </member>
         <member name="M:Microsoft.OData.SelectedPropertiesNode.Create(System.String)">
             <summary>
-            Creates a node from the given raw $select query option value.
+            Creates a node from the given raw $select query option value without structural type information.
             </summary>
             <param name="selectQueryOption">The value of the $select query option.</param>
             <returns>A tree representation of the selected properties specified in the query option.</returns>
         </member>
-        <member name="M:Microsoft.OData.SelectedPropertiesNode.Create(Microsoft.OData.UriParser.SelectExpandClause,Microsoft.OData.ODataVersion)">
+        <member name="M:Microsoft.OData.SelectedPropertiesNode.Create(Microsoft.OData.UriParser.SelectExpandClause)">
             <summary>
             Creates a node from the given SelectExpandClause.
             </summary>
             <param name="selectExpandClause">The value of the $select query option.</param>
-            <param name="version">OData version</param>
             <returns>A tree representation of the selected properties specified in the query option.</returns>
         </member>
         <member name="M:Microsoft.OData.SelectedPropertiesNode.CombineNodes(Microsoft.OData.SelectedPropertiesNode,Microsoft.OData.SelectedPropertiesNode)">
@@ -31117,6 +31199,12 @@
               <c>true</c> if the operation is selected; otherwise, <c>false</c>.
             </returns>
         </member>
+        <member name="M:Microsoft.OData.SelectedPropertiesNode.IsEntireSubtree">
+            <summary>
+            Returns whether the selection type of this node is <code>SelectionType.EntireSubtree</code>.
+            </summary>
+            <return><c>true</c> if entire subtree is selected; otherwise <c>false</c>.</return>
+        </member>
         <member name="M:Microsoft.OData.SelectedPropertiesNode.GetBaseTypesAndSelf(Microsoft.OData.Edm.IEdmStructuredType)">
             <summary>
             Gets an enumerable containing the given type and all of its base/ancestor types.
@@ -31145,6 +31233,13 @@
             <param name="mustBeNamespaceQualified">Whether the operations must be namespace qualified.</param>
             <returns>The identifiers to look for in the $select string when determining if this action is selected.</returns>
         </member>
+        <member name="M:Microsoft.OData.SelectedPropertiesNode.IsNavigationPropertyToken(System.String)">
+            <summary>
+            Checks the specified model and structuredType and see whether the token can be resolved to a navigation property name.
+            </summary>
+            <param name="token">The token to check.</param>
+            <returns>true if token can be resolved to a navigation property; false otherwise.</returns>
+        </member>
         <member name="M:Microsoft.OData.SelectedPropertiesNode.GetMatchingTypeSegments(Microsoft.OData.Edm.IEdmStructuredType)">
             <summary>
             Gets the matching type segments for the given type based on this node's children.
@@ -31159,12 +31254,13 @@
             <param name="segments">The segments of the select path.</param>
             <param name="index">The index of the segment to parse.</param>
         </member>
-        <member name="M:Microsoft.OData.SelectedPropertiesNode.EnsureChildAnnotation(System.String)">
+        <member name="M:Microsoft.OData.SelectedPropertiesNode.EnsureChildNode(System.String,System.Boolean)">
             <summary>
-            Ensures that a child annotation for the specified segment name already exists; if not creates one.
+            Ensures that a child node for the specified segment name already exists; if not creates one.
             </summary>
-            <param name="segmentName">The segment name to get the child annotation for.</param>
-            <returns>The existing or newly created child annotation for the <paramref name="segmentName"/>.</returns>
+            <param name="segmentName">The segment name to get the child node for.</param>
+            <param name="isExpandedNavigationProperty">Boolean flag indicating whether this is an expanded navigation property.</param>
+            <returns>The existing or newly created child node for the <paramref name="segmentName"/>.</returns>
         </member>
         <member name="M:Microsoft.OData.SelectedPropertiesNode.IsOperationSelectedAtThisLevel(Microsoft.OData.Edm.IEdmOperation,System.Boolean)">
             <summary>
@@ -31176,23 +31272,21 @@
               <c>true</c> if the operation is selected; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:Microsoft.OData.SelectedPropertiesNode.CreateFromSelectExpandClause(Microsoft.OData.UriParser.SelectExpandClause,Microsoft.OData.ODataVersion)">
+        <member name="M:Microsoft.OData.SelectedPropertiesNode.CreateFromSelectExpandClause(Microsoft.OData.UriParser.SelectExpandClause)">
             <summary>Create SelectedPropertiesNode from SelectExpandClause.</summary>
             <param name="selectExpandClause">The SelectExpandClause representing $select and $expand clauses.</param>
-            <param name="version">OData version</param>
             <returns>SelectedPropertiesNode generated using <paramref name="selectExpandClause"/></returns>
         </member>
-        <member name="M:Microsoft.OData.SelectedPropertiesNode.ProcessSubExpand(System.String,Microsoft.OData.SelectedPropertiesNode,Microsoft.OData.ODataVersion)">
+        <member name="M:Microsoft.OData.SelectedPropertiesNode.ProcessSubExpand(System.String,Microsoft.OData.SelectedPropertiesNode)">
             <summary>Process sub expand node, set name for the node.</summary>
             <param name="nodeName">Node name for the subexpandnode.</param>
             <param name="subExpandNode">Generated sub expand node.</param>
-            <param name="version">OData version.</param>
             <returns>The sub expanded node passed in.</returns>
         </member>
-        <member name="M:Microsoft.OData.SelectedPropertiesNode.CombineSelectAndExpandResult(System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{Microsoft.OData.SelectedPropertiesNode})">
+        <member name="M:Microsoft.OData.SelectedPropertiesNode.CombineSelectAndExpandResult(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{Microsoft.OData.SelectedPropertiesNode})">
             <summary>Create SelectedPropertiesNode using selected name list and expand node list.</summary>
-            <param name="selectList">A list of selected item names.</param>
-            <param name="expandList">A list of sub expanded nodes.</param>
+            <param name="selectList">An enumerable of selected item names.</param>
+            <param name="expandList">An enumerable of sub expanded nodes.</param>
             <returns>The generated SelectedPropertiesNode.</returns>
         </member>
         <member name="T:Microsoft.OData.ServiceLifetime">
@@ -31682,6 +31776,18 @@
             <param name="isOpenPropertyType">True if the type name belongs to an open property.</param>
             <returns>A type for the <paramref name="enumValue"/> or null if no type name is specified and no metadata is available.</returns>
         </member>
+        <member name="M:Microsoft.OData.TypeNameOracle.ResolveAndValidateTypeForResourceValue(Microsoft.OData.Edm.IEdmModel,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.OData.ODataResourceValue,System.Boolean,Microsoft.OData.IWriterValidator)">
+            <summary>
+            Resolve a type name against the provided <paramref name="model"/>. If not payload type name is specified,
+            derive the type from the model type (if available).
+            </summary>
+            <param name="model">The model to use.</param>
+            <param name="typeReferenceFromMetadata">The type inferred from the model or null if the model is not a user model.</param>
+            <param name="resourceValue">The value in question to resolve the type for.</param>
+            <param name="isOpenPropertyType">True if the type name belongs to an open (dynamic) property.</param>
+            <param name="writerValidator">The writer validator to use for validation.</param>
+            <returns>A type for the <paramref name="resourceValue"/> or null if no type name is specified and no metadata is available.</returns>
+        </member>
         <member name="M:Microsoft.OData.TypeNameOracle.ResolveAndValidateTypeForCollectionValue(Microsoft.OData.Edm.IEdmModel,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.OData.ODataCollectionValue,System.Boolean,Microsoft.OData.IWriterValidator)">
             <summary>
             Resolve a type name against the provided <paramref name="model"/>. If not payload type name is specified,
@@ -32144,6 +32250,27 @@
             <param name="visitor">An implementation of the visitor interface.</param>
             <returns>An object whose type is determined by the type parameter of the visitor.</returns>
         </member>
+        <member name="T:Microsoft.OData.UriParser.Aggregation.ExpandTransformationNode">
+            <summary>
+            Node representing a expand transformation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.Aggregation.ExpandTransformationNode.#ctor(Microsoft.OData.UriParser.SelectExpandClause)">
+            <summary>
+            Create a ExpandTransformationNode.
+            </summary>
+            <param name="expandClause">A <see cref="T:Microsoft.OData.UriParser.SelectExpandClause"/> representing the metadata bound expand expression.</param>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.Aggregation.ExpandTransformationNode.ExpandClause">
+            <summary>
+            Gets the <see cref="T:Microsoft.OData.UriParser.SelectExpandClause"/> representing the metadata bound expand expression.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.Aggregation.ExpandTransformationNode.Kind">
+            <summary>
+            Gets the kind of the transformation node.
+            </summary>
+        </member>
         <member name="T:Microsoft.OData.UriParser.Aggregation.FilterTransformationNode">
             <summary>
             Node representing a filter transformation.
@@ -32306,6 +32433,11 @@
         <member name="F:Microsoft.OData.UriParser.Aggregation.TransformationNodeKind.Compute">
             <summary>
             A Compute expressions
+            </summary>
+        </member>
+        <member name="F:Microsoft.OData.UriParser.Aggregation.TransformationNodeKind.Expand">
+            <summary>
+            A Expand expressions
             </summary>
         </member>
         <member name="T:Microsoft.OData.UriParser.BinaryOperatorBinder">
@@ -32562,13 +32694,14 @@
             Enum binder
             </summary>
         </member>
-        <member name="M:Microsoft.OData.UriParser.EnumBinder.TryBindDottedIdentifierAsEnum(Microsoft.OData.UriParser.DottedIdentifierToken,Microsoft.OData.UriParser.SingleValueNode,Microsoft.OData.UriParser.BindingState,Microsoft.OData.UriParser.QueryNode@)">
+        <member name="M:Microsoft.OData.UriParser.EnumBinder.TryBindDottedIdentifierAsEnum(Microsoft.OData.UriParser.DottedIdentifierToken,Microsoft.OData.UriParser.SingleValueNode,Microsoft.OData.UriParser.BindingState,Microsoft.OData.UriParser.ODataUriResolver,Microsoft.OData.UriParser.QueryNode@)">
             <summary>
             Try to bind a dotted identifier as enum node
             </summary>
             <param name="dottedIdentifierToken">a dotted identifier token</param>
             <param name="parent">the parent node</param>
             <param name="state">the current state of the binding algorithm</param>
+            <param name="resolver">ODataUriResolver</param>
             <param name="boundEnum">the output bound enum node</param>
             <returns>true if we bound an enum node, false otherwise.</returns>
         </member>
@@ -32579,6 +32712,17 @@
             <param name="identifier">the identifier to bind</param>
             <param name="typeReference">the enum typeReference</param>
             <param name="modelWhenNoTypeReference">the current model when no enum typeReference.</param>
+            <param name="boundEnum">an enum node .</param>
+            <returns>true if we bound an enum for this token.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.EnumBinder.TryBindIdentifier(System.String,Microsoft.OData.Edm.IEdmEnumTypeReference,Microsoft.OData.Edm.IEdmModel,Microsoft.OData.UriParser.ODataUriResolver,Microsoft.OData.UriParser.QueryNode@)">
+            <summary>
+            Try to bind an identifier to a EnumNode
+            </summary>
+            <param name="identifier">the identifier to bind</param>
+            <param name="typeReference">the enum typeReference</param>
+            <param name="modelWhenNoTypeReference">the current model when no enum typeReference.</param>
+            <param name="resolver">ODataUriResolver .</param>
             <param name="boundEnum">an enum node .</param>
             <returns>true if we bound an enum for this token.</returns>
         </member>
@@ -32890,6 +33034,14 @@
             Method to use for binding the parent node, if needed.
             </summary>
         </member>
+        <member name="T:Microsoft.OData.UriParser.InBinder.NormalizeFunction">
+            <summary>
+            Delegate for a function that normalizes a string item representing a certain type.
+            Each type should define a different implementation of the delegate.
+            </summary>
+            <param name="item">The item to be normalized.</param>
+            <returns>Normalized string of the item.</returns>
+        </member>
         <member name="M:Microsoft.OData.UriParser.InBinder.#ctor(System.Func{Microsoft.OData.UriParser.QueryToken,Microsoft.OData.UriParser.QueryNode})">
             <summary>
             Constructs a InBinder with the given method to be used binding the parent token if needed.
@@ -32919,6 +33071,22 @@
             <param name="expectedType">The expected type that this collection holds</param>
             <param name="model">The Edm model</param>
             <returns>The corresponding CollectionNode</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.InBinder.NormalizeStringItem(System.String)">
+            <summary>
+            Function to normalize quoted string, ensuring single quotes are escaped properly.
+            If the string is double-quoted, no op since single quote doesn't need to be escaped.
+            </summary>
+            <param name="str">The quoted string item to be normalized.</param>
+            <returns>The double-quoted string with single quotes properly escaped.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.InBinder.NormalizeGuidItem(System.String)">
+            <summary>
+            Function to normalize string representing GUID so that it is compatible with Json reader for de-serialization.
+            No op if the input string is ready in quoted form.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <returns>A Guid string in quoted form.</returns>
         </member>
         <member name="T:Microsoft.OData.UriParser.InnerPathTokenBinder">
             <summary>
@@ -33103,6 +33271,13 @@
             </summary>
         </member>
         <member name="M:Microsoft.OData.UriParser.LiteralBinder.BindLiteral(Microsoft.OData.UriParser.LiteralToken)">
+            <summary>
+            Binds a literal value to a ConstantNode
+            </summary>
+            <param name="literalToken">Literal token to bind.</param>
+            <returns>Bound query node.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.LiteralBinder.BindInLiteral(Microsoft.OData.UriParser.LiteralToken)">
             <summary>
             Binds a literal value to a ConstantNode
             </summary>
@@ -34710,6 +34885,12 @@
             </summary>
             <returns>A value representing that skip option, null if $skip query does not exist.</returns>
         </member>
+        <member name="M:Microsoft.OData.UriParser.ODataQueryOptionParser.ParseIndex">
+            <summary>
+            Parses a $index query option
+            </summary>
+            <returns>A value representing that index option, null if $index query does not exist.</returns>
+        </member>
         <member name="M:Microsoft.OData.UriParser.ODataQueryOptionParser.ParseCount">
             <summary>
             Parses a $count query option
@@ -34797,6 +34978,14 @@
             <param name="skipQuery">The count skipQuery from the query</param>
             <returns>A value representing that skip option, null if $skip query does not exist.</returns>
             <exception cref="T:Microsoft.OData.ODataException">Throws if the input count is not a valid $skip value.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ODataQueryOptionParser.ParseIndex(System.String)">
+            <summary>
+            Parses a $index query option
+            </summary>
+            <param name="indexQuery">The value of $index from the query</param>
+            <returns>A value representing that index option, null if $index query does not exist.</returns>
+            <exception cref="T:Microsoft.OData.ODataException">Throws if the input value is not a valid $index value.</exception>
         </member>
         <member name="M:Microsoft.OData.UriParser.ODataQueryOptionParser.ParseCount(System.String)">
             <summary>
@@ -35057,6 +35246,12 @@
             Parses a $skip query option
             </summary>
             <returns>A value representing that skip option, null if $skip query does not exist.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ODataUriParser.ParseIndex">
+            <summary>
+            Parses a $index query option
+            </summary>
+            <returns>A value representing that index option, null if $index query does not exist.</returns>
         </member>
         <member name="M:Microsoft.OData.UriParser.ODataUriParser.ParseCount">
             <summary>
@@ -35421,7 +35616,7 @@
         </member>
         <member name="M:Microsoft.OData.UriParser.CustomUriLiteralParsers.AddCustomUriLiteralParser(Microsoft.OData.UriParser.IUriLiteralParser)">
             <summary>
-            Add a custom 'IUriLiteralParser' which will be called to parse uri values during the uri parsing proccess.
+            Add a custom 'IUriLiteralParser' which will be called to parse uri values during the uri parsing process.
             </summary>
             <param name="customUriLiteralParser">The custom uri parser</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="customUriLiteralParser"/> is null</exception>
@@ -35429,7 +35624,7 @@
         </member>
         <member name="M:Microsoft.OData.UriParser.CustomUriLiteralParsers.AddCustomUriLiteralParser(Microsoft.OData.Edm.IEdmTypeReference,Microsoft.OData.UriParser.IUriLiteralParser)">
             <summary>
-            Add a custom 'IUriLiteralParser' which will be called to parse a value of the given EdmType during the UriParsing proccess.
+            Add a custom 'IUriLiteralParser' which will be called to parse a value of the given EdmType during the UriParsing process.
             </summary>
             <param name="edmTypeReference">The EdmType the Uri literal parser can parse.</param>
             <param name="customUriLiteralParser">The custom uri type parser to add.</param>
@@ -36297,6 +36492,11 @@
             Indicates that the next segment encountered must refer to something in 'metadata-space' and cannot be a key expression.
             </summary>
         </member>
+        <member name="F:Microsoft.OData.UriParser.ODataPathParser.lastNavigationSource">
+            <summary>
+            Last navigation source that has been parsed.
+            </summary>
+        </member>
         <member name="M:Microsoft.OData.UriParser.ODataPathParser.#ctor(Microsoft.OData.UriParser.ODataUriParserConfiguration)">
             <summary>
             Initializes a new instance of <see cref="T:Microsoft.OData.UriParser.ODataPathParser"/>.
@@ -36306,7 +36506,8 @@
         <member name="M:Microsoft.OData.UriParser.ODataPathParser.ExtractSegmentIdentifierAndParenthesisExpression(System.String,System.String@,System.String@)">
             <summary>
             Extracts the segment identifier and, if there are parenthesis in the segment, the expression in the parenthesis.
-            Will throw if identifier is not found or if the parenthesis expression is malformed.
+            Will throw if identifier is not found or if the parenthesis expression is malformed. This function does not validate
+            anything and simply provides the raw text of both the identifier and parenthetical expression.
             </summary>
             <remarks>Internal only so it can be called from tests. Should not be used outside <see cref="T:Microsoft.OData.UriParser.ODataPathParser"/>.</remarks>
             <param name="segmentText">The segment text.</param>
@@ -36382,18 +36583,53 @@
             </summary>
             <param name="previous">The previous segment which may need to be a leaf.</param>
         </member>
-        <member name="M:Microsoft.OData.UriParser.ODataPathParser.TryCreateCountSegment(System.String)">
+        <member name="M:Microsoft.OData.UriParser.ODataPathParser.TryCreateCountSegment(System.String,System.String)">
             <summary>
             Try to handle the segment as $count.
             </summary>
-            <param name="segmentText">The segment text to handle.</param>
+            <param name="identifier">The identifier that was parsed from this raw segment.</param>
+            <param name="parenthesisExpression">The query portion was parsed from this raw segment.
+            This value can be null if there is no query portion.</param>
             <returns>Whether the segment was $count.</returns>
         </member>
-        <member name="M:Microsoft.OData.UriParser.ODataPathParser.TryCreateEntityReferenceSegment(System.String)">
+        <member name="M:Microsoft.OData.UriParser.ODataPathParser.GenerateFilterClause(Microsoft.OData.Edm.IEdmNavigationSource,Microsoft.OData.Edm.IEdmType,System.String)">
+            <summary>
+            Creates a filter clause from a navigation source and filter expression.
+            </summary>
+            <param name="navigationSource">Navigation source to which the filter refers.</param>
+            <param name="targetEdmType">Target type for the entity being referenced.</param>
+            <param name="filter">Filter expression.</param>
+            <returns>Filter clause with the navigation source and filter information.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ODataPathParser.TryCreateFilterSegment(System.String)">
+            <summary>
+            Try to handle the segment as $filter.
+            </summary>
+            <param name="segmentText">The raw segment text.</param>
+            <returns>Whether the segment was $filter.</returns>
+            <remarks>
+            $filter path segment is different from existing path segments in that it strictly
+            follows the format of "$filter(expression)", expression could be an alias or inline expression
+            that resolves to a boolean. Thus, this function should validate the format of the path
+            segment closely.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ODataPathParser.TryCreateEachSegment(System.String,System.String)">
+            <summary>
+            Try to handle the segment as $each.
+            </summary>
+            <param name="identifier">The identifier that was parsed from this raw segment.</param>
+            <param name="parenthesisExpression">The query portion was parsed from this raw segment.
+            This value can be null if there is no query portion.</param>
+            <returns>Whether the segment was $each.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ODataPathParser.TryCreateEntityReferenceSegment(System.String,System.String)">
             <summary>
             Tries to handle the segment as $ref. If it is $ref, then the rest of the path will be parsed/validated in this call.
             </summary>
-            <param name="text">The text of the segment.</param>
+            <param name="identifier">The identifier that was parsed from this raw segment.</param>
+            <param name="parenthesisExpression">The query portion was parsed from this raw segment.
+            This value can be null if there is no query portion.</param>
             <returns>Whether the text was $ref.</returns>
         </member>
         <member name="M:Microsoft.OData.UriParser.ODataPathParser.TryBindKeyFromParentheses(System.String)">
@@ -36403,11 +36639,13 @@
             <param name="parenthesesSection">The section of the segment inside parentheses, or null if there was none.</param>
             <returns>Returns True if a key segment was found and added from the paratheses section otherwise false.</returns>
         </member>
-        <member name="M:Microsoft.OData.UriParser.ODataPathParser.TryCreateValueSegment(System.String)">
+        <member name="M:Microsoft.OData.UriParser.ODataPathParser.TryCreateValueSegment(System.String,System.String)">
             <summary>
             Try to handle the segment as $value.
             </summary>
-            <param name="text">The segment text.</param>
+            <param name="identifier">The identifier that was parsed from this raw segment.</param>
+            <param name="parenthesisExpression">The query portion was parsed from this raw segment.
+            This value can be null if there is no query portion.</param>
             <returns>Whether the segment was $value.</returns>
         </member>
         <member name="M:Microsoft.OData.UriParser.ODataPathParser.CreateDynamicPathSegment(Microsoft.OData.UriParser.ODataPathSegment,System.String,System.String)">
@@ -36501,6 +36739,20 @@
             <param name="expected">The expected identifer.</param>
             <param name="identifier">Identifier to be evaluated.</param>
             <returns>Whether the identifier matches.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ODataPathParser.CreateValidatedPathSegments">
+            <summary>
+            Validates the existing parsed segments and returns a list of validated segments.
+            </summary>
+            <returns>List of validated path segments.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ODataPathParser.CheckDollarEachSegmentRestrictions(System.Int32)">
+            <summary>
+            Per OData 4.01 spec, only one operation may follow $each. This function enforces that restriction.
+            </summary>
+            <param name="index">Index of path segment to examine in the list of parsed segments.</param>
+            <exception cref="T:Microsoft.OData.ODataException">Throws if there's a violation of $each restrictions.</exception>
+            <remarks>Should the restrictions on the $each be removed, this function can be deleted.</remarks>
         </member>
         <member name="T:Microsoft.OData.UriParser.PathParserModelUtils">
             <summary>
@@ -39405,6 +39657,30 @@
             <returns>null, since $count doesn't have an navigation source</returns>
             <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
         </member>
+        <member name="M:Microsoft.OData.UriParser.DetermineNavigationSourceTranslator.Translate(Microsoft.OData.UriParser.FilterSegment)">
+            <summary>
+            Determine the NavigationSource of a FilterSegment
+            </summary>
+            <param name="segment">The FilterSegment to look in.</param>
+            <returns>null, since $filter doesn't have an navigation source</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.DetermineNavigationSourceTranslator.Translate(Microsoft.OData.UriParser.ReferenceSegment)">
+            <summary>
+            Determine the NavigationSource of a ReferenceSegment
+            </summary>
+            <param name="segment">The ReferenceSegment to look in.</param>
+            <returns>null, since $filter doesn't have an navigation source</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.DetermineNavigationSourceTranslator.Translate(Microsoft.OData.UriParser.EachSegment)">
+            <summary>
+            Determine the NavigationSource of a EachSegment
+            </summary>
+            <param name="segment">The FilterSegment to look in.</param>
+            <returns>null, since $filter doesn't have an navigation source</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
+        </member>
         <member name="M:Microsoft.OData.UriParser.DetermineNavigationSourceTranslator.Translate(Microsoft.OData.UriParser.DynamicPathSegment)">
             <summary>
             Determine the NavigationSource of a OpenPropertySegment
@@ -39442,6 +39718,14 @@
             Determine the NavigationSource of a MetadataSegment
             </summary>
             <param name="segment">The MetadataSegment to look in.</param>
+            <returns>null, since $batch doesn't have an navigation source</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.DetermineNavigationSourceTranslator.Translate(Microsoft.OData.UriParser.PathTemplateSegment)">
+            <summary>
+            Determine the NavigationSource of a PathTemplateSegment
+            </summary>
+            <param name="segment">The PathTemplateSegment to look in.</param>
             <returns>null, since $batch doesn't have an navigation source</returns>
             <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
         </member>
@@ -39493,6 +39777,54 @@
             <param name="other">the other segment to check.</param>
             <returns>true if the other segment is equal.</returns>
             <exception cref="T:System.ArgumentNullException">Throws if the input other is null.</exception>
+        </member>
+        <member name="T:Microsoft.OData.UriParser.EachSegment">
+            <summary>
+            A segment representing $each in a path.
+            </summary>
+        </member>
+        <member name="F:Microsoft.OData.UriParser.EachSegment.edmType">
+            <summary>
+            The <see cref="T:Microsoft.OData.Edm.IEdmType"/> of the resource that this <see cref="T:Microsoft.OData.UriParser.EachSegment"/> represents.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.EachSegment.#ctor(Microsoft.OData.Edm.IEdmNavigationSource,Microsoft.OData.Edm.IEdmType)">
+            <summary>
+            Build a segment representing $each.
+            </summary>
+            <param name="navigationSource">The entity collection that this set-based operation applies to.</param>
+            <param name="targetEdmType">Target type for the entity being referenced.</param>
+            <exception cref="T:System.ArgumentNullException">Throws if any input parameter is null.</exception>
+            <remarks>$each cannot be applied on singletons.</remarks>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.EachSegment.EdmType">
+            <summary>
+            Gets the <see cref="T:Microsoft.OData.Edm.IEdmType"/> to which this <see cref="T:Microsoft.OData.UriParser.EachSegment"/> applies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.EachSegment.TranslateWith``1(Microsoft.OData.UriParser.PathSegmentTranslator{``0})">
+            <summary>
+            Translate a <see cref="T:Microsoft.OData.UriParser.EachSegment"/> using an instance of <see cref="T:Microsoft.OData.UriParser.PathSegmentTranslator`1"/>.
+            </summary>
+            <typeparam name="T">Type that the translator will return after visiting this token.</typeparam>
+            <param name="translator">An implementation of the translator interface.</param>
+            <returns>An object whose type is determined by the type parameter of the translator.</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input translator is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.EachSegment.HandleWith(Microsoft.OData.UriParser.PathSegmentHandler)">
+            <summary>
+            Handle a <see cref="T:Microsoft.OData.UriParser.EachSegment"/> using an instance of <see cref="T:Microsoft.OData.UriParser.PathSegmentHandler"/>.
+            </summary>
+            <param name="handler">An implementation of the handler interface.</param>
+            <exception cref="T:System.ArgumentNullException">Throws if the input handler is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.EachSegment.Equals(Microsoft.OData.UriParser.ODataPathSegment)">
+            <summary>
+            Check if this segment is equal to another segment.
+            </summary>
+            <param name="other">the other segment to check.</param>
+            <returns>true if the other segment is equal.</returns>
+            <exception cref="T:System.ArgumentNullException">throws if the input other is null.</exception>
         </member>
         <member name="T:Microsoft.OData.UriParser.EntityIdSegment">
             <summary>
@@ -39614,6 +39946,23 @@
             <param name="computeOption">A compute clause for this expand (can be null)</param>
             <exception cref="T:System.ArgumentNullException">Throws if input pathToNavigationProperty is null.</exception>
         </member>
+        <member name="M:Microsoft.OData.UriParser.ExpandedNavigationSelectItem.#ctor(Microsoft.OData.UriParser.ODataExpandPath,Microsoft.OData.Edm.IEdmNavigationSource,Microsoft.OData.UriParser.SelectExpandClause,Microsoft.OData.UriParser.FilterClause,Microsoft.OData.UriParser.OrderByClause,System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Boolean},Microsoft.OData.UriParser.SearchClause,Microsoft.OData.UriParser.LevelsClause,Microsoft.OData.UriParser.ComputeClause,Microsoft.OData.UriParser.Aggregation.ApplyClause)">
+            <summary>
+            Create an expand item, using a navigationProperty, its entity set, and any expand options.
+            </summary>
+            <param name="pathToNavigationProperty">the path to the navigation property for this expand item, including any type segments</param>
+            <param name="navigationSource">the navigation source for this expand level.</param>
+            <param name="selectAndExpand">This level select and any sub expands for this expand item.</param>
+            <param name="filterOption">A filter clause for this expand (can be null)</param>
+            <param name="orderByOption">An Orderby clause for this expand (can be null)</param>
+            <param name="topOption">A top clause for this expand (can be null)</param>
+            <param name="skipOption">A skip clause for this expand (can be null)</param>
+            <param name="countOption">An query count clause for this expand (can be null)</param>
+            <param name="searchOption">An levels clause for this expand (can be null)</param>
+            <param name="levelsOption">An levels clause for this expand (can be null)</param>
+            <param name="computeOption">A compute clause for this expand (can be null)</param>
+            <exception cref="T:System.ArgumentNullException">Throws if input pathToNavigationProperty is null.</exception>
+        </member>
         <member name="P:Microsoft.OData.UriParser.ExpandedNavigationSelectItem.SelectAndExpand">
             <summary>
             The select and expand clause for this expanded navigation.
@@ -39682,6 +40031,22 @@
             <param name="computeOption">A compute clause for this expand (can be null)</param>
             <exception cref="T:System.ArgumentNullException">Throws if input pathToNavigationProperty is null.</exception>
         </member>
+        <member name="M:Microsoft.OData.UriParser.ExpandedReferenceSelectItem.#ctor(Microsoft.OData.UriParser.ODataExpandPath,Microsoft.OData.Edm.IEdmNavigationSource,Microsoft.OData.UriParser.FilterClause,Microsoft.OData.UriParser.OrderByClause,System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Boolean},Microsoft.OData.UriParser.SearchClause,Microsoft.OData.UriParser.ComputeClause,Microsoft.OData.UriParser.Aggregation.ApplyClause)">
+            <summary>
+            Create an expand item, using a navigationProperty, its entity set, and any expand options.
+            </summary>
+            <param name="pathToNavigationProperty">the path to the navigation property for this expand item, including any type segments</param>
+            <param name="navigationSource">the navigation source for this expand level.</param>
+            <param name="filterOption">A filter clause for this expand (can be null)</param>
+            <param name="orderByOption">An Orderby clause for this expand (can be null)</param>
+            <param name="topOption">A top clause for this expand (can be null)</param>
+            <param name="skipOption">A skip clause for this expand (can be null)</param>
+            <param name="countOption">An query count clause for this expand (can be null)</param>
+            <param name="searchOption">A search clause for this expand (can be null)</param>
+            <param name="computeOption">A compute clause for this expand (can be null)</param>
+            <param name="applyOption">A apply clause for this expand (can be null)</param>
+            <exception cref="T:System.ArgumentNullException">Throws if input pathToNavigationProperty is null.</exception>
+        </member>
         <member name="P:Microsoft.OData.UriParser.ExpandedReferenceSelectItem.PathToNavigationProperty">
             <summary>
             Gets the Path for this expand level.
@@ -39711,6 +40076,11 @@
         <member name="P:Microsoft.OData.UriParser.ExpandedReferenceSelectItem.ComputeOption">
             <summary>
             Gets the compute clause for this expand item. Can be null if not specified(and will always be null in NonOptionMode).
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.ExpandedReferenceSelectItem.ApplyOption">
+            <summary>
+            Gets the apply clause for this expand item. Can be null if not specified(and will always be null in NonOptionMode).
             </summary>
         </member>
         <member name="P:Microsoft.OData.UriParser.ExpandedReferenceSelectItem.TopOption">
@@ -39781,6 +40151,90 @@
             <summary>
             Gets the type of item returned by this clause.
             </summary>
+        </member>
+        <member name="T:Microsoft.OData.UriParser.FilterSegment">
+            <summary>
+            A segment representing $filter in a path.
+            </summary>
+        </member>
+        <member name="F:Microsoft.OData.UriParser.FilterSegment.expression">
+            <summary>
+            The filter expression - this should evaluate to a single boolean value.
+            </summary>
+        </member>
+        <member name="F:Microsoft.OData.UriParser.FilterSegment.rangeVariable">
+            <summary>
+            The parameter for the alias which represents a single value from the collection.
+            </summary>
+        </member>
+        <member name="F:Microsoft.OData.UriParser.FilterSegment.bindingType">
+            <summary>
+            The type that this segment is bound to.
+            </summary>
+        </member>
+        <member name="F:Microsoft.OData.UriParser.FilterSegment.literalText">
+            <summary>
+            String representing "$filter(expression)".
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.FilterSegment.#ctor(Microsoft.OData.UriParser.SingleValueNode,Microsoft.OData.UriParser.RangeVariable,Microsoft.OData.Edm.IEdmNavigationSource)">
+            <summary>
+            Build a segment representing $filter.
+            </summary>
+            <param name="expression">The filter expression - this should evaluate to a single boolean value.</param>
+            <param name="rangeVariable">An expression that represents a single value from the collection.</param>
+            <param name="navigationSource">The navigation source that this filter applies to.</param>
+            <exception cref="T:System.ArgumentNullException">Throws if any input parameter is null.</exception>
+            <remarks>$filter should not be applied on singletons or single entities.</remarks>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.FilterSegment.Expression">
+            <summary>
+            Gets the filter expression - this should evaluate to a single boolean value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.FilterSegment.RangeVariable">
+            <summary>
+            Gets the parameter for the expression which represents a single value from the collection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.FilterSegment.ItemType">
+            <summary>
+            Gets the type of item returned by this clause.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.FilterSegment.EdmType">
+            <summary>
+            Gets the <see cref="T:Microsoft.OData.Edm.IEdmType"/> to which this <see cref="T:Microsoft.OData.UriParser.FilterSegment"/> applies.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.FilterSegment.LiteralText">
+            <summary>
+            Gets the string representing "$filter(expression)".
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.FilterSegment.TranslateWith``1(Microsoft.OData.UriParser.PathSegmentTranslator{``0})">
+            <summary>
+            Translate a <see cref="T:Microsoft.OData.UriParser.FilterSegment"/> using an instance of <see cref="T:Microsoft.OData.UriParser.PathSegmentTranslator`1"/>.
+            </summary>
+            <typeparam name="T">Type that the translator will return after visiting this token.</typeparam>
+            <param name="translator">An implementation of the translator interface.</param>
+            <returns>An object whose type is determined by the type parameter of the translator.</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input translator is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.FilterSegment.HandleWith(Microsoft.OData.UriParser.PathSegmentHandler)">
+            <summary>
+            Handle a <see cref="T:Microsoft.OData.UriParser.FilterSegment"/> using an instance of <see cref="T:Microsoft.OData.UriParser.PathSegmentHandler"/>.
+            </summary>
+            <param name="handler">An implementation of the handler interface.</param>
+            <exception cref="T:System.ArgumentNullException">Throws if the input handler is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.FilterSegment.Equals(Microsoft.OData.UriParser.ODataPathSegment)">
+            <summary>
+            Check if this segment is equal to another segment.
+            </summary>
+            <param name="other">the other segment to check.</param>
+            <returns>true if the other segment is equal.</returns>
+            <exception cref="T:System.ArgumentNullException">throws if the input other is null.</exception>
         </member>
         <member name="T:Microsoft.OData.UriParser.InNode">
             <summary>
@@ -40200,7 +40654,7 @@
         </member>
         <member name="T:Microsoft.OData.UriParser.NavigationPropertyLinkSegment">
             <summary>
-            A segment representing $ref
+            A segment representing $ref (backwards compatibility version for below ODL 7.4.x)
             </summary>
         </member>
         <member name="F:Microsoft.OData.UriParser.NavigationPropertyLinkSegment.navigationProperty">
@@ -40210,9 +40664,9 @@
         </member>
         <member name="M:Microsoft.OData.UriParser.NavigationPropertyLinkSegment.#ctor(Microsoft.OData.Edm.IEdmNavigationProperty,Microsoft.OData.Edm.IEdmNavigationSource)">
             <summary>
-            Build a segment to represnt $ref on a Nav prop
+            Build a segment to represent $ref on a Nav prop
             </summary>
-            <param name="navigationProperty">The navigaiton property this link or ref acts on</param>
+            <param name="navigationProperty">The navigation property this link or ref acts on</param>
             <param name="navigationSource">The navigation source of entities linked to by this <see cref="T:Microsoft.OData.UriParser.NavigationPropertyLinkSegment"/>. This can be null.</param>
             <exception cref="T:System.ArgumentNullException">Throws if the input navigationProperty is null.</exception>
         </member>
@@ -41367,6 +41821,47 @@
             A range variable that refers to non-entity/complex types.
             </summary>
         </member>
+        <member name="T:Microsoft.OData.UriParser.ReferenceSegment">
+            <summary>
+            A segment representing $ref in a path.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ReferenceSegment.#ctor(Microsoft.OData.Edm.IEdmNavigationSource)">
+            <summary>
+            Build a segment representing $ref.
+            </summary>
+            <param name="navigationSource">The navigation source to which this segment references.</param>
+            <exception cref="T:System.ArgumentNullException">Throws if any input parameter is null.</exception>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.ReferenceSegment.EdmType">
+            <summary>
+            Gets the <see cref="T:Microsoft.OData.Edm.IEdmType"/> of this <see cref="T:Microsoft.OData.UriParser.ReferenceSegment"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ReferenceSegment.TranslateWith``1(Microsoft.OData.UriParser.PathSegmentTranslator{``0})">
+            <summary>
+            Translate a <see cref="T:Microsoft.OData.UriParser.ReferenceSegment"/> using an instance of <see cref="T:Microsoft.OData.UriParser.PathSegmentTranslator`1"/>.
+            </summary>
+            <typeparam name="T">Type that the translator will return after visiting this token.</typeparam>
+            <param name="translator">An implementation of the translator interface.</param>
+            <returns>An object whose type is determined by the type parameter of the translator.</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input translator is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ReferenceSegment.HandleWith(Microsoft.OData.UriParser.PathSegmentHandler)">
+            <summary>
+            Handle a <see cref="T:Microsoft.OData.UriParser.ReferenceSegment"/> using an instance of <see cref="T:Microsoft.OData.UriParser.PathSegmentHandler"/>.
+            </summary>
+            <param name="handler">An implementation of the handler interface.</param>
+            <exception cref="T:System.ArgumentNullException">Throws if the input handler is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.ReferenceSegment.Equals(Microsoft.OData.UriParser.ODataPathSegment)">
+            <summary>
+            Check if this segment is equal to another segment.
+            </summary>
+            <param name="other">the other segment to check.</param>
+            <returns>true if the other segment is equal.</returns>
+            <exception cref="T:System.ArgumentNullException">throws if the input other is null.</exception>
+        </member>
         <member name="T:Microsoft.OData.UriParser.ResourceRangeVariable">
             <summary>
             A RangeVariable inside an any or all expression that refers to an entity or a complex.
@@ -41685,7 +42180,7 @@
             <param name="selectExpandClause">The select expand clause used.</param>
             <returns>String list generated from selected items</returns>
         </member>
-        <member name="M:Microsoft.OData.UriParser.SelectExpandClauseExtensions.Traverse``1(Microsoft.OData.UriParser.SelectExpandClause,System.Func{System.String,``0,Microsoft.OData.ODataVersion,``0},System.Func{System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{``0},``0},Microsoft.OData.ODataVersion,``0@)">
+        <member name="M:Microsoft.OData.UriParser.SelectExpandClauseExtensions.Traverse``1(Microsoft.OData.UriParser.SelectExpandClause,System.Func{System.String,``0,``0},System.Func{System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{``0},``0},``0@)">
             <summary>
             Traverse a SelectExpandClause using given functions.
             </summary>
@@ -41693,7 +42188,6 @@
             <param name="selectExpandClause">The select expand clause for evaluation.</param>
             <param name="processSubResult">The method to deal with sub expand result.</param>
             <param name="combineSelectAndExpand">The method to combine select and expand result lists.</param>
-            <param name="version">OData version to use in traversing the selectExpand clause</param>
             <param name="result">The result of the traversing.</param>
         </member>
         <member name="M:Microsoft.OData.UriParser.SelectExpandClauseExtensions.BuildTopLevelSelect(Microsoft.OData.UriParser.SelectExpandClause)">
@@ -41710,19 +42204,17 @@
             <param name="selectedItem">the select item to translate</param>
             <returns>the string representation of this select item, or null if the select item is an expandedNavPropSelectItem</returns>
         </member>
-        <member name="M:Microsoft.OData.UriParser.SelectExpandClauseExtensions.BuildExpandsForNode(Microsoft.OData.UriParser.SelectExpandClause,Microsoft.OData.ODataVersion)">
+        <member name="M:Microsoft.OData.UriParser.SelectExpandClauseExtensions.BuildExpandsForNode(Microsoft.OData.UriParser.SelectExpandClause)">
             <summary>
             Build the expand clause for a given level in the selectExpandClause
             </summary>
             <param name="selectExpandClause">the current level select expand clause</param>
-            <param name="version">OData Version.</param>
             <returns>the expand clause for this level.</returns>
         </member>
-        <member name="M:Microsoft.OData.UriParser.SelectExpandClauseExtensions.ProcessSubExpand(System.String,System.String,Microsoft.OData.ODataVersion)">
+        <member name="M:Microsoft.OData.UriParser.SelectExpandClauseExtensions.ProcessSubExpand(System.String,System.String)">
             <summary>Process sub expand node, contact with subexpad result</summary>
             <param name="expandNode">The current expanded node.</param>
             <param name="subExpand">Generated sub expand node.</param>
-            <param name="version">OData version.</param>
             <returns>The generated expand string.</returns>
         </member>
         <member name="M:Microsoft.OData.UriParser.SelectExpandClauseExtensions.CombineSelectAndExpandResult(System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String})">
@@ -43043,6 +43535,11 @@
             the compute option for this expand term.
             </summary>
         </member>
+        <member name="F:Microsoft.OData.UriParser.ExpandTermToken.applyOptions">
+            <summary>
+            the apply options for this expand term
+            </summary>
+        </member>
         <member name="F:Microsoft.OData.UriParser.ExpandTermToken.expandOption">
             <summary>
             the expand option for this expand term.
@@ -43093,6 +43590,23 @@
             <param name="expandOption">the expand option for this expand term</param>
             <param name="computeOption">the compute option for this expand term.</param>
         </member>
+        <member name="M:Microsoft.OData.UriParser.ExpandTermToken.#ctor(Microsoft.OData.UriParser.PathSegmentToken,Microsoft.OData.UriParser.QueryToken,System.Collections.Generic.IEnumerable{Microsoft.OData.UriParser.OrderByToken},System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Boolean},System.Nullable{System.Int64},Microsoft.OData.UriParser.QueryToken,Microsoft.OData.UriParser.SelectToken,Microsoft.OData.UriParser.ExpandToken,Microsoft.OData.UriParser.ComputeToken,System.Collections.Generic.IEnumerable{Microsoft.OData.UriParser.QueryToken})">
+            <summary>
+            Create an expand term token
+            </summary>
+            <param name="pathToNavigationProp">the nav prop for this expand term</param>
+            <param name="filterOption">the filter option for this expand term</param>
+            <param name="orderByOptions">the orderby options for this expand term</param>
+            <param name="topOption">the top option for this expand term</param>
+            <param name="skipOption">the skip option for this expand term</param>
+            <param name="countQueryOption">the query count option for this expand term</param>
+            <param name="levelsOption">the levels option for this expand term</param>
+            <param name="searchOption">the search option for this expand term</param>
+            <param name="selectOption">the select option for this expand term</param>
+            <param name="expandOption">the expand option for this expand term</param>
+            <param name="computeOption">the compute option for this expand term.</param>
+            <param name="applyOptions">the apply options for this expand term.</param>
+        </member>
         <member name="P:Microsoft.OData.UriParser.ExpandTermToken.PathToNavigationProp">
             <summary>
             the nav property for this expand term
@@ -43141,6 +43655,11 @@
         <member name="P:Microsoft.OData.UriParser.ExpandTermToken.ComputeOption">
             <summary>
             the compute option for this expand term.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.UriParser.ExpandTermToken.ApplyOptions">
+            <summary>
+            the apply options for this expand term.
             </summary>
         </member>
         <member name="P:Microsoft.OData.UriParser.ExpandTermToken.ExpandOption">
@@ -45021,6 +45540,15 @@
             <param name="qualifiedName">the name to find within the model</param>
             <returns>a type reference to the enum type, or null if no such type exists.</returns>
         </member>
+        <member name="M:Microsoft.OData.UriParser.UriEdmHelpers.FindEnumTypeFromModel(Microsoft.OData.Edm.IEdmModel,System.String,Microsoft.OData.UriParser.ODataUriResolver)">
+            <summary>
+            Wraps call to FindTypeFromModel for an Enum type.
+            </summary>
+            <param name="model">the model to search</param>
+            <param name="qualifiedName">the name to find within the model</param>
+            <param name="resolver">ODataUriResolver</param>
+            <returns>a type reference to the enum type, or null if no such type exists.</returns>
+        </member>
         <member name="M:Microsoft.OData.UriParser.UriEdmHelpers.CheckRelatedTo(Microsoft.OData.Edm.IEdmType,Microsoft.OData.Edm.IEdmType)">
             <summary>
             Check whether the parent and child are properly related types
@@ -45100,6 +45628,12 @@
         <member name="F:Microsoft.OData.UriParser.UriQueryConstants.CountSegment">
             <summary>A segment name in a URI that indicates that this is a count operation.</summary>
         </member>
+        <member name="F:Microsoft.OData.UriParser.UriQueryConstants.FilterSegment">
+            <summary>A segment name in a URI that indicates that a filter is being applied to a collection.</summary>
+        </member>
+        <member name="F:Microsoft.OData.UriParser.UriQueryConstants.EachSegment">
+            <summary>A segment name in a URI that indicates that a set-based operation is being applied to a collection.</summary>
+        </member>
         <member name="F:Microsoft.OData.UriParser.UriQueryConstants.FilterQueryOption">
             <summary>A filter query option name.</summary>
         </member>
@@ -45144,6 +45678,9 @@
         </member>
         <member name="F:Microsoft.OData.UriParser.UriQueryConstants.CountQueryOption">
             <summary>A count query option name.</summary>
+        </member>
+        <member name="F:Microsoft.OData.UriParser.UriQueryConstants.IndexQueryOption">
+            <summary>An index query option name.</summary>
         </member>
         <member name="F:Microsoft.OData.UriParser.UriQueryConstants.FormatQueryOption">
             <summary>A format query option name.</summary>
@@ -45258,6 +45795,30 @@
             <returns>UserDefinedValue</returns>
             <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
         </member>
+        <member name="M:Microsoft.OData.UriParser.IsCollectionTranslator.Translate(Microsoft.OData.UriParser.FilterSegment)">
+            <summary>
+            Translate a FilterSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>UserDefinedValue</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.IsCollectionTranslator.Translate(Microsoft.OData.UriParser.ReferenceSegment)">
+            <summary>
+            Translate a ReferenceSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>UserDefinedValue</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.IsCollectionTranslator.Translate(Microsoft.OData.UriParser.EachSegment)">
+            <summary>
+            Translate an EachSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>UserDefinedValue</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
+        </member>
         <member name="M:Microsoft.OData.UriParser.IsCollectionTranslator.Translate(Microsoft.OData.UriParser.NavigationPropertyLinkSegment)">
             <summary>
             Translate a NavigationPropertyLinkSegment
@@ -45293,6 +45854,14 @@
         <member name="M:Microsoft.OData.UriParser.IsCollectionTranslator.Translate(Microsoft.OData.UriParser.MetadataSegment)">
             <summary>
             Translate a MetadataSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>UserDefinedValue</returns>
+            <exception cref="T:System.ArgumentNullException">Throws if the input segment is null.</exception>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.IsCollectionTranslator.Translate(Microsoft.OData.UriParser.PathTemplateSegment)">
+            <summary>
+            Translate a PathTemplateSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>UserDefinedValue</returns>
@@ -45542,6 +46111,24 @@
             </summary>
             <param name="segment">the segment to Handle</param>
         </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentHandler.Handle(Microsoft.OData.UriParser.FilterSegment)">
+            <summary>
+            Handle a FilterSegment
+            </summary>
+            <param name="segment">the segment to Handle</param>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentHandler.Handle(Microsoft.OData.UriParser.ReferenceSegment)">
+            <summary>
+            Handle a ReferenceSegment
+            </summary>
+            <param name="segment">the segment to Handle</param>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentHandler.Handle(Microsoft.OData.UriParser.EachSegment)">
+            <summary>
+            Handle an EachSegment
+            </summary>
+            <param name="segment">the segment to Handle</param>
+        </member>
         <member name="M:Microsoft.OData.UriParser.PathSegmentHandler.Handle(Microsoft.OData.UriParser.NavigationPropertyLinkSegment)">
             <summary>
             Handle a LinksSegment
@@ -45655,14 +46242,14 @@
         </member>
         <member name="M:Microsoft.OData.UriParser.PathSegmentToContextUrlPathTranslator.Translate(Microsoft.OData.UriParser.OperationSegment)">
             <summary>
-            Translate a OperationSegment
+            Translate an OperationSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
         </member>
         <member name="M:Microsoft.OData.UriParser.PathSegmentToContextUrlPathTranslator.Translate(Microsoft.OData.UriParser.OperationImportSegment)">
             <summary>
-            Translate a OperationSegment
+            Translate an OperationImportSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
@@ -45677,6 +46264,27 @@
         <member name="M:Microsoft.OData.UriParser.PathSegmentToContextUrlPathTranslator.Translate(Microsoft.OData.UriParser.CountSegment)">
             <summary>
             Translate a CountSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToContextUrlPathTranslator.Translate(Microsoft.OData.UriParser.FilterSegment)">
+            <summary>
+            Translate a FilterSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToContextUrlPathTranslator.Translate(Microsoft.OData.UriParser.ReferenceSegment)">
+            <summary>
+            Translate a ReferenceSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToContextUrlPathTranslator.Translate(Microsoft.OData.UriParser.EachSegment)">
+            <summary>
+            Translate an EachSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
@@ -45712,6 +46320,13 @@
         <member name="M:Microsoft.OData.UriParser.PathSegmentToContextUrlPathTranslator.Translate(Microsoft.OData.UriParser.MetadataSegment)">
             <summary>
             Translate a MetadataSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToContextUrlPathTranslator.Translate(Microsoft.OData.UriParser.PathTemplateSegment)">
+            <summary>
+            Translate a PathTemplateSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
@@ -45849,14 +46464,14 @@
         </member>
         <member name="M:Microsoft.OData.UriParser.PathSegmentToResourcePathTranslator.Translate(Microsoft.OData.UriParser.OperationSegment)">
             <summary>
-            Translate a OperationSegment
+            Translate an OperationSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
         </member>
         <member name="M:Microsoft.OData.UriParser.PathSegmentToResourcePathTranslator.Translate(Microsoft.OData.UriParser.OperationImportSegment)">
             <summary>
-            Translate a OperationImportSegment
+            Translate an OperationImportSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
@@ -45871,6 +46486,27 @@
         <member name="M:Microsoft.OData.UriParser.PathSegmentToResourcePathTranslator.Translate(Microsoft.OData.UriParser.CountSegment)">
             <summary>
             Translate a CountSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToResourcePathTranslator.Translate(Microsoft.OData.UriParser.FilterSegment)">
+            <summary>
+            Translate a FilterSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToResourcePathTranslator.Translate(Microsoft.OData.UriParser.ReferenceSegment)">
+            <summary>
+            Translate a ReferenceSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToResourcePathTranslator.Translate(Microsoft.OData.UriParser.EachSegment)">
+            <summary>
+            Translate an EachSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
@@ -45906,6 +46542,13 @@
         <member name="M:Microsoft.OData.UriParser.PathSegmentToResourcePathTranslator.Translate(Microsoft.OData.UriParser.MetadataSegment)">
             <summary>
             Translate a MetadataSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToResourcePathTranslator.Translate(Microsoft.OData.UriParser.PathTemplateSegment)">
+            <summary>
+            Translate a PathTemplateSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
@@ -45955,14 +46598,14 @@
         </member>
         <member name="M:Microsoft.OData.UriParser.PathSegmentToStringTranslator.Translate(Microsoft.OData.UriParser.OperationSegment)">
             <summary>
-            Translate a OperationSegment
+            Translate an OperationSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
         </member>
         <member name="M:Microsoft.OData.UriParser.PathSegmentToStringTranslator.Translate(Microsoft.OData.UriParser.OperationImportSegment)">
             <summary>
-            Translate a OperationSegment
+            Translate an OperationImportSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
@@ -45970,6 +46613,34 @@
         <member name="M:Microsoft.OData.UriParser.PathSegmentToStringTranslator.Translate(Microsoft.OData.UriParser.DynamicPathSegment)">
             <summary>
             Translate an OpenPropertySegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToStringTranslator.Translate(Microsoft.OData.UriParser.FilterSegment)">
+            <summary>
+            Translate a FilterSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToStringTranslator.Translate(Microsoft.OData.UriParser.ReferenceSegment)">
+            <summary>
+            Translate a ReferenceSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToStringTranslator.Translate(Microsoft.OData.UriParser.EachSegment)">
+            <summary>
+            Translate an EachSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentToStringTranslator.Translate(Microsoft.OData.UriParser.PathTemplateSegment)">
+            <summary>
+            Translate a PathTemplateSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
@@ -46031,14 +46702,14 @@
         </member>
         <member name="M:Microsoft.OData.UriParser.PathSegmentTranslator`1.Translate(Microsoft.OData.UriParser.OperationImportSegment)">
             <summary>
-            Translate a OperationImportSegment
+            Translate an OperationImportSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
         </member>
         <member name="M:Microsoft.OData.UriParser.PathSegmentTranslator`1.Translate(Microsoft.OData.UriParser.OperationSegment)">
             <summary>
-            Translate a OperationSegment
+            Translate an OperationSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
@@ -46053,6 +46724,27 @@
         <member name="M:Microsoft.OData.UriParser.PathSegmentTranslator`1.Translate(Microsoft.OData.UriParser.CountSegment)">
             <summary>
             Translate a CountSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentTranslator`1.Translate(Microsoft.OData.UriParser.FilterSegment)">
+            <summary>
+            Translate a FilterSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentTranslator`1.Translate(Microsoft.OData.UriParser.ReferenceSegment)">
+            <summary>
+            Translate a ReferenceSegment
+            </summary>
+            <param name="segment">the segment to Translate</param>
+            <returns>Defined by the implementer.</returns>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.PathSegmentTranslator`1.Translate(Microsoft.OData.UriParser.EachSegment)">
+            <summary>
+            Translate an EachSegment
             </summary>
             <param name="segment">the segment to Translate</param>
             <returns>Defined by the implementer.</returns>
@@ -46531,7 +47223,7 @@
         </member>
         <member name="M:Microsoft.OData.UriParser.SplitEndingSegmentOfTypeHandler`1.Handle(Microsoft.OData.UriParser.OperationImportSegment)">
             <summary>
-            Handle an OperationSegment
+            Handle an OperationImportSegment
             </summary>
             <param name="segment">the segment to Handle</param>
         </member>
@@ -46550,6 +47242,30 @@
         <member name="M:Microsoft.OData.UriParser.SplitEndingSegmentOfTypeHandler`1.Handle(Microsoft.OData.UriParser.CountSegment)">
             <summary>
             Handle a CountSegment
+            </summary>
+            <param name="segment">the segment to Handle</param>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.SplitEndingSegmentOfTypeHandler`1.Handle(Microsoft.OData.UriParser.FilterSegment)">
+            <summary>
+            Handle a FilterSegment
+            </summary>
+            <param name="segment">the segment to Handle</param>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.SplitEndingSegmentOfTypeHandler`1.Handle(Microsoft.OData.UriParser.EachSegment)">
+            <summary>
+            Handle an EachSegment
+            </summary>
+            <param name="segment">the segment to Handle</param>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.SplitEndingSegmentOfTypeHandler`1.Handle(Microsoft.OData.UriParser.ReferenceSegment)">
+            <summary>
+            Handle a ReferenceSegment
+            </summary>
+            <param name="segment">the segment to Handle</param>
+        </member>
+        <member name="M:Microsoft.OData.UriParser.SplitEndingSegmentOfTypeHandler`1.Handle(Microsoft.OData.UriParser.PathTemplateSegment)">
+            <summary>
+            Handle a PathTemplateSegment
             </summary>
             <param name="segment">the segment to Handle</param>
         </member>
@@ -47108,6 +47824,9 @@
         <member name="F:Microsoft.OData.ExpressionConstants.QueryOptionCompute">
             <summary>the compute query option.</summary>
         </member>
+        <member name="F:Microsoft.OData.ExpressionConstants.KeywordExpand">
+            <summary>"expand" keyword for $apply.</summary>
+        </member>
         <member name="T:Microsoft.OData.NodeToStringBuilder">
             <summary>
             Build QueryNode to String Representation
@@ -47327,18 +48046,23 @@
             <returns>The LINQ String resulting from visiting the node.</returns>
         </member>
         <member name="M:Microsoft.OData.NodeToStringBuilder.TranslateFilterClause(Microsoft.OData.UriParser.FilterClause)">
-            <summary>Translates a <see cref="T:Microsoft.OData.UriParser.FilterClause"/> into a <see cref="T:Microsoft.OData.UriParser.FilterClause"/>.</summary>
+            <summary>Translates a <see cref="T:Microsoft.OData.UriParser.FilterClause"/> into a string.</summary>
             <param name="filterClause">The filter clause to translate.</param>
             <returns>The translated String.</returns>
         </member>
         <member name="M:Microsoft.OData.NodeToStringBuilder.TranslateOrderByClause(Microsoft.OData.UriParser.OrderByClause)">
-            <summary>Translates a <see cref="T:Microsoft.OData.UriParser.OrderByClause"/> into a <see cref="T:Microsoft.OData.UriParser.OrderByClause"/>.</summary>
+            <summary>Translates a <see cref="T:Microsoft.OData.UriParser.OrderByClause"/> into a string.</summary>
             <param name="orderByClause">The orderBy clause to translate.</param>
             <returns>The translated String.</returns>
         </member>
         <member name="M:Microsoft.OData.NodeToStringBuilder.TranslateSearchClause(Microsoft.OData.UriParser.SearchClause)">
-            <summary>Translates a <see cref="T:Microsoft.OData.UriParser.SearchClause"/> into a <see cref="T:Microsoft.OData.UriParser.SearchClause"/>.</summary>
+            <summary>Translates a <see cref="T:Microsoft.OData.UriParser.SearchClause"/> into a string.</summary>
             <param name="searchClause">The search clause to translate.</param>
+            <returns>The translated String.</returns>
+        </member>
+        <member name="M:Microsoft.OData.NodeToStringBuilder.TranslateComputeClause(Microsoft.OData.UriParser.ComputeClause)">
+            <summary>Translates a <see cref="T:Microsoft.OData.UriParser.ComputeClause"/> into a string.</summary>
+            <param name="computeClause">The compute clause to translate.</param>
             <returns>The translated String.</returns>
         </member>
         <member name="M:Microsoft.OData.NodeToStringBuilder.TranslateParameterAliasNodes(System.Collections.Generic.IDictionary{System.String,Microsoft.OData.UriParser.SingleValueNode})">
@@ -47409,7 +48133,7 @@
             Initializes a new instance of the <see cref="T:Microsoft.OData.ODataUri"/> class.
             </summary>
         </member>
-        <member name="M:Microsoft.OData.ODataUri.#ctor(Microsoft.OData.UriParser.ParameterAliasValueAccessor,Microsoft.OData.UriParser.ODataPath,System.Collections.Generic.IEnumerable{Microsoft.OData.UriParser.QueryNode},Microsoft.OData.UriParser.SelectExpandClause,Microsoft.OData.UriParser.FilterClause,Microsoft.OData.UriParser.OrderByClause,Microsoft.OData.UriParser.SearchClause,Microsoft.OData.UriParser.Aggregation.ApplyClause,System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Boolean},Microsoft.OData.UriParser.ComputeClause)">
+        <member name="M:Microsoft.OData.ODataUri.#ctor(Microsoft.OData.UriParser.ParameterAliasValueAccessor,Microsoft.OData.UriParser.ODataPath,System.Collections.Generic.IEnumerable{Microsoft.OData.UriParser.QueryNode},Microsoft.OData.UriParser.SelectExpandClause,Microsoft.OData.UriParser.FilterClause,Microsoft.OData.UriParser.OrderByClause,Microsoft.OData.UriParser.SearchClause,Microsoft.OData.UriParser.Aggregation.ApplyClause,System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Boolean},Microsoft.OData.UriParser.ComputeClause)">
             <summary>
             Create a new ODataUri. This contains the semantic meaning of the
             entire uri.
@@ -47492,6 +48216,11 @@
             Gets or sets any $top option for this uri.
             </summary>
         </member>
+        <member name="P:Microsoft.OData.ODataUri.Index">
+            <summary>
+            Gets or sets any $index option for this uri.
+            </summary>
+        </member>
         <member name="P:Microsoft.OData.ODataUri.QueryCount">
             <summary>
             Get or sets any query $count option for this uri.
@@ -47543,6 +48272,16 @@
             <param name="value">Value to convert.</param>
             <param name="version">OData version to be compliant with.</param>
             <returns>A string representation of <paramref name="value"/> to be added to a Url.</returns>
+        </member>
+        <member name="M:Microsoft.OData.ODataUriConversionUtils.ConvertFromResourceValue(System.String,Microsoft.OData.Edm.IEdmModel,Microsoft.OData.Edm.IEdmTypeReference)">
+            <summary>
+            Converts the given string <paramref name="value"/> to an ODataResourceValue and returns it.
+            </summary>
+            <remarks>Does not handle primitive values.</remarks>
+            <param name="value">Value to be deserialized.</param>
+            <param name="model">Model to use for verification.</param>
+            <param name="typeReference">Expected type reference from deserialization. If null, verification will be skipped.</param>
+            <returns>An ODataResourceValue that results from the deserialization of <paramref name="value"/>.</returns>
         </member>
         <member name="M:Microsoft.OData.ODataUriConversionUtils.ConvertFromCollectionValue(System.String,Microsoft.OData.Edm.IEdmModel,Microsoft.OData.Edm.IEdmTypeReference)">
             <summary>
@@ -47596,6 +48335,15 @@
             <param name="links">Instance to convert.</param>
             <param name="model">Model to be used for validation. User model is optional. The EdmLib core model is expected as a minimum.</param>
             <returns>A string representation of <paramref name="links"/> to be added to a Url.</returns>
+        </member>
+        <member name="M:Microsoft.OData.ODataUriConversionUtils.ConvertToResourceLiteral(Microsoft.OData.ODataResourceValue,Microsoft.OData.Edm.IEdmModel,Microsoft.OData.ODataVersion)">
+            <summary>
+            Converts a <see cref="T:Microsoft.OData.ODataResourceValue"/> to a string.
+            </summary>
+            <param name="resourceValue">Instance to convert.</param>
+            <param name="model">Model to be used for validation. User model is optional. The EdmLib core model is expected as a minimum.</param>
+            <param name="version">Version to be compliant with.</param>
+            <returns>A string representation of <paramref name="resourceValue"/> to be added.</returns>
         </member>
         <member name="M:Microsoft.OData.ODataUriConversionUtils.ConvertToUriCollectionLiteral(Microsoft.OData.ODataCollectionValue,Microsoft.OData.Edm.IEdmModel,Microsoft.OData.ODataVersion)">
             <summary>
@@ -48075,6 +48823,198 @@
             </summary>
             <param name="propertyName">The property name to check.</param>
         </member>
+        <member name="T:Microsoft.OData.ODataCollectionValue">
+            <summary>
+            OData representation of a Collection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataCollectionValue.TypeName">
+            <summary>Gets or sets the type of the collection value.</summary>
+            <returns>The type of the collection value.</returns>
+        </member>
+        <member name="P:Microsoft.OData.ODataCollectionValue.Items">
+            <summary>Gets or sets the items in the bag value.</summary>
+            <returns>The items in the bag value.</returns>
+        </member>
+        <member name="T:Microsoft.OData.ODataEnumValue">
+            <summary>
+            OData enum value
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.ODataEnumValue.#ctor(System.String)">
+            <summary>Constructor</summary>
+            <param name="value">The backing type, can be "3" or "White" or "Black,Yellow,Cyan".</param>
+        </member>
+        <member name="M:Microsoft.OData.ODataEnumValue.#ctor(System.String,System.String)">
+            <summary>Constructor</summary>
+            <param name="value">The backing type, can be "3" or "White" or "Black,Yellow,Cyan".</param>
+            <param name="typeName">The type name in edm model.</param>
+        </member>
+        <member name="P:Microsoft.OData.ODataEnumValue.Value">
+            <summary>Get backing type value, can be "3" or "White" or "Black,Yellow,Cyan".</summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataEnumValue.TypeName">
+            <summary>Get the type name in edm model.</summary>
+        </member>
+        <member name="T:Microsoft.OData.ODataNullValue">
+            <summary>
+            Represents a null property value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataNullValue.IsNullValue">
+            <summary>
+            Indicates whether the given value is a null value.
+            </summary>
+            <value> true, since this object always represents a null value. </value>
+        </member>
+        <member name="T:Microsoft.OData.ODataPrimitiveValue">
+            <summary>
+            Represents a primitive property value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.ODataPrimitiveValue.#ctor(System.Object)">
+            <summary>
+            Creates a new primitive value from the given CLR value.
+            </summary>
+            <param name="value">The primitive to wrap.</param>
+            <remarks>The primitive value should not be an instance of ODataValue.</remarks>
+        </member>
+        <member name="P:Microsoft.OData.ODataPrimitiveValue.Value">
+            <summary>
+            Gets the underlying CLR object wrapped by this <see cref="T:Microsoft.OData.ODataPrimitiveValue"/>.
+            </summary>
+            <value> The underlying primitive CLR value. </value>
+        </member>
+        <member name="T:Microsoft.OData.ODataResourceValue">
+            <summary>
+            Represents the value of a resource (complex or entity).
+            It can be used as instance annotation value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataResourceValue.TypeName">
+            <summary>
+            Gets or sets the type name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataResourceValue.Properties">
+            <summary>
+            Gets or sets the properties belong to this resource.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataResourceValue.InstanceAnnotations">
+            <summary>
+            Collection of custom instance annotations.
+            </summary>
+        </member>
+        <member name="T:Microsoft.OData.ODataStreamReferenceValue">
+            <summary>
+            Represents a media resource.
+            </summary>
+        </member>
+        <member name="F:Microsoft.OData.ODataStreamReferenceValue.metadataBuilder">
+            <summary>the metadata builder for this OData resource.</summary>
+        </member>
+        <member name="F:Microsoft.OData.ODataStreamReferenceValue.edmPropertyName">
+            <summary>The name of the named stream this value belongs to; null for the default media resource.</summary>
+        </member>
+        <member name="F:Microsoft.OData.ODataStreamReferenceValue.editLink">
+            <summary>Edit link for media resource.</summary>
+        </member>
+        <member name="F:Microsoft.OData.ODataStreamReferenceValue.computedEditLink">
+            <summary>Edit link for media resource.</summary>
+        </member>
+        <member name="F:Microsoft.OData.ODataStreamReferenceValue.readLink">
+            <summary>Read link for media resource.</summary>
+        </member>
+        <member name="F:Microsoft.OData.ODataStreamReferenceValue.computedReadLink">
+            <summary>Read link for media resource.</summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataStreamReferenceValue.EditLink">
+            <summary>Gets or sets the edit link for media resource.</summary>
+            <returns>The edit link for media resource.</returns>
+        </member>
+        <member name="P:Microsoft.OData.ODataStreamReferenceValue.ReadLink">
+            <summary>Gets or sets the read link for media resource.</summary>
+            <returns>The read link for media resource.</returns>
+        </member>
+        <member name="P:Microsoft.OData.ODataStreamReferenceValue.ContentType">
+            <summary>Gets or sets the content media type.</summary>
+            <returns>The content media type.</returns>
+        </member>
+        <member name="P:Microsoft.OData.ODataStreamReferenceValue.ETag">
+            <summary>Gets or sets the media resource ETag.</summary>
+            <returns>The media resource ETag.</returns>
+        </member>
+        <member name="P:Microsoft.OData.ODataStreamReferenceValue.HasNonComputedEditLink">
+            <summary>
+            true if an edit link was provided by the user or seen on the wire, false otherwise.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataStreamReferenceValue.HasNonComputedReadLink">
+            <summary>
+            true if a read link was provided by the user or seen on the wire, false otherwise.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.ODataStreamReferenceValue.SetMetadataBuilder(Microsoft.OData.Evaluation.ODataResourceMetadataBuilder,System.String)">
+            <summary>
+            Sets the metadata builder for this stream reference value.
+            </summary>
+            <param name="builder">The metadata builder used to compute values from model annotations.</param>
+            <param name="propertyName">The property name for the named stream; null for the default media resource.</param>
+        </member>
+        <member name="M:Microsoft.OData.ODataStreamReferenceValue.GetMetadataBuilder">
+            <summary>
+            Gets the metadata builder for this stream reference value.
+            </summary>
+            <returns>The metadata builder used to compute links.</returns>
+        </member>
+        <member name="T:Microsoft.OData.ODataUntypedValue">
+            <summary>
+            OData representation of an untyped value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataUntypedValue.RawValue">
+            <summary>Gets or sets the raw untyped value.</summary>
+            <returns>The raw untyped value.</returns>
+            <remarks>
+            The caller of the setter is responsible for formatting the value for the
+            data transmission protocol it will be used in.
+            For instance, if the protocol is JSON, the caller must format this value as JSON.
+            If the protocol is Atom, the caller must format this value as XML.
+            This libarary will not perform any formatting.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.OData.ODataValue">
+            <summary>
+            Represents the value of a property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.ODataValue.IsNullValue">
+            <summary>
+            Indicates whether the given value is a null value.
+            </summary>
+            <value> true if the value is an ODataNullValue, false otherwise. </value>
+        </member>
+        <member name="T:Microsoft.OData.ODataValueUtils">
+            <summary>
+            Class with utility methods to deal with values in ODataLib.
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.ODataValueUtils.ToODataValue(System.Object)">
+            <summary>
+            Converts an object to an ODataValue. If the given object is already an ODataValue (such as an ODataCollectionValue, etc.), the original object will be returned.
+            </summary>
+            <param name="objectToConvert">The object to convert to an ODataValue</param>
+            <returns>The given object as an ODataValue.</returns>
+        </member>
+        <member name="M:Microsoft.OData.ODataValueUtils.FromODataValue(Microsoft.OData.ODataValue)">
+            <summary>
+            Converts an ODataValue to the old style of representing values, where null values are null and primitive values are just the direct primitive (no longer wrapped by ODataPrimitiveValue).
+            All other value types, such as ODataCollectionValue are returned unchanged.
+            </summary>
+            <param name="odataValue">The value to convert.</param>
+            <returns>The value behind the given ODataValue.</returns>
+        </member>
         <member name="T:Microsoft.OData.WriterUtils">
             <summary>
             Class with utility methods for writing OData content.
@@ -48207,6 +49147,13 @@
             <param name="writingResponse">true when writing a response; otherwise false.</param>
             <remarks>This does NOT validate the value of the stream property, just the property itself.</remarks>
         </member>
+        <member name="M:Microsoft.OData.WriterValidationUtils.ValidatePropertyDerivedTypeConstraint(Microsoft.OData.PropertySerializationInfo)">
+            <summary>
+            Validates the value type of a property meets the derived type constraints.
+            </summary>
+            <param name="propertySerializationInfo">The property serialization info.</param>
+            <remarks>This does NOT validate the value of the property, just the type of property.</remarks>
+        </member>
         <member name="M:Microsoft.OData.WriterValidationUtils.ValidateEntityReferenceLinkNotNull(Microsoft.OData.ODataEntityReferenceLink)">
             <summary>
             Validates that the specified <paramref name="entityReferenceLink"/> is not null.
@@ -48229,6 +49176,16 @@
             <param name="expandedPayloadKind">The <see cref="T:Microsoft.OData.ODataPayloadKind"/> of the expanded content of this nested resource info or null for deferred links.</param>
             <param name="throwOnUndeclaredProperty">Flag indicating whether undeclared property on non open type should be prohibited.</param>
             <returns>The type of the navigation property for this nested resource info; or null if no <paramref name="declaringStructuredType"/> was specified.</returns>
+        </member>
+        <member name="M:Microsoft.OData.WriterValidationUtils.ValidateDerivedTypeConstraint(Microsoft.OData.Edm.IEdmStructuredType,Microsoft.OData.Edm.IEdmStructuredType,System.Collections.Generic.IEnumerable{System.String},System.String,System.String)">
+            <summary>
+            Validates the input <see cref="T:Microsoft.OData.Edm.IEdmStructuredType"/> meets the derived type constaints on the odata item.
+            </summary>
+            <param name="resourceType">The input resource type.</param>
+            <param name="metadataType">The type from metadata.</param>
+            <param name="derivedTypeConstraints">The derived type constraints on the nested resource.</param>
+            <param name="itemKind">The item kind.</param>
+            <param name="itemName">The item name.</param>
         </member>
         <member name="M:Microsoft.OData.WriterValidationUtils.ValidateNestedResourceInfoHasCardinality(Microsoft.OData.ODataNestedResourceInfo)">
             <summary>
@@ -48373,6 +49330,16 @@
             <param name="expandedPayloadKind">The <see cref="T:Microsoft.OData.ODataPayloadKind"/> of the expanded content of this nested resource info or null for deferred links.</param>
             <returns>The type of the navigation property for this nested resource info; or null if no <paramref name="declaringStructuredType"/> was specified.</returns>
         </member>
+        <member name="M:Microsoft.OData.WriterValidator.ValidateDerivedTypeConstraint(Microsoft.OData.Edm.IEdmStructuredType,Microsoft.OData.Edm.IEdmStructuredType,System.Collections.Generic.IEnumerable{System.String},System.String,System.String)">
+            <summary>
+            Validates the input <see cref="T:Microsoft.OData.Edm.IEdmStructuredType"/> meets the derived type constaints on the <see cref="T:Microsoft.OData.Edm.IEdmNavigationSource"/>.
+            </summary>
+            <param name="resourceType">The input resource type.</param>
+            <param name="metadataType">The type from metadata.</param>
+            <param name="derivedTypeConstraints">The derived type constraints on the nested resource.</param>
+            <param name="itemKind">The item kind.</param>
+            <param name="itemName">The item name.</param>
+        </member>
         <member name="T:Microsoft.OData.PlatformHelper">
             <summary>
             Helper methods that provide a common API surface on all platforms.
@@ -48485,12 +49452,28 @@
             <param name="type">Type on which to call this helper method.</param>
             <returns>See documentation for property being accessed in the body of the method.</returns>
         </member>
+        <member name="M:Microsoft.OData.PlatformHelper.TryConvertStringToDate(System.String,Microsoft.OData.Edm.Date@)">
+            <summary>
+            Converts a string to a Date.
+            </summary>
+            <param name="text">String to be converted.</param>
+            <param name="date">The converted date value</param>
+            <returns>if parsing was successful</returns>
+        </member>
         <member name="M:Microsoft.OData.PlatformHelper.ConvertStringToDate(System.String)">
             <summary>
             Converts a string to a Date.
             </summary>
             <param name="text">String to be converted.</param>
             <returns>Date value</returns>
+        </member>
+        <member name="M:Microsoft.OData.PlatformHelper.TryConvertStringToTimeOfDay(System.String,Microsoft.OData.Edm.TimeOfDay@)">
+            <summary>
+            Converts a string to a TimeOfDay.
+            </summary>
+            <param name="text">String to be converted.</param>
+            <param name="timeOfDay">Time of the day</param>
+            <returns>Whether the value is a valid time of day</returns>
         </member>
         <member name="M:Microsoft.OData.PlatformHelper.ConvertStringToTimeOfDay(System.String)">
             <summary>
@@ -49245,14 +50228,25 @@
             A string like "ODataWriter.WriteEnd was called in an invalid state ('{0}'); WriteEnd is only supported in states 'Resource', 'ResourceSet', 'NavigationLink', and 'NavigationLinkWithContent'."
             </summary>
         </member>
+        <member name="P:Microsoft.OData.Strings.ODataWriterCore_DeltaResourceWithoutIdOrKeyProperties">
+            <summary>
+            A string like "No Id or key properties were found. A resource in a delta response requires an ID or key properties be specified."
+            </summary>
+        </member>
         <member name="P:Microsoft.OData.Strings.ODataWriterCore_QueryCountInRequest">
             <summary>
             A string like "The ODataResourceSet.Count must be null for request payloads. Query counts are only supported in responses."
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "P:Microsoft.OData.Strings.ODataWriterCore_QueryDeltaLinkInRequest" -->
+        <member name="P:Microsoft.OData.Strings.ODataWriterCore_QueryNextLinkInRequest">
+            <summary>
+            A string like "The NextPageLink must be null for request payloads. Next page links are only supported in responses."
+            </summary>
+        </member>
         <member name="P:Microsoft.OData.Strings.ODataWriterCore_CannotWriteDeltaWithResourceSetWriter">
             <summary>
-            A string like "Cannot write a deleted resource, delta link, or delta deleted link using ODataResourceSetWriter. Please use an ODataDeltaResourceSetWriter."
+            A string like "Cannot write a delta deleted resource, link, or deleted link using ODataResourceSetWriter. Please use an ODataDeltaResourceSetWriter."
             </summary>
         </member>
         <member name="P:Microsoft.OData.Strings.ODataWriterCore_NestedContentNotAllowedIn40DeletedEntry">
@@ -49278,11 +50272,6 @@
         <member name="P:Microsoft.OData.Strings.ODataWriterCore_AsyncCallOnSyncWriter">
             <summary>
             A string like "An asynchronous operation was called on a synchronous writer. Calls on a writer instance must be either all synchronous or all asynchronous."
-            </summary>
-        </member>
-        <member name="P:Microsoft.OData.Strings.ODataWriterCore_DeltaResourceWithoutIdOrKeyProperties">
-            <summary>
-            A string like "No Id or key properties were found. A resource in a delta response requires an ID or key properties be specified."
             </summary>
         </member>
         <member name="P:Microsoft.OData.Strings.ODataWriterCore_EntityReferenceLinkWithoutNavigationLink">
@@ -49453,6 +50442,11 @@
         <member name="M:Microsoft.OData.Strings.ODataMessageWriter_NonCollectionType(System.Object)">
             <summary>
             A string like "The type '{0}' specified as the collection's item type is not primitive, enum or complex. An ODataCollectionWriter can only write collections of primitive, enum or complex values."
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.Strings.ODataMessageWriter_NotAllowedWriteTopLevelPropertyWithResourceValue(System.Object)">
+            <summary>
+            A string like "Not allowed to write top level property '{0}' with 'ODataResourceValue' or collection of resource value."
             </summary>
         </member>
         <member name="P:Microsoft.OData.Strings.ODataMessageWriterSettings_MessageWriterSettingsXmlCustomizationCallbacksMustBeSpecifiedBoth">
@@ -49730,11 +50724,6 @@
             A string like "A response message for the operation has already been created. You cannot create a response message for the same operation multiple times."
             </summary>
         </member>
-        <member name="P:Microsoft.OData.Strings.ODataBatchReader_ReaderStreamChangesetBoundaryCannotBeNull">
-            <summary>
-            A string like "Changeset boundary must have been set by now."
-            </summary>
-        </member>
         <member name="M:Microsoft.OData.Strings.ODataBatchReader_InvalidStateForCreateOperationResponseMessage(System.Object)">
             <summary>
             A string like "The method CreateOperationResponseMessage was called in state '{0}', which is not allowed. CreateOperationResponseMessage can only be called in state 'Operation'."
@@ -49775,15 +50764,19 @@
             A string like "An operation was detected, but no message was created for it. You must create a message for every operation found in a batch or change set."
             </summary>
         </member>
+        <member name="P:Microsoft.OData.Strings.ODataBatchReader_ReaderModeNotInitilized">
+            <summary>
+            A string like "Reader mode is not setup correctly."
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.Strings.ODataBatchReader_JsonBatchTopLevelPropertyMissing">
+            <summary>
+            A string like "JsonLight batch format requires top level property name 'requests' or 'response' but it is missing."
+            </summary>
+        </member>
         <member name="M:Microsoft.OData.Strings.ODataBatchReader_DuplicateContentIDsNotAllowed(System.Object)">
             <summary>
             A string like "The content ID '{0}' was found more than once in the same change set or same batch request. Content IDs have to be unique across all operations of a change set for OData V4.0 and have to be unique across all operations in the whole batch request for OData V4.01."
-            </summary>
-        </member>
-        <!-- Badly formed XML comment ignored for member "P:Microsoft.OData.Strings.ODataBatchReader_ReaderModeNotInitilized" -->
-        <member name="P:Microsoft.OData.Strings.ODataBatchReader_JsonBatchTopLevelPropertyMissing">
-            <summary>
-            A string like "JsonLight batch format requires top level property name 'requests' or 'responses' but it is missing."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.ODataBatchReader_DuplicateAtomicityGroupIDsNotAllowed(System.Object)">
@@ -49808,13 +50801,17 @@
         </member>
         <member name="M:Microsoft.OData.Strings.ODataBatchReader_DependsOnRequestIdIsPartOfAtomicityGroupNotAllowed(System.Object,System.Object)">
             <summary>
-            A string like "The dependsOn request Id [{0}] is part of atomic group [{1}]. Therefore
-            dependsOn property should refer to atomic group Id [{1}] instead."
+            A string like "The dependsOn request Id [{0}] is part of atomic group [{1}]. Therefore dependsOn property should refer to atomic group Id [{1}] instead."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.ODataBatchReader_DependsOnIdNotFound(System.Object,System.Object)">
             <summary>
             A string like "The dependsOn Id: [{0}] in request [{1}] is not matching any of the request Id and atomic group Id seen so far. Forward reference is not allowed."
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.Strings.ODataBatchReader_AbsoluteURINotMatchingBaseUri(System.Object,System.Object)">
+            <summary>
+            A string like "Absolute URI {0} is not start with the base URI [{1}] specified by the operation message."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.ODataBatchReader_ReferenceIdNotIncludedInDependsOn(System.Object,System.Object,System.Object)">
@@ -49829,7 +50826,12 @@
         </member>
         <member name="M:Microsoft.OData.Strings.ODataBatchReader_MessageIdPositionedIncorrectly(System.Object,System.Object)">
             <summary>
-            A string like " Message with id {0} is positioned incorrectly: all messages of same groupId {1} must be adjacent."
+            A string like "Message with id [{0}] is positioned incorrectly: all messages of same groupId [{1}] must be adjacent."
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.Strings.ODataBatchReader_ReaderStreamChangesetBoundaryCannotBeNull">
+            <summary>
+            A string like "Changeset boundary must have been set by now."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.ODataBatchReaderStream_InvalidHeaderSpecified(System.Object)">
@@ -50182,14 +51184,14 @@
             A string like "The value '{0}' of the OData-Version HTTP header is invalid. Only '4.0' and '4.01' are supported as values for the OData-Version header."
             </summary>
         </member>
-        <member name="P:Microsoft.OData.Strings.ODataUtils_UnsupportedVersionNumber">
-            <summary>
-            A string like "An invalid enum value was specified for the version number."
-            </summary>
-        </member>
         <member name="M:Microsoft.OData.Strings.ODataUtils_MaxProtocolVersionExceeded(System.Object,System.Object)">
             <summary>
             A string like "An OData version of {0} was specified and the maximum supported OData version is {1}."
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.Strings.ODataUtils_UnsupportedVersionNumber">
+            <summary>
+            A string like "An invalid enum value was specified for the version number."
             </summary>
         </member>
         <member name="P:Microsoft.OData.Strings.ODataUtils_ModelDoesNotHaveContainer">
@@ -50275,6 +51277,11 @@
         <member name="M:Microsoft.OData.Strings.ReaderValidationUtils_ContextUriDoesNotReferTypeAssignableToExpectedType(System.Object,System.Object,System.Object)">
             <summary>
             A string like "The context URI '{0}' refers to the item type '{1}' which is not assignable to the expected item type '{2}'."
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.Strings.ReaderValidationUtils_ValueTypeNotAllowedInDerivedTypeConstraint(System.Object,System.Object,System.Object)">
+            <summary>
+            A string like "The value type '{0}' is not allowed due to an Org.OData.Validation.V1.DerivedTypeConstraint annotation on {1} '{2}'."
             </summary>
         </member>
         <member name="P:Microsoft.OData.Strings.ODataMessageReader_ReaderAlreadyUsed">
@@ -50892,6 +51899,11 @@
             A string like "A JSON Padding function was specified on ODataMessageWriterSettings when trying to write a request message. JSON Padding is only for writing responses."
             </summary>
         </member>
+        <member name="M:Microsoft.OData.Strings.WriterValidationUtils_ValueTypeNotAllowedInDerivedTypeConstraint(System.Object,System.Object,System.Object)">
+            <summary>
+            A string like "The value type '{0}' is not allowed due to an Org.OData.Validation.V1.DerivedTypeConstraint annotation on {1} '{2}'."
+            </summary>
+        </member>
         <member name="M:Microsoft.OData.Strings.XmlReaderExtension_InvalidNodeInStringValue(System.Object)">
             <summary>
             A string like "An XML node of type '{0}' was found in a string value. An element with a string value can only contain Text, CDATA, SignificantWhitespace, Whitespace or Comment nodes."
@@ -51107,9 +52119,9 @@
             A string like "The ODataResourceSet.InstanceAnnotations collection must be empty for expanded resource sets. Custom instance annotations are not supported on expanded resource sets."
             </summary>
         </member>
-        <member name="P:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueSerializer_NoExpectedTypeOrTypeNameSpecifiedForComplexValueRequest">
+        <member name="P:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueSerializer_NoExpectedTypeOrTypeNameSpecifiedForResourceValueRequest">
             <summary>
-            A string like "Neither an expected type nor a type name in the OData object model was provided for a complex value. When writing a request payload, either an expected type or a type name has to be specified."
+            A string like "Neither an expected type nor a type name in the OData object model was provided for a resource value. When writing a request payload, either an expected type or a type name has to be specified."
             </summary>
         </member>
         <member name="P:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueSerializer_NoExpectedTypeOrTypeNameSpecifiedForCollectionValueInRequest">
@@ -51207,9 +52219,9 @@
             A string like "One or more property annotations for property '{0}' were found in the top-level property or collection payload without the property to annotate. Top-level property and collection payloads must contain a single property, with optional annotations for this property."
             </summary>
         </member>
-        <member name="M:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueDeserializer_ComplexValuePropertyAnnotationWithoutProperty(System.Object)">
+        <member name="M:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueDeserializer_ResourceValuePropertyAnnotationWithoutProperty(System.Object)">
             <summary>
-            A string like "One or more property annotations for property '{0}' were found in the complex value without the property to annotate. Complex values must only contain property annotations for existing properties."
+            A string like "One or more property annotations for property '{0}' were found in the resource value without the property to annotate. Resource values must only contain property annotations for existing properties."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueDeserializer_ComplexValueWithPropertyTypeAnnotation(System.Object)">
@@ -51217,9 +52229,9 @@
             A string like "A complex property with an '{0}' property annotation was found. Complex properties must not have the '{0}' property annotation, instead the '{0}' should be specified as an instance annotation in the complex value."
             </summary>
         </member>
-        <member name="P:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueDeserializer_ComplexTypeAnnotationNotFirst">
+        <member name="P:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueDeserializer_ResourceTypeAnnotationNotFirst">
             <summary>
-            A string like "The 'odata.type' instance annotation in a complex object is not the first property of the object. In OData, the 'odata.type' instance annotation must be the first property of the complex object."
+            A string like "The 'odata.type' instance annotation in a resource object is not the first property of the object. In OData, the 'odata.type' instance annotation must be the first property of the resource object."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueDeserializer_UnexpectedDataPropertyAnnotation(System.Object,System.Object)">
@@ -51254,12 +52266,12 @@
         </member>
         <member name="M:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueDeserializer_CollectionTypeNotExpected(System.Object)">
             <summary>
-            A string like "A collection type '{0}' was specified for a non-collection value."
+            A string like "A collection type of '{0}' was specified for a non-collection value."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.ODataJsonLightPropertyAndValueDeserializer_CollectionTypeExpected(System.Object)">
             <summary>
-            A string like "A non-collection type '{0}' was specified for a collection value."
+            A string like "A non-collection type of '{0}' was specified for a collection value."
             </summary>
         </member>
         <member name="P:Microsoft.OData.Strings.ODataJsonReaderCoreUtils_CannotReadSpatialPropertyValue">
@@ -51270,11 +52282,6 @@
         <member name="P:Microsoft.OData.Strings.ODataJsonLightReader_UnexpectedPrimitiveValueForODataResource">
             <summary>
             A string like "If a primitive value is representing a resource, the resource must be null."
-            </summary>
-        </member>
-        <member name="M:Microsoft.OData.Strings.ODataJsonLightResourceDeserializer_DeltaRemovedAnnotationMustBeObject(System.Object)">
-            <summary>
-            A string like "Invalid primitive value '{0}' for @removed annotation. @removed annotation must be a JSON object, optionally containing a 'reason' property."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.ODataJsonLightReaderUtils_AnnotationWithNullValue(System.Object)">
@@ -51330,6 +52337,11 @@
         <member name="M:Microsoft.OData.Strings.ODataJsonLightContextUriParser_TopLevelContextUrlShouldBeAbsolute(System.Object)">
             <summary>
             A string like "The top level context URL '{0}' should be an absolute Uri."
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.Strings.ODataJsonLightResourceDeserializer_DeltaRemovedAnnotationMustBeObject(System.Object)">
+            <summary>
+            A string like "Invalid primitive value '{0}' for @removed annotation. @removed annotation must be a JSON object, optionally containing a 'reason' property."
             </summary>
         </member>
         <member name="P:Microsoft.OData.Strings.ODataJsonLightResourceDeserializer_ResourceTypeAnnotationNotFirst">
@@ -51732,6 +52744,11 @@
             A string like "The property '{0}' on type '{1}' is a non-primitive value. All key and etag properties must be of primitive types."
             </summary>
         </member>
+        <member name="M:Microsoft.OData.Strings.ODataResource_PropertyValueCannotBeODataResourceValue(System.Object)">
+            <summary>
+            A string like "The value of a property '{0}' in ODataResource cannot be of type ODataResourceValue or collection of ODataResourceValue."
+            </summary>
+        </member>
         <member name="M:Microsoft.OData.Strings.EdmValueUtils_NonPrimitiveValue(System.Object,System.Object)">
             <summary>
             A string like "The primitive property '{0}' on type '{1}' has a value which is not a primitive value."
@@ -51847,6 +52864,11 @@
             A string like "Invalid value '{0}' for $count query option found. Valid values are '{1}'."
             </summary>
         </member>
+        <member name="M:Microsoft.OData.Strings.SyntacticTree_InvalidIndexQueryOptionValue(System.Object)">
+            <summary>
+            A string like "Invalid value '{0}' for $index query option found. The $index query option requires an integer value."
+            </summary>
+        </member>
         <member name="M:Microsoft.OData.Strings.QueryOptionUtils_QueryParameterMustBeSpecifiedOnce(System.Object)">
             <summary>
             A string like "Query option '{0}' was specified more than once, but it must be specified at most once."
@@ -51920,6 +52942,11 @@
         <member name="M:Microsoft.OData.Strings.UriQueryExpressionParser_KeywordOrIdentifierExpected(System.Object,System.Object,System.Object)">
             <summary>
             A string like "'{0}' expected at position {1} in '{2}'."
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.Strings.UriQueryExpressionParser_InnerMostExpandRequireFilter(System.Object,System.Object)">
+            <summary>
+            A string like "The inner most expand transformation requires a filter transformation at position {0} in '{1}'."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.UriQueryPathParser_RequestUriDoesNotHaveTheCorrectBaseUri(System.Object,System.Object)">
@@ -52132,6 +53159,11 @@
             A string like "The '{0}' option cannot be applied to the query path. '{0}' can only be applied to a collection of entities."
             </summary>
         </member>
+        <member name="M:Microsoft.OData.Strings.StringItemShouldBeQuoted(System.Object)">
+            <summary>
+            A string like "String item should be single/double quoted: '{0}'."
+            </summary>
+        </member>
         <member name="M:Microsoft.OData.Strings.ApplyBinder_AggregateExpressionIncompatibleTypeForMethod(System.Object,System.Object)">
             <summary>
             A string like "$apply/aggregate expression '{0}' operation does not support value type '{1}'."
@@ -52144,7 +53176,7 @@
         </member>
         <member name="M:Microsoft.OData.Strings.ApplyBinder_UnsupportedAggregateKind(System.Object)">
             <summary>
-            A string like "$apply/aggregate token kind '{0}' not supported."
+            A string like "$apply/aggregate expression token kind '{0}' not supported."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.ApplyBinder_AggregateExpressionNotSingleValue(System.Object)">
@@ -52167,7 +53199,7 @@
             A string like "$apply/groupby not support '{0}' as child transformation"
             </summary>
         </member>
-        <member name="M:Microsoft.OData.Strings.AggregateTransformationNode_UnsupportedAggregateExpressions">
+        <member name="P:Microsoft.OData.Strings.AggregateTransformationNode_UnsupportedAggregateExpressions">
             <summary>
             A string like "There are unsupported aggregation expressions in the transformation node."
             </summary>
@@ -52339,7 +53371,7 @@
         </member>
         <member name="M:Microsoft.OData.Strings.Nodes_InNode_CollectionItemTypeMustBeSameAsSingleItemType(System.Object,System.Object)">
             <summary>
-            A string like "An instance of InNode can only be created where the item type of the right operand collection '{0}' is equal to that of the left operand single value '{0}'."
+            A string like "An instance of InNode can only be created where the item types of the right operand '{0}' and the left operand '{1}' can be compared."
             </summary>
         </member>
         <member name="P:Microsoft.OData.Strings.ExpandTreeNormalizer_NonPathInPropertyChain">
@@ -52487,6 +53519,11 @@
             A string like "Type cast segment '{0}' after a collection which is not of entity or complex type is not allowed."
             </summary>
         </member>
+        <member name="M:Microsoft.OData.Strings.PathParser_TypeCastOnlyAllowedInDerivedTypeConstraint(System.Object,System.Object,System.Object)">
+            <summary>
+            A string like "Type cast segment '{0}' on {1} '{2}' is not allowed due to an Org.OData.Validation.V1.DerivedTypeConstraint annotation."
+            </summary>
+        </member>
         <member name="P:Microsoft.OData.Strings.ODataResourceSet_MustNotContainBothNextPageLinkAndDeltaLink">
             <summary>
             A string like "A resource set may contain a next page link, a delta link or neither, but must not contain both."
@@ -52602,6 +53639,31 @@
             A string like "The KeySegment provided (Id = {0}) is either null, having no keys, or does not target a single resource."
             </summary>
         </member>
+        <member name="M:Microsoft.OData.Strings.RequestUriProcessor_CannotApplyFilterOnSingleEntities(System.Object)">
+            <summary>
+            A string like "$filter path segment cannot be applied on single entities or singletons. Entity type: '{0}'."
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.Strings.RequestUriProcessor_CannotApplyEachOnSingleEntities(System.Object)">
+            <summary>
+            A string like "$each set-based operation cannot be applied on single entities or singletons. Entity type: '{0}'."
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.Strings.RequestUriProcessor_FilterPathSegmentSyntaxError">
+            <summary>
+            A string like "The $filter path segment must be in the form $filter(expression), where the expression resolves to a boolean."
+            </summary>
+        </member>
+        <member name="M:Microsoft.OData.Strings.RequestUriProcessor_NoNavigationSourceFound(System.Object)">
+            <summary>
+            A string like "There are no navigation sources found to apply '{0}'."
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.Strings.RequestUriProcessor_OnlySingleOperationCanFollowEachPathSegment">
+            <summary>
+            A string like "Only a single operation can follow $each."
+            </summary>
+        </member>
         <member name="P:Microsoft.OData.Strings.RequestUriProcessor_EmptySegmentInRequestUrl">
             <summary>
             A string like "Empty segment encountered in request URL. Please make sure that a valid request URL is specified."
@@ -52615,6 +53677,21 @@
         <member name="P:Microsoft.OData.Strings.RequestUriProcessor_CountOnRoot">
             <summary>
             A string like "The request URI is not valid, the segment $count cannot be applied to the root of the service."
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.Strings.RequestUriProcessor_FilterOnRoot">
+            <summary>
+            A string like "The request URI is not valid, the segment $filter cannot be applied to the root of the service."
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.Strings.RequestUriProcessor_EachOnRoot">
+            <summary>
+            A string like "The request URI is not valid, the segment $each cannot be applied to the root of the service."
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.Strings.RequestUriProcessor_RefOnRoot">
+            <summary>
+            A string like "The request URI is not valid, the segment $ref cannot be applied to the root of the service."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.RequestUriProcessor_MustBeLeafSegment(System.Object)">
@@ -52895,6 +53972,11 @@
         <member name="M:Microsoft.OData.Strings.JsonReader_InvalidPropertyNameOrUnexpectedComma(System.Object)">
             <summary>
             A string like "Invalid JSON. The property name '{0}' is not valid. The name of a property cannot be empty."
+            </summary>
+        </member>
+        <member name="P:Microsoft.OData.Strings.JsonReader_MaxBufferReached">
+            <summary>
+            A string like "Cannot increase the JSON reader buffer to hold the input JSON which has very long token."
             </summary>
         </member>
         <member name="M:Microsoft.OData.Strings.JsonReaderExtensions_UnexpectedNodeDetected(System.Object,System.Object)">
