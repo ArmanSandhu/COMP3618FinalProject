@@ -1,1 +1,4 @@
 2019-04-02 15:59:57.7156|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containingtt0000005
+2019-04-02 16:15:59.5845|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing 
+2019-04-02 16:16:08.8513|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing Search
+2019-04-02 16:16:20.0561|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing Search

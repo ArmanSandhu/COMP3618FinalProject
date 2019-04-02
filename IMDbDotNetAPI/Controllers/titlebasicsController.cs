@@ -88,7 +88,7 @@ namespace IMDbDotNetAPI.Controllers
                     throw;
                 }
             }
-
+            logger.Trace("Update " + id);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -120,7 +120,7 @@ namespace IMDbDotNetAPI.Controllers
                     throw;
                 }
             }
-
+            logger.Trace("Create " + titlebasic.tconst);
             return CreatedAtRoute("DefaultApi", new { id = titlebasic.tconst }, titlebasic);
         }
 
@@ -136,7 +136,7 @@ namespace IMDbDotNetAPI.Controllers
 
             unitOfWork.Repository<titlebasic>().Delete(titlebasic);
             unitOfWork.Repository<titlebasic>().SaveChanges();
-
+            logger.Trace("Delete " + id);
             return Ok(titlebasic);
         }
 
