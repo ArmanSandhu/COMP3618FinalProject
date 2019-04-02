@@ -141,3 +141,5 @@ D:\Ann\BCIT\COMP3618\Assignments\FinalProject\COMP3618FinalProject\WpfApplicatio
 D:\Ann\BCIT\COMP3618\Assignments\FinalProject\COMP3618FinalProject\WpfApplication1\bin\Debug\WebGrease.dll
 D:\Ann\BCIT\COMP3618\Assignments\FinalProject\COMP3618FinalProject\WpfApplication1\bin\Debug\Antlr3.Runtime.dll
 D:\Ann\BCIT\COMP3618\Assignments\FinalProject\COMP3618FinalProject\WpfApplication1\bin\Debug\Antlr3.Runtime.pdb
+D:\Ann\BCIT\COMP3618\Assignments\FinalProject\COMP3618FinalProject\WpfApplication1\bin\Debug\NLog.dll
+D:\Ann\BCIT\COMP3618\Assignments\FinalProject\COMP3618FinalProject\WpfApplication1\bin\Debug\NLog.xml
