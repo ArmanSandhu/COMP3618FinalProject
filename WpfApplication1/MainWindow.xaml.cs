@@ -228,6 +228,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using System.ComponentModel;
 
 namespace WpfApplication1
 {
@@ -237,19 +238,28 @@ namespace WpfApplication1
     public partial class MainWindow : Window
     {
         public ObservableCollection<titlebasic> ObserveTitleBasicList { get; set; }
+        private readonly BackgroundWorker worker = new BackgroundWorker();
         public static List<titlebasic> titleBasicList;
         private string titleBasicID = null;
-        private int pageSize = 12;
-        private int pageIndex = 0;
+        private const int pageSize = 12;
+        private static int pageIndex = 0;
+        private static int cacheIndex = 0;
+        private static string cacheTag;
+        private List<titlebasic> nextList;
+        private string nowId;
         public int ienumerableCount=0;
         public List<titlebasic> asList;
         public List<titlebasic> pageList = new List<titlebasic>();
         public static HttpClient Client = new HttpClient();
+        bool temp = true;
 
         //start window
         public MainWindow()
         {
             Run();
+            worker.DoWork += worker_DoWork;
+            worker.WorkerSupportsCancellation = true;
+            if (pageIndex == 0) PreviousButton.IsEnabled = false;
         }
 
         //initialize components
@@ -331,12 +341,15 @@ namespace WpfApplication1
         //calls search method when button clicked
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            bgUtil();
             Search();
         }
 
         //calls search method when user double clicks on search box
         private void M_txtTest_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+
+            bgUtil();
             Search();
         }
 
@@ -345,6 +358,7 @@ namespace WpfApplication1
         {
             if (e.Key == System.Windows.Input.Key.Return)
             {
+                bgUtil();
                 Search();
             }
         }
@@ -352,24 +366,53 @@ namespace WpfApplication1
         //searches for user from database based on text in search box searching for tconst
         private async void Search()
         {
-
-            var id = m_txtTest.Text.Trim();
-            var url = "api/titlebasics/?id=" + id + "&startindex=" + pageIndex + "&pagesize=" + pageSize;
-            HttpResponseMessage response = Client.GetAsync(url).Result;
-
-            if (response.IsSuccessStatusCode)
+            if (pageIndex != 0) PreviousButton.IsEnabled = true;
+            
+            var url = "api/titlebasics/?id=" + nowId + "&startindex=" + pageIndex + "&pagesize=" + pageSize;
+            
+           
+            HttpResponseMessage response = null;
+            
+            if (nowId == cacheTag)
             {
-                PageNumber.Content = pageIndex + 1;
-                var titlebasics = await response.Content.ReadAsAsync<IEnumerable<titlebasic>>();
-                ienumerableCount = titlebasics.Count();
+                
+                PageNumber.Content = pageIndex / 12 + 1;
+                try
+                {
+                    asList = nextList.GetRange(pageIndex, 12);
+                }
+                catch {
+                    asList = nextList.Skip(pageIndex).ToList();
+                }
+                
+                ienumerableCount = asList.Count();
                 TotalCount.Content = ienumerableCount;
-                asList = titlebasics.ToList();
                 ObserveTitleBasicList = new ObservableCollection<titlebasic>(asList);
-                DataContext = ObserveTitleBasicList;              
+                DataContext = ObserveTitleBasicList;
+                
             }
             else
             {
-                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+                response = Client.GetAsync(url).Result;
+                if (nextList != null)
+                {
+                    nextList.Clear();
+                }
+                cacheTag = nowId;
+                if (response.IsSuccessStatusCode)
+                {
+                    PageNumber.Content = pageIndex % 12 + 1;
+                    var titlebasics = await response.Content.ReadAsAsync<IEnumerable<titlebasic>>();
+                    ienumerableCount = titlebasics.Count();
+                    TotalCount.Content = ienumerableCount;
+                    asList = titlebasics.ToList();
+                    ObserveTitleBasicList = new ObservableCollection<titlebasic>(asList);
+                    DataContext = ObserveTitleBasicList;
+                }
+                else
+                {
+                    MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+                }
             }
         }
 
@@ -405,28 +448,84 @@ namespace WpfApplication1
         {
             if (pageIndex > 0)
             {
-             
-                pageIndex--;
-                PageNumber.Content = pageIndex + 1;
-                var t = Task.Run(() => {
-                    Dispatcher.BeginInvoke(new ThreadStart(() => Search()));
-                });
-                t.Wait();
+                pageIndex-=12;
+                PageNumber.Content = pageIndex / 12 + 1;
+                Search();
             }
         }
 
         //advance pageIndex to next page and runs search based on new pageIndex
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            pageIndex++;
-            PageNumber.Content = pageIndex + 1;
-            var t = Task.Run(() => {
-                Dispatcher.BeginInvoke(new ThreadStart(() => Search()));
-            });
-            t.Wait();
+            pageIndex += 12;
+            PageNumber.Content = pageIndex / 12 + 1;
+            Search();
+           
         }
+        
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            
+            while (temp)
+            {
+                GetCache(sender as BackgroundWorker);
+            }
+            
 
-
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+            else
+            {
+                e.Result = "Get List Completed";
+            }
+        }
+        private async void GetCache(BackgroundWorker worker)
+        {
+            var cacheUrl = "api/titlebasics/?id=" + nowId + "&startindex=" + cacheIndex + "&pagesize=" + 36;
+            HttpResponseMessage responseCache = null;
+            responseCache = Client.GetAsync(cacheUrl).Result;
+            if (responseCache.IsSuccessStatusCode)
+            {
+                var tb = await responseCache.Content.ReadAsAsync<IEnumerable<titlebasic>>();
+                if (nextList == null)
+                {
+                    nextList = tb.ToList();
+                }
+                else
+                {
+                    nextList.AddRange(tb.ToList());
+                }
+                
+                cacheIndex += 36;
+            }
+            else
+            {
+                temp = false;
+            }
+            
+        }
+        private void bgUtil()
+        {
+            var id = m_txtTest.Text.Trim();
+            if (id == "Search") id = "";
+            nowId = id;
+            worker.CancelAsync();
+            pageIndex = 0;
+            if (nextList != null)
+            {
+                nextList.Clear();
+            }
+            if (!worker.IsBusy)
+            {
+                //trigger DoWork event
+                worker.RunWorkerAsync();
+            }
+            
+            
+        }
         //NOT USED.  COULD NOT GET IT TO PROPERLY CALL TITLEBASICCONTROLLER CLASS
         //private async void GetCount()
         //{
