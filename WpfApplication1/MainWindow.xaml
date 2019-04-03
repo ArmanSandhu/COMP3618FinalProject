@@ -1,0 +1,146 @@
+﻿<Window x:Class="WpfApplication1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"       
+        xmlns:local="clr-namespace:WpfApplication1"
+        mc:Ignorable="d"
+        Title="IMDB Movie Database" 
+        Height="700" Width="405" 
+        MinHeight="500" MinWidth="405"
+        MaxWidth="405"
+        WindowStartupLocation="Manual"
+        Left="50" Top="50"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <ControlTemplate x:Key="btnTemplate" TargetType="Button">
+            <Grid>
+                <Rectangle RadiusX="5" RadiusY="5" Fill="Gray">
+                </Rectangle>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+            </Grid>
+        </ControlTemplate>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="FontSize" Value="13"></Setter>
+
+        </Style>
+        <Style x:Key="tbkStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="10"></Setter>
+            <Setter Property="Padding" Value="4"></Setter>
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <Setter Property="LineStackingStrategy" Value="BlockLineHeight"></Setter>
+            <Setter Property="LineHeight" Value="10"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="0,0,0,0">
+
+        <DockPanel x:Name="SearchBar" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" Height="40" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"  Margin="0,0,0,0" MouseEnter="SearchBar_MouseEnter" MouseLeave="SearchBar_MouseLeave">
+            <TextBox x:Name="m_txtTest" Text="Search" FontSize="16" Padding="5,10,5,10" Background="AliceBlue" TextAlignment="Left" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" DockPanel.Dock ="Left" TextWrapping="Wrap" Width="350" Margin="0,0,0,0" Height="40" MouseDoubleClick="M_txtTest_MouseDoubleClick" KeyDown="M_txtTest_KeyDown" />
+            <Button x:Name="btnSearch" DockPanel.Dock ="Left" Width="50" Background="white" Foreground="Black" BorderThickness="0" Click="btnSearch_Click">
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <Image Source="Images/icons8-search-32.png" Width="25" Height="25"/>
+                </StackPanel>
+                <Button.ToolTip>
+                    <ToolTip>
+                        Search By tconst
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="BlankButton2" Content="" DockPanel.Dock ="Left" Height="25" Width="0" Background="White" Foreground="White"/>
+            
+        </DockPanel>
+
+        <DockPanel x:Name="Toolbar" Height="40" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Margin="0,40,0,0">
+            <Button x:Name="New_Button" DockPanel.Dock ="Left" Width="50" Background="white" Foreground="Black" Click="btnAdd_Click">
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <Image Source="Images/icons8-plus-math-32.png" Width="25" Height="25"/>
+                </StackPanel>
+                <Button.ToolTip>
+                    <ToolTip>
+                        Add New Entry
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="Edit_Button" DockPanel.Dock ="Left" Width="50" Background="white" Foreground="Black" Click="Edit_Button_Click">
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <Image Source="Images/icons8-edit-32.png" Width="25" Height="25" Margin="0,0,0,0"/>
+                </StackPanel>
+                <Button.ToolTip>
+                    <ToolTip>
+                        Edit
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="Save_Button" DockPanel.Dock ="Left" Width="50" Background="white" Foreground="Black" Click="Save_Button_Click">
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <Image Source="Images/icons8-save-32.png" Width="25" Height="25" Margin="0,0,0,0"/>
+                </StackPanel>
+                <Button.ToolTip>
+                    <ToolTip>
+                        Save
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="Refresh_Button" DockPanel.Dock ="Left" Width="50" Background="white" Foreground="Black" Click="Refresh_Button_Click">
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <Image Source="Images/icons8-available-updates-32.png" Width="25" Height="25" Margin="0,0,0,0"/>
+                </StackPanel>
+                <Button.ToolTip>
+                    <ToolTip>
+                        Refresh Page
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="Trash_Button" DockPanel.Dock ="Left" Width="50" Background="white" Foreground="Black" Click="btnDelete_Click">
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <Image Source="Images/icons8-trash-32.png" Width="25" Height="25" Margin="0,0,0,0"/>
+                </StackPanel>
+                <Button.ToolTip>
+                    <ToolTip>
+                        Delete Current Selection
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            
+            <Button x:Name="BlankButton" Content="" DockPanel.Dock ="Left" Height="25" Width="0" Background="White" Foreground="White"/>
+            <Label Name="PageCount" Content="       Page : " DockPanel.Dock ="Left" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White" VerticalContentAlignment="Center" Width="75"/>
+            <Label Name="PageNumber" Content="0"  DockPanel.Dock ="Right" Height="50" VerticalAlignment="Center" Background="Black" Foreground="White" VerticalContentAlignment="Center" Width="100"/>
+
+        </DockPanel>
+
+        <ListView Name="titlebasicsListView" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" HorizontalAlignment="Stretch" SelectionMode="Single" HorizontalContentAlignment="Stretch" Margin="0,80,0,0" 
+                  VerticalAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" d:DataContext="{d:DesignInstance {x:Type local:MainWindow}}"  Background="Transparent" Foreground="Black" ScrollViewer.CanContentScroll="True" SelectionChanged="ListView1_SelectionChanged" >
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border CornerRadius="6" BorderBrush="Gray" Background="LightGray" BorderThickness="2">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource tbkStyle}" FontSize="14" FontWeight="Bold">
+                                <TextBlock.Inlines>
+                                    <Run Text="{Binding tconst}"></Run>
+                                </TextBlock.Inlines>
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource tbkStyle}">
+                                <TextBlock.Inlines>
+                                    <Run Text="     "></Run>
+                                    <Run Text="{Binding primaryTitle}"></Run>
+                                </TextBlock.Inlines>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <DockPanel x:Name="Footer" Height="50" VerticalAlignment="Bottom" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}">
+            <Button x:Name="NextButton" Content="Next" DockPanel.Dock ="Right" Width="75"  BorderBrush="#FF0A0101" Background="Black" Foreground="White" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="NextButton_Click" />
+            <Button x:Name="PreviousButton" Content="Previous" DockPanel.Dock ="Right" Width="75"  BorderBrush="#FF0A0101" Background="Black" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="PreviousButton_Click"  />
+            <Button x:Name="BlankButton3" Content="" DockPanel.Dock ="Left" Height="50" Width="0"  BorderBrush="#FF0A0101" Background="Black" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Name="RecordsCount" Content="Records : " DockPanel.Dock ="Left" Height="50" VerticalAlignment="Top" Background="Black" Foreground="White" VerticalContentAlignment="Center" Width="75"/>
+            <Label Name="TotalCount" Content="0"  DockPanel.Dock ="Left" Height="50" VerticalAlignment="Top" Background="Black" Foreground="White" VerticalContentAlignment="Center" Width="100"/>
+            <Label x:Name="BlankLabel" Content="" DockPanel.Dock ="Left" Height="50" Width="0"  BorderBrush="#FF0A0101" Background="Black" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        </DockPanel>
+    </Grid>
+</Window>

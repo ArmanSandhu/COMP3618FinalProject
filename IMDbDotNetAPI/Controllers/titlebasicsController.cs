@@ -12,12 +12,14 @@ using IMDbDotNetAPI.Models;
 using IMDbDotNetDomain;
 using IMDbDotNetInfrastructure;
 using System.Web.Http.Cors;
+using NLog;
 
 namespace IMDbDotNetAPI.Controllers
 {
     [EnableCors(origins:"http://localhost:1234", headers:"*", methods:"*")]
     public class titlebasicsController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private UnitOfWork unitOfWork = new UnitOfWork(new IMDbEntities1());
         //public titlebasicsController()
         //: this(new EFGenericRepository<titlebasic>(new IMDbEntities1()))
@@ -37,7 +39,7 @@ namespace IMDbDotNetAPI.Controllers
             {
                 return NotFound();
             }
-
+            logger.Trace("Get all title basics");
             return Ok(titlebasics);
         }
 
@@ -50,7 +52,7 @@ namespace IMDbDotNetAPI.Controllers
             {
                 return NotFound();
             }
-
+            logger.Trace("Get title basics containing " + id);
             return Ok(titlebasics);
         }
 

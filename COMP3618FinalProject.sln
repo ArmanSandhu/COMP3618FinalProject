@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDbDotNetDomain", "IMDbDot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDbDotNetInfrastructure", "IMDbDotNetInfrastructure\IMDbDotNetInfrastructure.csproj", "{D86B225B-46DD-4E1D-9115-4C7FCC0CE55C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication1", "WpfApplication1\WpfApplication1.csproj", "{3F68F7AC-F108-4E5F-A569-DD69FEE2F300}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{D86B225B-46DD-4E1D-9115-4C7FCC0CE55C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D86B225B-46DD-4E1D-9115-4C7FCC0CE55C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D86B225B-46DD-4E1D-9115-4C7FCC0CE55C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F68F7AC-F108-4E5F-A569-DD69FEE2F300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F68F7AC-F108-4E5F-A569-DD69FEE2F300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F68F7AC-F108-4E5F-A569-DD69FEE2F300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F68F7AC-F108-4E5F-A569-DD69FEE2F300}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
