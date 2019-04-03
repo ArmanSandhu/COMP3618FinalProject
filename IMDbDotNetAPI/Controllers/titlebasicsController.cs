@@ -11,10 +11,12 @@ using System.Web.Http.Description;
 using IMDbDotNetAPI.Models;
 using IMDbDotNetDomain;
 using IMDbDotNetInfrastructure;
+using System.Web.Http.Cors;
 using NLog;
 
 namespace IMDbDotNetAPI.Controllers
 {
+    [EnableCors(origins:"http://localhost:1234", headers:"*", methods:"*")]
     public class titlebasicsController : ApiController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
