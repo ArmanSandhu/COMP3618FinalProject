@@ -11,9 +11,11 @@ using System.Web.Http.Description;
 using IMDbDotNetAPI.Models;
 using IMDbDotNetDomain;
 using IMDbDotNetInfrastructure;
+using System.Web.Http.Cors;
 
 namespace IMDbDotNetAPI.Controllers
 {
+    [EnableCors(origins:"http://localhost:1234", headers:"*", methods:"*")]
     public class titlebasicsController : ApiController
     {
         private UnitOfWork unitOfWork = new UnitOfWork(new IMDbEntities1());
