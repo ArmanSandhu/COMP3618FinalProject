@@ -1,0 +1,10 @@
+.nav-item{
+    padding-left: 50px;
+    margin-left: 5px;
+}
+
+.navbar{
+    background-color: white;
+    border: solid black 1px;
+    border-radius: 10px;
+}

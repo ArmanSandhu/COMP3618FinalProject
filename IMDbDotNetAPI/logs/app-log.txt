@@ -1,1 +1,365 @@
 2019-04-02 15:59:57.7156|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containingtt0000005
+2019-04-03 01:15:11.3730|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 01:15:29.2555|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 01:53:06.4294|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 01:53:26.0826|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 01:53:46.4787|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 01:56:28.3755|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 02:05:33.9417|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 02:07:35.7818|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 02:12:34.9848|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 02:29:34.1936|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 02:48:07.4281|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 02:49:56.9747|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 02:59:21.6087|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:06:22.0445|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:06:31.8104|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 03:06:47.2384|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:14:47.4413|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:15:59.2758|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:16:41.4992|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:18:57.7139|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:20:58.1736|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:23:12.7020|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:23:47.2411|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:33:40.4745|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:34:40.3257|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:36:43.1748|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:37:08.8754|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:37:32.6836|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:40:15.5382|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:40:15.7899|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:40:53.0600|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:41:49.9824|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:53:46.3621|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:55:26.7986|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:56:03.2965|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:58:21.4294|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 03:58:27.9597|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 04:01:57.2439|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 04:02:17.6142|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 04:02:21.9747|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 04:02:48.2360|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 04:04:18.1358|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 04:06:58.2060|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 04:15:27.4647|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 04:15:39.7703|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 04:16:24.7547|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 04:26:57.2949|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 05:43:27.8516|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 05:43:33.3171|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 05:45:03.7803|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 05:46:04.7116|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 05:48:58.1726|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 05:50:08.2838|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 05:51:42.2008|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 05:52:26.4468|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 05:55:03.4683|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:01:00.7422|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:05:00.5308|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:05:12.7604|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:06:13.8586|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:06:37.1564|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 06:12:25.5887|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 06:13:49.3630|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 06:18:41.6270|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 06:22:23.1618|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 06:28:29.7370|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 06:29:08.0445|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 06:29:13.8723|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:30:09.2014|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:35:15.6847|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:36:37.8492|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:38:36.3376|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:40:14.4090|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:40:29.9524|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:40:40.7027|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:55:15.1409|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 06:55:35.6075|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 06:56:46.2975|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 06:56:50.9663|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:03:51.5452|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:04:07.9388|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:07:22.0789|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:08:22.9627|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 07:08:28.4739|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:09:20.5655|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 07:09:25.1728|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:10:29.0248|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 07:10:35.3523|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:11:29.0119|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 07:11:34.5677|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:13:00.4730|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:14:50.3168|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:16:38.9204|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:18:02.7410|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:19:03.3016|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:19:11.4585|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:19:23.5787|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:22:03.2675|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 07:23:05.9203|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 07:23:35.3430|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 07:26:47.0930|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 07:30:33.9402|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 07:33:50.3410|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 07:33:57.1261|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:05.3098|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:08.8798|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:12.5971|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:15.9503|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:19.3743|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:22.3177|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:25.9121|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:28.1112|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 09:15:29.0302|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:32.3612|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:32.7543|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:32.8052|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:33.0370|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:33.0729|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:37.5524|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:37.5684|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:38.2252|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:38.3691|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:38.7257|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:38.7457|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:43.5528|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:43.6472|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:44.2381|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:44.4529|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:44.7151|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:44.7576|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:49.6091|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:49.7770|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:50.3823|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:50.6281|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:50.8818|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:51.0067|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:56.0656|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:56.2564|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:56.6699|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:57.0406|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:57.1165|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:15:57.3782|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:16:02.1549|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:16:02.3996|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:16:02.6673|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:16:03.1633|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:16:03.2023|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:16:03.5190|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:16:07.2572|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:16:07.6303|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:16:13.0273|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:19:08.5545|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:19:37.1861|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:19:40.2197|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:19:43.6799|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:19:46.6437|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:19:49.6677|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:19:53.2646|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:19:56.0488|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:19:59.6167|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:03.0347|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:07.5222|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:09.3818|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:09.3998|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:09.4338|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:09.4837|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:09.5676|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:12.5761|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:15.0900|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:15.0900|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:15.1050|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:15.2419|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:15.3508|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:18.3952|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:20.9406|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:20:40.0022|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:24:28.9324|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:26:53.6836|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:27:34.8580|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:27:35.4484|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:29:18.7690|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:29:18.7930|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:29:19.2695|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:31:40.7420|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:32:26.4938|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:32:57.8661|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:33:19.2875|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:39:53.7291|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 09:42:58.3793|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 10:10:18.2876|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 10:34:49.9261|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 10:50:37.5469|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:36:06.0176|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:37:36.2280|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:06.7969|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:16.0597|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:20.9267|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:24.2573|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:27.9855|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:31.9934|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:36.8903|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:39.8113|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:43.0091|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:47.3516|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:50.9759|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:54.4823|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:38:56.1276|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:39:41.8850|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:39:45.5672|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:39:49.3384|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:39:53.3043|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:39:57.3192|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:40:00.3491|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:40:03.8705|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:40:07.3909|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:40:10.8094|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:40:45.6797|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:43:57.4340|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:44:22.7394|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:44:27.0170|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:44:31.8761|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:44:37.1986|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:44:40.9248|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:44:45.1305|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:44:48.1734|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:44:51.7157|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:44:56.3480|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:00.3009|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:04.0301|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:07.7603|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:12.8261|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:17.4244|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:22.2635|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:26.6300|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:31.1973|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:35.2761|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:39.5118|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:43.8414|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:47.3528|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:52.3137|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:45:56.5983|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:00.4633|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:05.3374|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:10.2653|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:15.9425|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:19.8495|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:23.3709|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:27.4787|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:31.0510|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:35.1079|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:51.5139|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:55.7166|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:46:59.6406|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:47:03.4996|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:47:07.1609|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:47:11.1178|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:47:15.2566|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:47:19.6501|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:47:23.4921|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:47:24.7399|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:48:18.6870|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:55:37.9509|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:55:38.2256|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:55:55.0093|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:56:55.9161|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:56:56.3107|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:57:12.9395|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:57:29.5194|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:57:42.4906|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:57:54.1849|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:58:53.2578|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:58:53.7273|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:59:09.2490|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:59:31.7460|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 11:59:43.4585|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:03:43.2580|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:03:58.4661|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:05:46.9547|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000094
+2019-04-03 12:05:56.3141|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:08:26.3282|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:11:01.0537|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:11:12.2048|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:13:44.7285|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:16:29.4940|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:17:45.4069|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:20:16.0987|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:20:44.2893|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:20:53.7335|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:21:50.7778|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:22:54.1500|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:27:13.0923|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:27:22.2895|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:27:53.7379|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:29:27.0143|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:31:04.5263|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:32:51.4119|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:35:46.7163|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:37:40.9463|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:38:16.6724|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:38:35.6466|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 12:39:01.7566|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:39:12.9094|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 12:43:52.9551|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:44:05.7725|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 12:44:59.0484|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:45:11.9778|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 12:47:59.2701|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:48:12.8974|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 12:49:23.8868|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 12:49:29.3894|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 12:49:52.4059|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000100
+2019-04-03 12:50:29.0831|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt000010
+2019-04-03 12:50:46.0964|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000106
+2019-04-03 12:50:56.9618|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 13:09:02.6082|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 13:12:39.4536|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 13:13:47.5648|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 13:14:46.1055|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 13:14:53.6983|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 13:15:33.7600|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 13:16:04.4264|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 13:16:47.2419|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 13:17:07.6754|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt000010
+2019-04-03 13:17:28.5557|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 14:05:34.3326|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt
+2019-04-03 14:05:48.4954|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000001
+2019-04-03 14:06:02.0158|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt
+2019-04-03 14:06:12.4851|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt
+2019-04-03 14:13:19.1290|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing 
+2019-04-03 14:13:39.5868|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing Search
+2019-04-03 14:24:22.8665|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 14:25:30.4134|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 14:49:59.3852|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 14:53:23.7317|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing 
+2019-04-03 14:53:36.1862|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing tt0000003
+2019-04-03 14:53:57.7297|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing Search
+2019-04-03 14:54:49.4907|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing Search
+2019-04-03 14:55:02.4904|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing 
+2019-04-03 14:55:22.0573|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing Search
+2019-04-03 14:56:16.5006|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get title basics containing Search
+2019-04-03 14:59:13.3641|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:16:30.4724|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:19:57.4821|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:20:13.8189|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:21:59.3379|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:22:59.8421|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:23:12.7039|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:24:35.4274|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:24:47.1941|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:25:50.8615|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:28:06.0936|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:29:38.9891|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:30:28.0405|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:31:06.1514|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:34:58.3380|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:35:11.0624|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:35:13.9744|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:35:43.0082|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:36:00.7822|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:36:13.4643|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:41:30.7078|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:41:40.3207|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:42:49.6481|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
+2019-04-03 15:43:06.4926|TRACE|IMDbDotNetAPI.Controllers.titlebasicsController|Get all title basics
