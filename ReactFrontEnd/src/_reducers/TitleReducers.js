@@ -1,3 +1,4 @@
+
 import * as types from '../_actions/TitleActionsTypes';
 
 const initialState = {
@@ -75,8 +76,9 @@ const titleReducer = (state = initialState, action) => {
             break;
         }
         case types.GET_MORE_TITLE_SUCCESS: {
-            const titles = [...state.titles, action.titles];
-            return {titles};
+            const updateTitles = state.titles.concat(action.titles);
+            state = Object.assign({}, state, {titles: updateTitles})
+            break;
         }
         case types.GET_MORE_TITLE_ERROR: {
             state = Object.assign({}, state, {error: action.error});
